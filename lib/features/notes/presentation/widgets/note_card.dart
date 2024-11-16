@@ -82,7 +82,10 @@ class NoteCard extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 5),
-          NotesFolderListView(folders: note.folders)
+          NotesFolderListView(
+            folders: note.folders,
+            colorIdx: note.color,
+          )
         ],
       ),
     );

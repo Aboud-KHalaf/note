@@ -5,9 +5,11 @@ class NotesFolderListView extends StatelessWidget {
   const NotesFolderListView({
     required this.folders,
     super.key,
+    required this.colorIdx,
   });
 
   final List<String> folders;
+  final int colorIdx;
 
   @override
   Widget build(BuildContext context) {
@@ -21,6 +23,7 @@ class NotesFolderListView extends StatelessWidget {
               ? Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 2.0),
                   child: NotesFolderItem(
+                    colorIdx: colorIdx,
                     folder: folders[index],
                   ),
                 )

@@ -5,21 +5,25 @@ class NotesFolderItem extends StatelessWidget {
   const NotesFolderItem({
     super.key,
     required this.folder,
+    required this.colorIdx,
   });
 
   final String folder;
+  final int colorIdx;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        boxShadow: [
+        boxShadow: const [
           BoxShadow(
-            color: AppColors.primary.withOpacity(0.2),
-            blurRadius: 5.0,
+            color: AppColors.background,
+            blurRadius: 16.0,
+            blurStyle: BlurStyle.outer,
           ),
         ],
-        color: AppColors.primary.withOpacity(0.4),
+        border: Border.all(color: Colors.white),
+        color: AppColors.cardColors[colorIdx],
         borderRadius: BorderRadius.circular(12),
       ),
       child: Padding(

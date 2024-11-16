@@ -60,7 +60,7 @@ class NoteLocalDataSourceImpl implements NoteLocalDataSource {
       final jsonNotes = await SQLiteService.instance.fetchWhere(
         table: 'notes',
         whereClause: 'user_id = ?',
-        whereArgs: [note.userId],
+        whereArgs: [note.id],
       );
 
       if (jsonNotes.isEmpty) {

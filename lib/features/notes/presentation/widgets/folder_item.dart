@@ -22,11 +22,30 @@ class FolderItem extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          SvgPicture.asset(
-            colorFilter: ColorFilter.mode(
-                AppColors.cardColors[folder.color], BlendMode.srcIn),
-            SvgProvider.folder,
+          Container(
             width: 100,
+            height: 100,
+            decoration: BoxDecoration(
+              color: Colors
+                  .transparent, // Set to transparent or a background color if needed
+              boxShadow: [
+                BoxShadow(
+                  color:
+                      Colors.black.withOpacity(0.2), // Shadow color and opacity
+                  spreadRadius: 2,
+                  blurRadius: 10,
+                  offset: const Offset(4, 4), // Shadow position
+                ),
+              ],
+            ),
+            child: SvgPicture.asset(
+              SvgProvider.folder,
+              colorFilter: ColorFilter.mode(
+                AppColors.cardColors[folder.color],
+                BlendMode.srcIn,
+              ),
+              width: 100,
+            ),
           ),
           Text(folder.name),
         ],

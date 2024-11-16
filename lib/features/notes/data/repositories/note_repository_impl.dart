@@ -49,6 +49,7 @@ class NoteRepositoryImpl implements NoteRepository {
             imageFile: data.image!, id: idd);
       }
 
+      Log.cyan(idd);
       NoteModel noteModel = NoteModel(
         id: idd,
         color: data.color,

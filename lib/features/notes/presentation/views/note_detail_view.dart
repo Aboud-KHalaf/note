@@ -5,6 +5,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:note/core/helpers/colors/app_colors.dart';
 import 'package:note/core/helpers/localization/app_localization.dart';
 import 'package:note/core/services/image_storage_services.dart';
+import 'package:note/core/utils/logger.dart';
 import 'package:note/features/auth/presentation/manager/get_user_cubit/get_user_cubit.dart';
 import 'package:note/features/notes/domain/entities/note_entity.dart';
 import 'package:note/features/notes/domain/entities/required_data_entity.dart';
@@ -174,7 +175,7 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
     return AppBar(
       backgroundColor: AppColors.cardColors[color],
       title: Text(
-        widget.note == null ? "edit_note".tr(context) : "new_note".tr(context),
+        widget.note != null ? "edit_note".tr(context) : "new_note".tr(context),
       ),
     );
   }
@@ -188,6 +189,7 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
     final pop = Navigator.pop(context);
 
     if (getUserState is GetUserSuccess) {
+      Log.cyan("hello...");
       RequiredDataEntity data = RequiredDataEntity(
         imageUrl: widget.note?.imageUrl ?? '',
         color: color,
