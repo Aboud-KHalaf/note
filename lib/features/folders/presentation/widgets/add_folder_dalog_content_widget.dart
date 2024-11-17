@@ -8,7 +8,7 @@ import '../../../../core/utils/validators.dart';
 import '../../../../core/widgets/custom_text_form_field_w.dart';
 import '../../../notes/presentation/widgets/color_secetions_sheet.dart';
 import '../../domain/entities/folder_entity.dart';
-import '../manager/cubit/folder_actions_cubit.dart';
+import '../manager/folder_actions_cubit/folder_actions_cubit.dart';
 
 class AddFolderDialogContentWidget extends StatefulWidget {
   const AddFolderDialogContentWidget({

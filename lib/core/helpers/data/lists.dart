@@ -2,10 +2,11 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:note/core/cubits/localizations_cubit/localizations_cubit.dart';
 import 'package:note/features/auth/presentation/manager/auth_cubit/auth_cubit.dart';
+import 'package:note/features/folders/presentation/manager/sync_folders_cubit/sync_folders_cubit.dart';
 import 'package:note/features/notes/presentation/manager/synce_notes_cubit/sync_notes_cubit.dart';
 
 import '../../../features/auth/presentation/manager/get_user_cubit/get_user_cubit.dart';
-import '../../../features/folders/presentation/manager/cubit/folder_actions_cubit.dart';
+import '../../../features/folders/presentation/manager/folder_actions_cubit/folder_actions_cubit.dart';
 import '../../../features/notes/presentation/manager/delete_note_cubit/delete_note_cubit.dart';
 import '../../../features/notes/presentation/manager/fetch_all_notes_cubit/fetch_all_notes_cubit.dart';
 import '../../../features/notes/presentation/manager/fetch_notes_by_folder_cubit.dart/fetch_notes_by_folder_cubit.dart';
@@ -43,5 +44,8 @@ List<BlocProvider> providers = [
   ),
   BlocProvider<FetchNotesByFolderCubit>(
     create: (BuildContext context) => sl<FetchNotesByFolderCubit>(),
+  ),
+  BlocProvider<SyncFoldersCubit>(
+    create: (BuildContext context) => sl<SyncFoldersCubit>(),
   ),
 ];

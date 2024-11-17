@@ -7,7 +7,7 @@ import 'package:note/features/notes/presentation/manager/synce_notes_cubit/sync_
 import 'package:note/features/notes/presentation/widgets/home_view_body.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-import '../../../folders/presentation/manager/cubit/folder_actions_cubit.dart';
+import '../../../folders/presentation/manager/folder_actions_cubit/folder_actions_cubit.dart';
 import '../manager/fetch_all_notes_cubit/fetch_all_notes_cubit.dart';
 
 class HomeView extends StatefulWidget {

@@ -9,5 +9,5 @@ abstract interface class FolderRepository {
   ResultFuture<Unit> editFolder({required FolderEntity folder});
   ResultFuture<Unit> deleteFolder({required FolderEntity folder});
   ResultFuture<List<FolderEntity>> fetchAllFolders();
-  ResultFuture<Unit> synceNotes();
+  ResultFuture<Unit> synceFolders();
 }

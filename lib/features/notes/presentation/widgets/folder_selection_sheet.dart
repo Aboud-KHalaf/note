@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:note/core/helpers/colors/app_colors.dart';
 import 'package:note/features/folders/domain/entities/folder_entity.dart';
-import 'package:note/features/folders/presentation/manager/cubit/folder_actions_cubit.dart';
+import 'package:note/features/folders/presentation/manager/folder_actions_cubit/folder_actions_cubit.dart';
 
 class FolderSelectionSheet extends StatelessWidget {
   final List<String> currentNoteFolders;

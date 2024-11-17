@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:note/features/folders/presentation/manager/cubit/folder_actions_cubit.dart';
+import 'package:note/features/folders/presentation/manager/folder_actions_cubit/folder_actions_cubit.dart';
 import 'package:note/features/folders/presentation/widgets/empty_folders.dart';
 import 'package:note/features/folders/presentation/widgets/folders_grid_view.dart';
 

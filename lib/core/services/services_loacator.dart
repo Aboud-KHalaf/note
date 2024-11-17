@@ -170,8 +170,15 @@ Future<void> _initFolder() async {
     () => FetchAllFolderUsecase(folderRepository: sl()),
   );
 
+  sl.registerLazySingleton<SyncFoldersUsecase>(
+    () => SyncFoldersUsecase(folderRepository: sl()),
+  );
+
   // Register Cubits
   sl.registerFactory<FolderActionsCubit>(
     () => FolderActionsCubit(sl(), sl(), sl(), sl()),
+  );
+  sl.registerFactory<SyncFoldersCubit>(
+    () => SyncFoldersCubit(sl()),
   );
 }

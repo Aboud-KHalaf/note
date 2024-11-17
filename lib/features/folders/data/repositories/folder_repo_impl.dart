@@ -86,7 +86,7 @@ class FolderRepoImpl implements FolderRepository {
   }
 
   @override
-  ResultFuture<Unit> synceNotes() async {
+  ResultFuture<Unit> synceFolders() async {
     bool isConnected = await internetConnectivity.isConnected();
 
     if (isConnected) {
