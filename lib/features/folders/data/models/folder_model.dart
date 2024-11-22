@@ -1,3 +1,4 @@
+import 'package:note/features/folders/data/models/upload_folder_model.dart';
 import 'package:note/features/folders/domain/entities/folder_entity.dart';
 
 class FolderModel extends FolderEntity {
@@ -85,6 +86,16 @@ class FolderModel extends FolderEntity {
       isSynced: isSynced,
       isDeleted: isDeleted,
       isUpdated: isUpdated,
+    );
+  }
+
+  UploadFolderModel toUploadFolderModel() {
+    return UploadFolderModel(
+      id: id,
+      name: name,
+      description: description,
+      color: color,
+      userID: userID,
     );
   }
 }

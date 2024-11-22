@@ -18,6 +18,7 @@ import 'package:note/features/folders/domain/use_casees/delete_folder_usecase.da
 import 'package:note/features/folders/domain/use_casees/edit_folder_usecase.dart';
 import 'package:note/features/folders/domain/use_casees/fetch_all_folders_usecase.dart';
 import 'package:note/features/folders/domain/use_casees/sync_folders_usecase.dart';
+import 'package:note/features/folders/presentation/manager/sync_folders_cubit/sync_folders_cubit.dart';
 import 'package:note/features/notes/domain/usecases/fetch_all_remote_notes_usecase.dart';
 import 'package:note/features/notes/domain/usecases/fetch_notes_by_folder_usecase.dart';
 import 'package:note/features/folders/presentation/manager/folder_actions_cubit/folder_actions_cubit.dart';
