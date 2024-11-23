@@ -15,7 +15,7 @@ class FoldersView extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         backgroundColor: AppColors.primary,
         onPressed: () async {
-          showAddFolderDialog(context);
+          showAddFolderDialog(context: context);
         },
         child: const Icon(Icons.add),
       ),

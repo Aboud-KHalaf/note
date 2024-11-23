@@ -311,7 +311,7 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
                 backgroundColor: WidgetStatePropertyAll(AppColors.secondary),
               ),
               onPressed: () {
-                showAddFolderDialog(context);
+                showAddFolderDialog(context: context);
               },
               child: Text(
                 "add_new_folder".tr(context),

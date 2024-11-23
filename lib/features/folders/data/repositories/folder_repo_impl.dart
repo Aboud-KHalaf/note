@@ -58,16 +58,9 @@ class FolderRepoImpl implements FolderRepository {
 
   @override
   ResultFuture<Unit> editFolder({required FolderEntity folder}) async {
-    FolderModel folderModel = FolderModel(
-      userID: await sharedPreferencesService.getUserId() ?? "",
-      isSynced: folder.isSynced,
-      isDeleted: folder.isDeleted,
-      isUpdated: folder.isUpdated,
-      description: folder.description,
-      id: folder.id,
-      name: folder.name,
-      color: folder.color,
-    );
+    FolderModel folderModel = FolderModel.fromEntity(folder);
+    folderModel = folderModel.copyWith(
+        userID: await sharedPreferencesService.getUserId() ?? "");
     return _handleFolderOperation(
         () => folderLocalDataSource.updateFolder(folder: folderModel));
   }
@@ -109,7 +102,8 @@ class FolderRepoImpl implements FolderRepository {
 
     for (var folder in unsyncedFolders) {
       try {
-        await folderRemoteDataSource.uploadFolder(folder: folder);
+        await folderRemoteDataSource.uploadFolder(
+            folder: folder.toUploadFolderModel());
         await folderLocalDataSource.updateFolder(
             folder: folder.copyWith(isSynced: 1));
       } catch (e) {
@@ -127,7 +121,8 @@ class FolderRepoImpl implements FolderRepository {
       Log.error(folder.name);
 
       try {
-        await folderRemoteDataSource.deleteFolder(folder: folder);
+        await folderRemoteDataSource.deleteFolder(
+            folder: folder.toUploadFolderModel());
 
         await folderLocalDataSource.deleteFolder(folderId: folder.id);
 
@@ -147,10 +142,11 @@ class FolderRepoImpl implements FolderRepository {
       Log.error(folder.name);
 
       try {
-        await folderRemoteDataSource.updateFolder(folder: folder);
-
         await folderRemoteDataSource.updateFolder(
-            folder: folder.copyWith(isSynced: 1));
+            folder: folder.toUploadFolderModel());
+
+        await folderLocalDataSource.updateFolder(
+            folder: folder.copyWith(isSynced: 1, isUpdated: 0));
 
         Log.info("${folder.name} deleted success");
       } catch (e) {

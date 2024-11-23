@@ -1,35 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:note/core/helpers/colors/app_colors.dart';
+import 'package:note/core/helpers/localization/app_localization.dart';
 
 class OptionsMenuButton extends StatelessWidget {
-  const OptionsMenuButton({super.key});
-
+  const OptionsMenuButton(
+      {super.key,
+      required this.onEditSelected,
+      required this.ondeleteSelected});
+  final Future<void> Function() onEditSelected;
+  final Future<void> Function() ondeleteSelected;
   @override
   Widget build(BuildContext context) {
     return PopupMenuButton<String>(
       color: AppColors.cardColor,
       onSelected: (value) {
         switch (value) {
-          case 'update':
-            // Perform the update action
-            ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Update option selected')));
+          case 'edit':
+            // Perform the edit action
+            onEditSelected();
             break;
           case 'delete':
             // Perform the delete action
-            ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Delete option selected')));
+            ondeleteSelected();
             break;
         }
       },
       itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
-        const PopupMenuItem<String>(
-          value: 'update',
-          child: Text('Update'),
+        PopupMenuItem<String>(
+          value: 'edit',
+          child: Text('edit'.tr(context)),
         ),
-        const PopupMenuItem<String>(
+        PopupMenuItem<String>(
           value: 'delete',
-          child: Text('Delete'),
+          child: Text('delete'.tr(context)),
         ),
       ],
       icon: const Icon(Icons.more_vert),

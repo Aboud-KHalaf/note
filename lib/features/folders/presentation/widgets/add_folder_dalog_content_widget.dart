@@ -13,7 +13,10 @@ import '../manager/folder_actions_cubit/folder_actions_cubit.dart';
 class AddFolderDialogContentWidget extends StatefulWidget {
   const AddFolderDialogContentWidget({
     super.key,
+    this.folderEntity,
   });
+
+  final FolderEntity? folderEntity;
 
   @override
   State<AddFolderDialogContentWidget> createState() =>
@@ -25,12 +28,15 @@ class _AddFolderDialogContentWidgetState
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   late TextEditingController _nameController;
   late TextEditingController _discriptionController;
-  int colorIdx = 0;
+  late int _colorIdx;
 
   @override
   void initState() {
-    _nameController = TextEditingController();
-    _discriptionController = TextEditingController();
+    _nameController =
+        TextEditingController(text: widget.folderEntity?.name ?? "");
+    _discriptionController =
+        TextEditingController(text: widget.folderEntity?.description ?? "");
+    _colorIdx = widget.folderEntity?.color ?? 0;
     super.initState();
   }
 
@@ -66,9 +72,9 @@ class _AddFolderDialogContentWidgetState
               SpacingHelper.h2,
               ColorSelectionSheet(
                 onColorSelected: (int idx) {
-                  colorIdx = idx;
+                  _colorIdx = idx;
                 },
-                idx: 0,
+                idx: _colorIdx,
               ),
               SpacingHelper.h5,
               ElevatedButton(
@@ -77,23 +83,45 @@ class _AddFolderDialogContentWidgetState
                     FolderEntity folder = FolderEntity(
                       userID: '',
                       description: _discriptionController.text.trim(),
-                      id: const Uuid().v1(),
+                      id: widget.folderEntity == null
+                          ? const Uuid().v1()
+                          : widget.folderEntity!.id,
                       name: _nameController.text.trim(),
-                      color: colorIdx,
+                      color: _colorIdx,
                     );
-                    context
-                        .read<FolderActionsCubit>()
-                        .createFolder(folder: folder);
+
+                    if (widget.folderEntity == null) {
+                      _createFolder(folder);
+                    } else {
+                      _editFolder(folder);
+                    }
+
                     context.read<FolderActionsCubit>().fetchAllFolders();
                     Navigator.pop(context);
                   }
                 },
-                child: Text('add'.tr(context)),
+                child: Text(createOrEdit()),
               ),
             ],
           ),
         ),
       ),
     );
+  }
+
+  Future<void> _createFolder(FolderEntity folder) async {
+    await context.read<FolderActionsCubit>().createFolder(folder: folder);
+  }
+
+  Future<void> _editFolder(FolderEntity folder) async {
+    await context.read<FolderActionsCubit>().editFolder(folder: folder);
+  }
+
+  String createOrEdit() {
+    if (widget.folderEntity == null) {
+      return 'add'.tr(context);
+    } else {
+      return 'edit'.tr(context);
+    }
   }
 }

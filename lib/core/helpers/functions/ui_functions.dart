@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:note/core/helpers/colors/app_colors.dart';
+import 'package:note/features/folders/domain/entities/folder_entity.dart';
 
 import '../../../features/folders/presentation/widgets/add_folder_dalog_content_widget.dart';
 import '../../widgets/custtom_bottom_sheet._widget.dart';
@@ -46,12 +47,13 @@ void customShowModelBottomSheetMethod(
       builder: (BuildContext context) => child);
 }
 
-Future<dynamic> showAddFolderDialog(BuildContext context) {
+Future<dynamic> showAddFolderDialog(
+    {required BuildContext context, FolderEntity? folderEntity}) {
   return showDialog(
       context: context,
-      builder: (context) => const AlertDialog(
+      builder: (context) => AlertDialog(
             backgroundColor: AppColors.cardColor,
-            content: AddFolderDialogContentWidget(),
+            content: AddFolderDialogContentWidget(folderEntity: folderEntity),
           ));
 }
 

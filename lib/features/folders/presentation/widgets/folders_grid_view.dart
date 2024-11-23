@@ -30,7 +30,7 @@ class FoldersGridView extends StatelessWidget {
             Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (context) => FolderNotesView(
-                  folderName: folders[index].name,
+                  folder: folders[index],
                 ),
               ),
             );

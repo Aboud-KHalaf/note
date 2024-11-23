@@ -254,7 +254,6 @@ class NoteRepositoryImpl implements NoteRepository {
         bool result = await noteRemoteDataSource.updateNote(note: noteModel);
 
         if (result == true) {
-          // Mark the note as synced in the local database
           await noteLocalDataSource
               .updateNoteLocally(noteModel.copyWith(isSynced: 1, isUpdated: 0));
           Log.info("${note.title} updated success");

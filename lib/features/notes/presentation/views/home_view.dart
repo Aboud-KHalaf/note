@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:note/core/helpers/colors/app_colors.dart';
 import 'package:note/core/helpers/localization/app_localization.dart';
+import 'package:note/core/utils/logger.dart';
+import 'package:note/features/folders/data/data_soureces/folder_local_data_source.dart';
+import 'package:note/features/folders/data/data_soureces/folder_remote_data_source.dart';
+import 'package:note/features/folders/data/models/folder_model.dart';
 import 'package:note/features/notes/presentation/manager/synce_notes_cubit/sync_notes_cubit.dart';
 
 import 'package:note/features/notes/presentation/widgets/home_view_body.dart';
@@ -34,14 +38,34 @@ class _HomeViewState extends State<HomeView> {
   }
 
   Future<void> signOutUser() async {
-    try {
-      // Sign out the user from Supabase
-      await Supabase.instance.client.auth.signOut();
-      print('User signed out successfully.');
-    } catch (e) {
-      // Handle any errors that occur during sign out
-      print('Error signing out: $e');
+    FolderLocalDataSource folderLocalDataSource = FolderLocalDataSourceImple();
+    FolderRemoteDataSource folderRemoteDataSource =
+        FolderRemoteDataSourceImpl(supabaseClient: Supabase.instance.client);
+
+    Log.info("connected ... upload folders start");
+    final List<FolderModel> unsyncedFolders =
+        await folderLocalDataSource.fetchLocalUnSyncedFolders();
+
+    for (var folder in unsyncedFolders) {
+      try {
+        Log.cyan(folder.name);
+        await folderRemoteDataSource.uploadFolder(
+            folder: folder.toUploadFolderModel());
+        await folderLocalDataSource.updateFolder(
+            folder: folder.copyWith(isSynced: 1));
+      } catch (e) {
+        Log.error("${folder.name} upload failed because ${e.toString()}");
+      }
     }
+
+    // try {
+    //   // Sign out the user from Supabase
+    //   await Supabase.instance.client.auth.signOut();
+    //   print('User signed out successfully.');
+    // } catch (e) {
+    //   // Handle any errors that occur during sign out
+    //   print('Error signing out: $e');
+    // }
   }
 
   @override

@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:note/core/helpers/colors/app_colors.dart';
+import 'package:note/core/helpers/functions/ui_functions.dart';
 import 'package:note/core/helpers/localization/app_localization.dart';
+import 'package:note/core/utils/logger.dart';
+import 'package:note/features/folders/domain/entities/folder_entity.dart';
 import 'package:note/features/folders/presentation/widgets/folder_notes_view_body.dart';
 import 'package:note/features/folders/presentation/widgets/options_menu_button.dart';
 import 'package:note/features/notes/domain/entities/note_entity.dart';
@@ -12,9 +15,9 @@ import 'package:note/features/notes/presentation/manager/fetch_notes_by_folder_c
 class FolderNotesView extends StatefulWidget {
   const FolderNotesView({
     super.key,
-    required this.folderName,
+    required this.folder,
   });
-  final String folderName;
+  final FolderEntity folder;
 
   @override
   State<FolderNotesView> createState() => _FolderNotesViewState();
@@ -28,7 +31,7 @@ class _FolderNotesViewState extends State<FolderNotesView> {
   void initState() {
     context
         .read<FetchNotesByFolderCubit>()
-        .fetchNotesByFolder(folderName: widget.folderName);
+        .fetchNotesByFolder(folderName: widget.folder.name);
     super.initState();
   }
 
@@ -65,7 +68,7 @@ class _FolderNotesViewState extends State<FolderNotesView> {
     }
     context
         .read<FetchNotesByFolderCubit>()
-        .fetchNotesByFolder(folderName: widget.folderName);
+        .fetchNotesByFolder(folderName: widget.folder.name);
     setState(() {
       isSelectionMode = false;
       selectedNotes.clear();
@@ -79,7 +82,7 @@ class _FolderNotesViewState extends State<FolderNotesView> {
       body: Padding(
         padding: const EdgeInsets.all(12.0),
         child: FolderNotesViewBody(
-          folder: widget.folderName,
+          folder: widget.folder.name,
           isSelectionMode: isSelectionMode,
           selectedNotes: selectedNotes,
           onNoteTap: toggleSelectionMode,
@@ -128,7 +131,7 @@ class _FolderNotesViewState extends State<FolderNotesView> {
         TextSpan(
           children: [
             TextSpan(
-              text: '${widget.folderName} ',
+              text: '${widget.folder.name} ',
               style: const TextStyle(color: AppColors.primary),
             ),
             TextSpan(
@@ -137,8 +140,27 @@ class _FolderNotesViewState extends State<FolderNotesView> {
           ],
         ),
       ),
-      actions: const [OptionsMenuButton()],
+      actions: [
+        OptionsMenuButton(
+          onEditSelected: _editFolder,
+          ondeleteSelected: _delteFolder,
+        )
+      ],
       centerTitle: true,
     );
+  }
+
+  Future<void> _delteFolder() async {
+    Log.cyan('delelte');
+    if (mounted) {
+      Navigator.pop(context);
+    }
+  }
+
+  Future<void> _editFolder() async {
+    await showAddFolderDialog(context: context, folderEntity: widget.folder);
+    if (mounted) {
+      Navigator.pop(context);
+    }
   }
 }

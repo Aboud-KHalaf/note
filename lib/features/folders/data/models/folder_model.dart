@@ -75,6 +75,19 @@ class FolderModel extends FolderEntity {
     );
   }
 
+  static FolderModel fromUploadFolderModel(UploadFolderModel folder) {
+    return FolderModel(
+      id: folder.id,
+      name: folder.name,
+      description: folder.description,
+      color: folder.color,
+      userID: folder.userID,
+      isSynced: 1,
+      isDeleted: 0,
+      isUpdated: 0,
+    );
+  }
+
   // Mapper function to convert FolderModel back to FolderEntity
   FolderEntity toEntity() {
     return FolderEntity(
