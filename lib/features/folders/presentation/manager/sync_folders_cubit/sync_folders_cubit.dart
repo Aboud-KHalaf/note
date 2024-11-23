@@ -5,10 +5,10 @@ import 'package:note/features/folders/domain/use_casees/sync_folders_usecase.dar
 part 'sunc_folders_state.dart';
 
 class SyncFoldersCubit extends Cubit<SyncFoldersState> {
-  SyncFoldersCubit(this.syncFoldersUsecase) : super(SuncFoldersInitial());
+  SyncFoldersCubit(this._syncFoldersUsecase) : super(SuncFoldersInitial());
 
-  final SyncFoldersUsecase syncFoldersUsecase;
+  final SyncFoldersUsecase _syncFoldersUsecase;
   Future<void> syncFolders() async {
-    await syncFoldersUsecase.call();
+    await _syncFoldersUsecase.call();
   }
 }

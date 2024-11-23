@@ -5,11 +5,11 @@ import 'package:note/features/notes/domain/usecases/synce_notes_usecase.dart';
 part 'sync_notes_state.dart';
 
 class SynceNotesCubit extends Cubit<SyncNotesState> {
-  SynceNotesCubit(this.synceNotesUsecase) : super(SyncNotesInitial());
+  SynceNotesCubit(this._synceNotesUsecase) : super(SyncNotesInitial());
 
-  final SynceNotesUsecase synceNotesUsecase;
+  final SynceNotesUsecase _synceNotesUsecase;
   Future<void> synceNotes() async {
-    var res = await synceNotesUsecase.call();
+    var res = await _synceNotesUsecase.call();
 
     res.fold((failure) {
       emit(SyncNotesFailure(errMessage: failure.message));

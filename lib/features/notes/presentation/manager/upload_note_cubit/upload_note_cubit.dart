@@ -6,14 +6,14 @@ import 'package:note/features/notes/domain/usecases/insert_note_usecase.dart';
 part 'upload_note_state.dart';
 
 class UploadNoteCubit extends Cubit<UploadNoteState> {
-  UploadNoteCubit(this.uploadNoteUsecase) : super(UploadNoteInitial());
-  final InsertNoteUsecase uploadNoteUsecase;
+  UploadNoteCubit(this._uploadNoteUsecase) : super(UploadNoteInitial());
+  final InsertNoteUsecase _uploadNoteUsecase;
 
   Future<void> uploadNote({
     required RequiredDataEntity data,
   }) async {
     emit(UploadNoteLoading());
-    var res = await uploadNoteUsecase.call(
+    var res = await _uploadNoteUsecase.call(
       data,
     );
 

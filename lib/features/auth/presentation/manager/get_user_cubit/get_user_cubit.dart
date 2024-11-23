@@ -7,14 +7,14 @@ import '../../../../../core/entites/user_entity.dart';
 part 'get_user_state.dart';
 
 class GetUserCubit extends Cubit<GetUserState> {
-  GetUserCubit(this.getUserDataUsecase) : super(GetUserInitial());
+  GetUserCubit(this._getUserDataUsecase) : super(GetUserInitial());
 
-  final GetUserDataUsecase getUserDataUsecase;
+  final GetUserDataUsecase _getUserDataUsecase;
 
   Future<void> getUserData() async {
     emit(GetUserLoading());
 
-    final res = await getUserDataUsecase.call();
+    final res = await _getUserDataUsecase.call();
 
     res.fold((failure) {
       emit(GetUserFailuer(errMessage: failure.message));

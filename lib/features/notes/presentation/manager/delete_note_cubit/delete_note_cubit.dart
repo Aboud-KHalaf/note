@@ -8,12 +8,12 @@ import '../../../domain/entities/note_entity.dart';
 part 'delete_note_state.dart';
 
 class DeleteNoteCubit extends Cubit<DeleteNoteState> {
-  DeleteNoteCubit(this.deleteNoteUsecase) : super(DeleteNoteInitial());
-  final DeleteNoteUsecase deleteNoteUsecase;
+  DeleteNoteCubit(this._deleteNoteUsecase) : super(DeleteNoteInitial());
+  final DeleteNoteUsecase _deleteNoteUsecase;
 
   Future<void> deleteNote({required NoteEntity note}) async {
     emit(DeleteNoteLoading());
-    var res = await deleteNoteUsecase.call(note: note as NoteModel);
+    var res = await _deleteNoteUsecase.call(note: note as NoteModel);
     res.fold((falure) {
       emit(DeleteNoteFailure(errMessage: falure.message));
     }, (unit) {

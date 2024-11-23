@@ -11,20 +11,20 @@ part 'folder_actions_state.dart';
 
 class FolderActionsCubit extends Cubit<FolderActionsState> {
   FolderActionsCubit(
-    this.createFolderUsecase,
-    this.deleteFolderUsecase,
-    this.editFolderUsecase,
-    this.fetchAllFoldersUsecase,
+    this._createFolderUsecase,
+    this._deleteFolderUsecase,
+    this._editFolderUsecase,
+    this._fetchAllFoldersUsecase,
   ) : super(FolderActionsInitial());
 
-  final CreateFolderUsecase createFolderUsecase;
-  final DeleteFolderUsecase deleteFolderUsecase;
-  final EditFolderUsecase editFolderUsecase;
-  final FetchAllFolderUsecase fetchAllFoldersUsecase;
+  final CreateFolderUsecase _createFolderUsecase;
+  final DeleteFolderUsecase _deleteFolderUsecase;
+  final EditFolderUsecase _editFolderUsecase;
+  final FetchAllFolderUsecase _fetchAllFoldersUsecase;
 
   Future<void> createFolder({required FolderEntity folder}) async {
     emit(FolderActionsLoading());
-    var res = await createFolderUsecase.call(folder);
+    var res = await _createFolderUsecase.call(folder);
     res.fold((failure) {
       emit(FolderActionsFailure(errMessage: failure.message));
     }, (unit) {
@@ -36,7 +36,7 @@ class FolderActionsCubit extends Cubit<FolderActionsState> {
 
   Future<void> editFolder({required FolderEntity folder}) async {
     emit(FolderActionsLoading());
-    var res = await editFolderUsecase.call(folder);
+    var res = await _editFolderUsecase.call(folder);
     res.fold(
         (failure) => emit(FolderActionsFailure(errMessage: failure.message)),
         (unit) => emit(FolderActionsSuccess()));
@@ -44,7 +44,7 @@ class FolderActionsCubit extends Cubit<FolderActionsState> {
 
   Future<void> deleteFolder({required FolderEntity folder}) async {
     emit(FolderActionsLoading());
-    var res = await deleteFolderUsecase.call(folder);
+    var res = await _deleteFolderUsecase.call(folder);
     res.fold(
         (failure) => emit(FolderActionsFailure(errMessage: failure.message)),
         (unit) => emit(FolderActionsSuccess()));
@@ -52,7 +52,7 @@ class FolderActionsCubit extends Cubit<FolderActionsState> {
 
   Future<void> fetchAllFolders() async {
     emit(FolderActionsLoading());
-    var res = await fetchAllFoldersUsecase.call();
+    var res = await _fetchAllFoldersUsecase.call();
     res.fold(
         (failure) => emit(FolderActionsFailure(errMessage: failure.message)),
         (folders) => emit(FetchFoldersNameSuccess(folders: folders)));

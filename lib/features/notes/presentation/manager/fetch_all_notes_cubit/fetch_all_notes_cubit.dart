@@ -7,14 +7,15 @@ import 'package:note/features/notes/domain/usecases/fetch_all_remote_notes_useca
 part 'fetch_all_notes_state.dart';
 
 class FetchAllNotesCubit extends Cubit<FetchAllNotesState> {
-  FetchAllNotesCubit(this.fetchAllNotesUsecase, this.fetchAllRemoteNotesUsecase)
+  FetchAllNotesCubit(
+      this._fetchAllNotesUsecase, this._fetchAllRemoteNotesUsecase)
       : super(FetchAllNotesInitial());
 
-  final FetchAllNotesUsecase fetchAllNotesUsecase;
-  final FetchAllRemoteNotesUsecase fetchAllRemoteNotesUsecase;
+  final FetchAllNotesUsecase _fetchAllNotesUsecase;
+  final FetchAllRemoteNotesUsecase _fetchAllRemoteNotesUsecase;
   Future<void> fetchAllNotes() async {
     emit(FetchAllNotesLoading());
-    var res = await fetchAllNotesUsecase.call();
+    var res = await _fetchAllNotesUsecase.call();
     res.fold((failure) {
       emit(FetchAllNotesFaiure(errMessage: failure.message));
     }, (notes) {
@@ -23,7 +24,7 @@ class FetchAllNotesCubit extends Cubit<FetchAllNotesState> {
   }
 
   Future<void> fetchAllRemoteNotes() async {
-    var res = await fetchAllRemoteNotesUsecase.call();
+    var res = await _fetchAllRemoteNotesUsecase.call();
     res.fold((failure) {
       emit(FetchAllNotesFaiure(errMessage: failure.message));
     }, (notes) {

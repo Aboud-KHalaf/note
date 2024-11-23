@@ -10,16 +10,16 @@ part 'auth_state.dart';
 
 class AuthCubit extends Cubit<AuthState> {
   AuthCubit(
-    this.signUpWithEmailAndPasswordUsecase,
-    this.signInWithEmailAndPasswordUsecase,
-    this.isUserLoggedInUseCase,
-    this.googleSignInUsecase,
+    this._signUpWithEmailAndPasswordUsecase,
+    this._signInWithEmailAndPasswordUsecase,
+    this._isUserLoggedInUseCase,
+    this._googleSignInUsecase,
   ) : super(AuthInitial());
 
-  final SignUpWithEmailAndPasswordUsecase signUpWithEmailAndPasswordUsecase;
-  final SignInWithEmailAndPasswordUsecase signInWithEmailAndPasswordUsecase;
-  final GoogleSignInUsecase googleSignInUsecase;
-  final IsUserLoggedInUseCase isUserLoggedInUseCase;
+  final SignUpWithEmailAndPasswordUsecase _signUpWithEmailAndPasswordUsecase;
+  final SignInWithEmailAndPasswordUsecase _signInWithEmailAndPasswordUsecase;
+  final GoogleSignInUsecase _googleSignInUsecase;
+  final IsUserLoggedInUseCase _isUserLoggedInUseCase;
 
   Future<void> signUp({
     required String name,
@@ -29,7 +29,7 @@ class AuthCubit extends Cubit<AuthState> {
     //
     emit(AuthLoading());
     //
-    final res = await signUpWithEmailAndPasswordUsecase(
+    final res = await _signUpWithEmailAndPasswordUsecase(
       name: name,
       email: email,
       password: password,
@@ -55,7 +55,7 @@ class AuthCubit extends Cubit<AuthState> {
     //
     emit(AuthLoading());
     //
-    final res = await signInWithEmailAndPasswordUsecase(
+    final res = await _signInWithEmailAndPasswordUsecase(
       email: email,
       password: password,
     );
@@ -75,7 +75,7 @@ class AuthCubit extends Cubit<AuthState> {
   ///
 
   Future<void> isUserLoggedIn() async {
-    final bool res = await isUserLoggedInUseCase.call();
+    final bool res = await _isUserLoggedInUseCase.call();
     if (res) {
       emit(UserLoggedIn());
     }
@@ -85,7 +85,7 @@ class AuthCubit extends Cubit<AuthState> {
 
   Future<void> googleSignIn() async {
     emit(AuthLoading());
-    var res = await googleSignInUsecase.call();
+    var res = await _googleSignInUsecase.call();
     res.fold((failure) {
       emit(AuthFailure(errMessage: failure.message));
     }, (unit) {

@@ -6,13 +6,13 @@ import 'package:note/features/notes/domain/usecases/upadate_note_usecase.dart';
 part 'update_note_state.dart';
 
 class UpdateNoteCubit extends Cubit<UpdateNoteState> {
-  UpdateNoteCubit(this.upadateNoteUsecase) : super(UpdateNoteInitial());
+  UpdateNoteCubit(this._upadateNoteUsecase) : super(UpdateNoteInitial());
 
-  final UpdateNoteUsecase upadateNoteUsecase;
+  final UpdateNoteUsecase _upadateNoteUsecase;
   Future<void> updateNote({required RequiredDataEntity data}) async {
     emit(UpdateNoteLoading());
 
-    var res = await upadateNoteUsecase.call(data);
+    var res = await _upadateNoteUsecase.call(data);
     res.fold((failure) {
       emit(UpdateNoteFailure(errMessage: failure.message));
     }, (unit) {

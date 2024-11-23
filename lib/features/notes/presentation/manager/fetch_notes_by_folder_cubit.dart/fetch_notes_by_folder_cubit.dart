@@ -6,14 +6,14 @@ import 'package:note/features/notes/domain/usecases/fetch_notes_by_folder_usecas
 part 'fetch_notes_by_folder_state.dart';
 
 class FetchNotesByFolderCubit extends Cubit<FetchNotesByFolderState> {
-  FetchNotesByFolderCubit(this.fetchNotesByFolderUsecase)
+  FetchNotesByFolderCubit(this._fetchNotesByFolderUsecase)
       : super(FetchNotesByFolderInitial());
 
-  final FetchNotesByFolderUsecase fetchNotesByFolderUsecase;
+  final FetchNotesByFolderUsecase _fetchNotesByFolderUsecase;
 
   Future<void> fetchNotesByFolder({required String folderName}) async {
     emit(FetchNotesByFolderLoading());
-    var res = await fetchNotesByFolderUsecase.call(folderName);
+    var res = await _fetchNotesByFolderUsecase.call(folderName);
     res.fold(
         (failure) => emit(FetchNotesByFolderFailure(message: failure.message)),
         (notes) => emit(FetchNotesByFolderSuccess(notes: notes)));
