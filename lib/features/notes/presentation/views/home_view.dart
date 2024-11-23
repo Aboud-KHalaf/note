@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:note/core/helpers/colors/app_colors.dart';
 import 'package:note/core/helpers/localization/app_localization.dart';
+import 'package:note/core/services/shared_preferences_services.dart';
 import 'package:note/core/utils/logger.dart';
+import 'package:note/features/auth/presentation/manager/get_user_cubit/get_user_cubit.dart';
 import 'package:note/features/folders/data/data_soureces/folder_local_data_source.dart';
 import 'package:note/features/folders/data/data_soureces/folder_remote_data_source.dart';
 import 'package:note/features/folders/data/models/folder_model.dart';
@@ -73,7 +75,7 @@ class _HomeViewState extends State<HomeView> {
     return DefaultTabController(
       length: 2,
       child: Scaffold(
-        drawer: const Drawer(),
+        drawer: const HomeDrawer(),
         body: NestedScrollView(
           headerSliverBuilder: (context, innerBoxIsScrolled) => [
             SliverAppBar(
@@ -128,6 +130,126 @@ class _HomeViewState extends State<HomeView> {
             ),
           ],
           body: const HomeViewBody(),
+        ),
+      ),
+    );
+  }
+}
+
+class HomeDrawer extends StatelessWidget {
+  const HomeDrawer({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Drawer(
+      backgroundColor: AppColors.background,
+      child: SafeArea(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Drawer Header
+            Container(
+              padding: const EdgeInsets.all(16),
+              child: const Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Hi, name!', // Personal greeting
+                    style: TextStyle(
+                      color: AppColors.primary,
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  SizedBox(height: 8),
+                  Text(
+                    'Welcome back!', // Optional subtitle
+                    style: TextStyle(
+                      fontSize: 16,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 20),
+
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16),
+              child: Text(
+                "Theme",
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: AppColors.primary,
+                ),
+              ),
+            ),
+            const SizedBox(height: 10),
+
+            SwitchListTile(
+              title: const Text('Dark Mode'),
+              value: true, // Replace with your theme logic
+              onChanged: (isDark) {},
+              inactiveThumbColor: AppColors.secondary,
+              activeColor: AppColors.secondary,
+            ),
+
+            // Language Selector
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16),
+              child: Text(
+                "Language",
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: AppColors.primary,
+                ),
+              ),
+            ),
+            const SizedBox(height: 10),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  ElevatedButton(
+                    onPressed: () {
+                      // Set language to Arabic
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppColors.cardColor,
+                      foregroundColor: AppColors.secondary,
+                    ),
+                    child: const Text("العربية"),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      // Set language to English
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppColors.cardColor,
+                      foregroundColor: AppColors.secondary,
+                    ),
+                    child: const Text("English"),
+                  ),
+                ],
+              ),
+            ),
+
+            const Spacer(),
+
+            // Footer (Optional)
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Text(
+                "App Version: 1.0.0",
+                style: TextStyle(
+                  fontSize: 12,
+                  color: AppColors.secondary.withOpacity(0.6),
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );

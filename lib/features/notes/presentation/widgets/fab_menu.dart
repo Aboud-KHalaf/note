@@ -112,7 +112,7 @@ class _FabMenuState extends State<FabMenu> with SingleTickerProviderStateMixin {
                   ..scale(degTwoTranslationAnimation.value),
                 alignment: Alignment.center,
                 child: CircularButton(
-                  color: Colors.yellow,
+                  color: Colors.cyan,
                   width: 50,
                   height: 50,
                   icon: const Icon(

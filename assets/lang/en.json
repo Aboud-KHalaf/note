@@ -41,5 +41,9 @@
     "syncing": "Syncing....",
     "empty_notes": "Your notebook is currently empty.",
     "start_writing": "Start jotting down your notes and capturing your amazing ideas!",
-    "emtpy_folders": "Create your own folders now, and make your thoughts and notes more organized and inspiring!"
+    "emtpy_folders": "Create your own folders now, and make your thoughts and notes more organized and inspiring!",
+    "edit": "edit",
+    "cancel": "cancel",
+    "warning": "Warning",
+    "folder_warning_content": "Are you sure you want to delete this item? This action cannot be undone."
 }

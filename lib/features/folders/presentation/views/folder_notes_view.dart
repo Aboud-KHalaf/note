@@ -4,8 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:note/core/helpers/colors/app_colors.dart';
 import 'package:note/core/helpers/functions/ui_functions.dart';
 import 'package:note/core/helpers/localization/app_localization.dart';
-import 'package:note/core/utils/logger.dart';
 import 'package:note/features/folders/domain/entities/folder_entity.dart';
+import 'package:note/features/folders/presentation/manager/folder_actions_cubit/folder_actions_cubit.dart';
 import 'package:note/features/folders/presentation/widgets/folder_notes_view_body.dart';
 import 'package:note/features/folders/presentation/widgets/options_menu_button.dart';
 import 'package:note/features/notes/domain/entities/note_entity.dart';
@@ -142,22 +142,33 @@ class _FolderNotesViewState extends State<FolderNotesView> {
       ),
       actions: [
         OptionsMenuButton(
-          onEditSelected: _editFolder,
-          ondeleteSelected: _delteFolder,
+          onEditSelected: _oneditFolder,
+          ondeleteSelected: _ondelteFolder,
         )
       ],
       centerTitle: true,
     );
   }
 
-  Future<void> _delteFolder() async {
-    Log.cyan('delelte');
+  Future<void> _deleteFolder() async {
+    await context.read<FolderActionsCubit>().deleteFolder(
+          folder: widget.folder,
+        );
     if (mounted) {
-      Navigator.pop(context);
+      Navigator.of(context).pop();
+      await context.read<FolderActionsCubit>().fetchAllFolders();
     }
   }
 
-  Future<void> _editFolder() async {
+  Future<void> _ondelteFolder() async {
+    showDeleteWarning(
+      context,
+      "folder_warning_content".tr(context),
+      _deleteFolder,
+    );
+  }
+
+  Future<void> _oneditFolder() async {
     await showAddFolderDialog(context: context, folderEntity: widget.folder);
     if (mounted) {
       Navigator.pop(context);

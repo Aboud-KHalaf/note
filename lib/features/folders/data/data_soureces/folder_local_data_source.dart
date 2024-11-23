@@ -56,8 +56,8 @@ class FolderLocalDataSourceImple implements FolderLocalDataSource {
     try {
       var jsonFolders = await SQLiteService.instance.fetchWhere(
         table: 'folders',
-        whereClause: 'user_id = ?',
-        whereArgs: [userId],
+        whereClause: 'user_id = ? AND is_deleted = ?',
+        whereArgs: [userId, 0],
       );
       List<FolderModel> folders =
           jsonFolders.map((json) => FolderModel.fromJson(json)).toList();

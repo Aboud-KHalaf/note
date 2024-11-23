@@ -5,6 +5,8 @@ import 'package:lottie/lottie.dart';
 import 'package:note/core/cubits/localizations_cubit/localizations_cubit.dart';
 import 'package:note/features/auth/presentation/manager/auth_cubit/auth_cubit.dart';
 import 'package:note/features/auth/presentation/views/first_view.dart';
+import 'package:note/features/auth/presentation/views/syncing_view.dart';
+import 'package:note/features/folders/presentation/manager/sync_folders_cubit/sync_folders_cubit.dart';
 import 'package:note/features/notes/presentation/views/home_view.dart';
 
 import '../../../auth/presentation/manager/get_user_cubit/get_user_cubit.dart';
@@ -18,33 +20,48 @@ class SplashView extends StatefulWidget {
 }
 
 class _SplashViewState extends State<SplashView> {
+  late Future<void> _initialization;
+
   @override
   void initState() {
-    BlocProvider.of<AuthCubit>(context).isUserLoggedIn();
-    BlocProvider.of<GetUserCubit>(context).getUserData();
-    BlocProvider.of<SynceNotesCubit>(context).synceNotes();
-    BlocProvider.of<LocalizationsCubit>(context).getLang();
     super.initState();
+    _initialization = _initializeApp();
+  }
+
+  Future<void> _initializeApp() async {
+    await Future.wait([
+      BlocProvider.of<AuthCubit>(context).isUserLoggedIn(),
+      BlocProvider.of<GetUserCubit>(context).getUserData(),
+      BlocProvider.of<SynceNotesCubit>(context).synceNotes(),
+      BlocProvider.of<SyncFoldersCubit>(context).syncFolders(),
+      BlocProvider.of<LocalizationsCubit>(context).getLang(),
+    ]);
   }
 
   @override
   Widget build(BuildContext context) {
-    return const SplashScreenBody();
+    return FutureBuilder<void>(
+      future: _initialization,
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          return const SplashScreenBody();
+        } else {
+          return const SyncingView();
+        }
+      },
+    );
   }
 }
 
 class SplashScreenBody extends StatelessWidget {
-  const SplashScreenBody({
-    super.key,
-  });
+  const SplashScreenBody({super.key});
 
   @override
   Widget build(BuildContext context) {
     ColorScheme colorScheme = Theme.of(context).colorScheme;
+
     return BlocSelector<AuthCubit, AuthState, bool>(
-      selector: (state) {
-        return (state is UserLoggedIn);
-      },
+      selector: (state) => state is UserLoggedIn,
       builder: (context, isLoggedIn) {
         return AnimatedSplashScreen(
           duration: 1400,

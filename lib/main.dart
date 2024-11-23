@@ -44,7 +44,7 @@ class NotesApp extends StatelessWidget {
           ),
           brightness: Brightness.dark,
         ),
-        locale: const Locale('ar'),
+        locale: const Locale('en'),
         localizationsDelegates: const [
           AppLocalizations.delegate,
           GlobalMaterialLocalizations.delegate,

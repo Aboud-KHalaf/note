@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:note/core/helpers/colors/app_colors.dart';
+import 'package:note/core/helpers/localization/app_localization.dart';
 import 'package:note/features/folders/domain/entities/folder_entity.dart';
 
 import '../../../features/folders/presentation/widgets/add_folder_dalog_content_widget.dart';
@@ -62,4 +63,43 @@ bool isArbic(firstChar) {
           r'[\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF\uFB50-\uFDFF\uFE70-\uFEFF]')
       .hasMatch(firstChar);
   return isArab;
+}
+
+void showDeleteWarning(BuildContext context, String content,
+    Future<void> Function() onDeleted) async {
+  showDialog(
+    context: context,
+    barrierDismissible: false,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: Text("warning".tr(context)),
+        content: Text(content),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15),
+          side: const BorderSide(
+            color: AppColors.primary, // Border color
+            width: 0.3, // Border width
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: Text("cancel".tr(context)),
+          ),
+          ElevatedButton(
+            onPressed: () async {
+              Navigator.of(context).pop();
+              await onDeleted();
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.red,
+            ),
+            child: Text("delete".tr(context)),
+          ),
+        ],
+      );
+    },
+  );
 }
