@@ -68,7 +68,7 @@ Future<void> _initAuth() async {
     () => AuthCubit(sl(), sl(), sl(), sl()),
   );
   sl.registerFactory<GetUserCubit>(
-    () => GetUserCubit(sl()),
+    () => GetUserCubit(sl(), sl()),
   );
 }
 

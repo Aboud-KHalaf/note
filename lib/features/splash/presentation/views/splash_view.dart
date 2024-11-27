@@ -34,7 +34,7 @@ class _SplashViewState extends State<SplashView> {
       BlocProvider.of<GetUserCubit>(context).getUserData(),
       BlocProvider.of<SynceNotesCubit>(context).synceNotes(),
       BlocProvider.of<SyncFoldersCubit>(context).syncFolders(),
-      BlocProvider.of<LocalizationsCubit>(context).getLang(),
+      BlocProvider.of<LocalizationsCubit>(context).loadUserLanguage(),
     ]);
   }
 

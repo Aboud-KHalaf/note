@@ -1,6 +1,17 @@
 part of 'localizations_cubit.dart';
 
-@immutable
-sealed class LocalizationsState {}
+abstract class LocalizationsState {}
 
-final class LocalizationsInitial extends LocalizationsState {}
+class LocalizationsInitial extends LocalizationsState {}
+
+class LanguageLoaded extends LocalizationsState {
+  final Locale locale;
+
+  LanguageLoaded(this.locale);
+}
+
+class LocalizationsError extends LocalizationsState {
+  final String message;
+
+  LocalizationsError(this.message);
+}
