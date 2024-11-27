@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:note/core/helpers/colors/app_colors.dart';
 import 'package:note/core/helpers/functions/ui_functions.dart';
 import 'package:note/core/helpers/localization/app_localization.dart';
 import 'package:note/features/folders/domain/entities/folder_entity.dart';
@@ -77,8 +76,12 @@ class _FolderNotesViewState extends State<FolderNotesView> {
 
   @override
   Widget build(BuildContext context) {
+    ThemeData theme = Theme.of(context);
+
     return Scaffold(
-      appBar: isSelectionMode ? _buildSelcetionModeAppBar() : _buildAppBar(),
+      appBar: isSelectionMode
+          ? _buildSelcetionModeAppBar(theme.primaryColor)
+          : _buildAppBar(theme.primaryColor),
       body: Padding(
         padding: const EdgeInsets.all(12.0),
         child: FolderNotesViewBody(
@@ -91,14 +94,14 @@ class _FolderNotesViewState extends State<FolderNotesView> {
     );
   }
 
-  AppBar _buildSelcetionModeAppBar() {
+  AppBar _buildSelcetionModeAppBar(Color color) {
     return AppBar(
       title: Text.rich(
         TextSpan(
           children: [
             TextSpan(
               text: '${selectedNotes.length} ',
-              style: const TextStyle(color: AppColors.primary),
+              style: TextStyle(color: color),
             ),
             TextSpan(
               text: 'selected'.tr(context),
@@ -125,14 +128,14 @@ class _FolderNotesViewState extends State<FolderNotesView> {
     );
   }
 
-  AppBar _buildAppBar() {
+  AppBar _buildAppBar(Color color) {
     return AppBar(
       title: Text.rich(
         TextSpan(
           children: [
             TextSpan(
               text: '${widget.folder.name} ',
-              style: const TextStyle(color: AppColors.primary),
+              style: TextStyle(color: color),
             ),
             TextSpan(
               text: 'folder'.tr(context),

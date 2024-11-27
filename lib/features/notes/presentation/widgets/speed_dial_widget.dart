@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:note/core/helpers/localization/app_localization.dart';
 
-import '../../../../core/helpers/colors/app_colors.dart';
 import '../../domain/entities/note_entity.dart';
 import '../manager/delete_note_cubit/delete_note_cubit.dart';
 
@@ -23,13 +22,14 @@ class SpeedDialWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ThemeData theme = Theme.of(context);
     return SpeedDial(
-      backgroundColor: AppColors.primary,
+      backgroundColor: theme.scaffoldBackgroundColor,
       children: [
         SpeedDialChild(
-          child: const Icon(
+          child: Icon(
             Icons.color_lens,
-            color: AppColors.primary,
+            color: theme.primaryColor,
           ),
           label: "color".tr(context),
           onTap: onColorPressed,

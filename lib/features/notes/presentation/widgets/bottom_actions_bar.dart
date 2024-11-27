@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:note/core/helpers/colors/app_colors.dart';
 import 'package:note/core/helpers/styles/spacing_h.dart';
 
 import '../../domain/entities/note_entity.dart';
@@ -23,8 +22,10 @@ class BottomActionBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ThemeData theme = Theme.of(context);
+
     return Container(
-      color: AppColors.background,
+      color: theme.scaffoldBackgroundColor,
       height: 60,
       child: Padding(
         padding: const EdgeInsets.all(12.0),
@@ -44,9 +45,9 @@ class BottomActionBar extends StatelessWidget {
             SpacingHelper.w2,
             ElevatedButton(
               onPressed: onColorPressed,
-              child: const Icon(
+              child: Icon(
                 Icons.color_lens,
-                color: AppColors.primary,
+                color: theme.primaryColor,
               ),
             ),
             SpacingHelper.w2,

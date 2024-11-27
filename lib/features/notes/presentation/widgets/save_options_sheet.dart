@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../../../core/helpers/colors/app_colors.dart';
-
 class ImageOptionsSheet extends StatelessWidget {
   final VoidCallback onPickImage;
   final VoidCallback onDeleteImage;
@@ -14,8 +12,10 @@ class ImageOptionsSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ThemeData theme = Theme.of(context);
+
     return Container(
-      color: AppColors.cardColor,
+      color: theme.primaryColor,
       height: 150,
       child: Column(
         children: [

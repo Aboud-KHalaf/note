@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:note/core/helpers/colors/app_colors.dart';
 import 'package:note/core/helpers/localization/app_localization.dart';
 import 'package:note/features/folders/domain/entities/folder_entity.dart';
 
 import '../../../features/folders/presentation/widgets/add_folder_dalog_content_widget.dart';
 import '../../widgets/custtom_bottom_sheet._widget.dart';
 
-Widget buildLoadingIndicator() {
+Widget buildLoadingIndicator(Color color) {
   return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(999),
-        color: AppColors.primary,
+        color: color,
       ),
       child: const Padding(
         padding: EdgeInsets.all(8.0),
@@ -41,19 +40,23 @@ void showAnimatedSnackBar(BuildContext context, Color color, String text) {
 
 void customShowModelBottomSheetMethod(
     {required BuildContext context, required CustomModalBottomSheet child}) {
+  ThemeData theme = Theme.of(context);
+
   showModalBottomSheet(
       showDragHandle: true,
-      backgroundColor: AppColors.bottomSheet,
+      backgroundColor: theme.primaryColor,
       context: context,
       builder: (BuildContext context) => child);
 }
 
 Future<dynamic> showAddFolderDialog(
     {required BuildContext context, FolderEntity? folderEntity}) {
+  ThemeData theme = Theme.of(context);
+
   return showDialog(
       context: context,
       builder: (context) => AlertDialog(
-            backgroundColor: AppColors.cardColor,
+            backgroundColor: theme.cardColor,
             content: AddFolderDialogContentWidget(folderEntity: folderEntity),
           ));
 }
@@ -71,13 +74,15 @@ void showDeleteWarning(BuildContext context, String content,
     context: context,
     barrierDismissible: false,
     builder: (BuildContext context) {
+      ThemeData theme = Theme.of(context);
+
       return AlertDialog(
         title: Text("warning".tr(context)),
         content: Text(content),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(15),
-          side: const BorderSide(
-            color: AppColors.primary, // Border color
+          side: BorderSide(
+            color: theme.primaryColor, // Border color
             width: 0.3, // Border width
           ),
         ),

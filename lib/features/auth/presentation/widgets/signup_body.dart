@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:note/core/helpers/colors/app_colors.dart';
 import 'package:note/core/helpers/functions/ui_functions.dart';
 import 'package:note/core/helpers/localization/app_localization.dart';
 import 'package:note/core/helpers/providers/animations_provider.dart';
@@ -100,6 +99,8 @@ class _SignUpViewBodyState extends State<SignUpViewBody>
 
   @override
   Widget build(BuildContext context) {
+    ThemeData theme = Theme.of(context);
+
     return Form(
       key: _formKey,
       child: Padding(
@@ -131,7 +132,7 @@ class _SignUpViewBodyState extends State<SignUpViewBody>
                     builder: (context, state) {
                       return AnimatedSwitcher(
                         duration: const Duration(milliseconds: 500),
-                        child: _buildAuthContent(state),
+                        child: _buildAuthContent(state, theme.primaryColor),
                       );
                     },
                   ),
@@ -147,21 +148,21 @@ class _SignUpViewBodyState extends State<SignUpViewBody>
     );
   }
 
-  Widget _buildAuthContent(AuthState state) {
+  Widget _buildAuthContent(AuthState state, Color color) {
     if (state is AuthLoading) {
-      return buildLoadingIndicator();
+      return buildLoadingIndicator(Colors.cyan);
     } else if (state is AuthFailure) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         showAnimatedSnackBar(context, Colors.red, state.errMessage);
       });
-      return _buildSignUpButton();
+      return _buildSignUpButton(color);
     } else if (state is AuthSuccess) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         showAnimatedSnackBar(context, Colors.green, 'sign up success');
         Navigator.of(context).pushReplacementNamed(HomeView.id);
       });
     }
-    return _buildSignUpButton();
+    return _buildSignUpButton(color);
   }
 
   Widget _buildGoogleButton() {
@@ -225,10 +226,10 @@ class _SignUpViewBodyState extends State<SignUpViewBody>
     );
   }
 
-  Widget _buildSignUpButton() {
+  Widget _buildSignUpButton(Color color) {
     return CustomMaterialButton(
       text: "sign_up".tr(context),
-      color: AppColors.primary,
+      color: color,
       onPressed: _submitForm,
     );
   }

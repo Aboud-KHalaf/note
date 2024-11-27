@@ -14,9 +14,11 @@ class FolderItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ThemeData theme = Theme.of(context);
+
     return Container(
       decoration: BoxDecoration(
-        color: AppColors.cardColor,
+        color: theme.primaryColor,
         borderRadius: BorderRadius.circular(8.0),
       ),
       child: Column(

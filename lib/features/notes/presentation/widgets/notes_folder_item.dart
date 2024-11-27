@@ -13,11 +13,13 @@ class NotesFolderItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ThemeData theme = Theme.of(context);
+
     return Container(
       decoration: BoxDecoration(
-        boxShadow: const [
+        boxShadow: [
           BoxShadow(
-            color: AppColors.background,
+            color: theme.primaryColor,
             blurRadius: 16.0,
             blurStyle: BlurStyle.outer,
           ),

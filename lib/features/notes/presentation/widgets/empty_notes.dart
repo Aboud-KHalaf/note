@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:note/core/helpers/colors/app_colors.dart';
 import 'package:note/core/helpers/localization/app_localization.dart';
 import 'package:note/core/helpers/providers/images_provider.dart';
 import 'package:note/core/helpers/styles/spacing_h.dart';
@@ -9,6 +8,8 @@ class EmptyNotes extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ThemeData theme = Theme.of(context);
+
     return SingleChildScrollView(
       child: Padding(
         padding:
@@ -28,16 +29,16 @@ class EmptyNotes extends StatelessWidget {
                 Text(
                   "empty_notes".tr(context),
                   textAlign: TextAlign.center,
-                  style: const TextStyle(
-                      color: AppColors.primary,
+                  style: TextStyle(
+                      color: theme.primaryColor,
                       fontSize: 28,
                       fontWeight: FontWeight.bold),
                 ),
                 Text(
                   "start_writing".tr(context),
                   textAlign: TextAlign.center,
-                  style: const TextStyle(
-                      color: AppColors.secondary,
+                  style: TextStyle(
+                      color: theme.hintColor,
                       fontSize: 18,
                       fontWeight: FontWeight.bold),
                 ),

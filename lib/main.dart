@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:note/core/cubits/localizations_cubit/localizations_cubit.dart';
-import 'package:note/core/helpers/colors/app_colors.dart';
+import 'package:note/core/helpers/colors/themes.dart';
 import 'package:note/core/helpers/localization/app_localization.dart';
 import 'package:note/features/splash/presentation/views/splash_view.dart';
 
@@ -36,22 +36,7 @@ class NotesApp extends StatelessWidget {
               Locale('en'),
               Locale('ar'),
             ],
-            theme: ThemeData(
-              fontFamily: 'Rubik',
-              textTheme: const TextTheme(
-                bodyLarge: TextStyle(fontSize: 16),
-                bodyMedium: TextStyle(fontSize: 14),
-                titleLarge:
-                    TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-              ),
-              scaffoldBackgroundColor: AppColors.background,
-              appBarTheme: const AppBarTheme(
-                backgroundColor: AppColors.background,
-                surfaceTintColor: AppColors.background,
-                elevation: 0,
-              ),
-              brightness: Brightness.dark,
-            ),
+            theme: darkTheme,
             locale: locale,
             localizationsDelegates: const [
               AppLocalizations.delegate,

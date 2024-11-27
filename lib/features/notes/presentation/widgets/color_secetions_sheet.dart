@@ -25,6 +25,8 @@ class _ColorSelectionSheetState extends State<ColorSelectionSheet> {
 
   @override
   Widget build(BuildContext context) {
+    ThemeData theme = Theme.of(context);
+
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12),
@@ -46,7 +48,7 @@ class _ColorSelectionSheetState extends State<ColorSelectionSheet> {
                 },
                 icon: CircleAvatar(
                   backgroundColor:
-                      (index == currentIdx) ? AppColors.primary : Colors.white,
+                      (index == currentIdx) ? theme.primaryColor : Colors.white,
                   radius: 22,
                   child: CircleAvatar(
                     backgroundColor: AppColors.cardColors[index],
@@ -55,11 +57,11 @@ class _ColorSelectionSheetState extends State<ColorSelectionSheet> {
                 ),
               ),
               (index == currentIdx)
-                  ? const Center(
+                  ? Center(
                       child: Icon(
                         Icons.check,
                         size: 38,
-                        color: AppColors.primary,
+                        color: theme.primaryColor,
                       ),
                     )
                   : const SizedBox(),

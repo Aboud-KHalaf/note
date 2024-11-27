@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:note/core/helpers/colors/app_colors.dart';
 import 'package:note/core/helpers/localization/app_localization.dart';
 
 class OptionsMenuButton extends StatelessWidget {
@@ -11,8 +10,10 @@ class OptionsMenuButton extends StatelessWidget {
   final Future<void> Function() ondeleteSelected;
   @override
   Widget build(BuildContext context) {
+    ThemeData theme = Theme.of(context);
+
     return PopupMenuButton<String>(
-      color: AppColors.cardColor,
+      color: theme.cardColor,
       onSelected: (value) {
         switch (value) {
           case 'edit':

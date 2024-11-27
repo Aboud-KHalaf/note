@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:note/core/helpers/colors/app_colors.dart';
 import 'package:note/core/helpers/localization/app_localization.dart';
 import 'package:note/core/helpers/styles/spacing_h.dart';
 import 'package:note/features/auth/presentation/manager/get_user_cubit/get_user_cubit.dart';
@@ -25,6 +24,8 @@ class _SyncingViewState extends State<SyncingView> {
 
   @override
   Widget build(BuildContext context) {
+    ThemeData theme = Theme.of(context);
+
     return Scaffold(
       body: BlocBuilder<FetchAllNotesCubit, FetchAllNotesState>(
         builder: (context, state) {
@@ -45,8 +46,8 @@ class _SyncingViewState extends State<SyncingView> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 SpacingHelper.widthExtender,
-                const CircularProgressIndicator(
-                  color: AppColors.primary,
+                CircularProgressIndicator(
+                  color: theme.primaryColor,
                 ),
                 SpacingHelper.h6,
                 SpacingHelper.h6,

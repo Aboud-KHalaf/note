@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:note/core/helpers/colors/app_colors.dart';
 
 class CustomModalBottomSheet extends StatelessWidget {
   final String title;
@@ -13,10 +12,12 @@ class CustomModalBottomSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ThemeData theme = Theme.of(context);
+
     return Container(
-      decoration: const BoxDecoration(
-        color: AppColors.bottomSheet,
-        borderRadius: BorderRadius.vertical(top: Radius.circular(16.0)),
+      decoration: BoxDecoration(
+        color: theme.cardColor,
+        borderRadius: const BorderRadius.vertical(top: Radius.circular(16.0)),
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,

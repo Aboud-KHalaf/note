@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:note/features/notes/presentation/widgets/circular_button.dart';
 
-import '../../../../core/helpers/colors/app_colors.dart';
-
 class FabMenu extends StatefulWidget {
   const FabMenu(
       {super.key,
@@ -68,6 +66,8 @@ class _FabMenuState extends State<FabMenu> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    ThemeData theme = Theme.of(context);
+
     return Positioned(
         right: 30,
         bottom: 30,
@@ -90,7 +90,7 @@ class _FabMenuState extends State<FabMenu> with SingleTickerProviderStateMixin {
                   ..scale(degOneTranslationAnimation.value),
                 alignment: Alignment.center,
                 child: CircularButton(
-                  color: AppColors.primary,
+                  color: theme.primaryColor,
                   width: 50,
                   height: 50,
                   icon: const Icon(
@@ -152,7 +152,7 @@ class _FabMenuState extends State<FabMenu> with SingleTickerProviderStateMixin {
                   getRadiansFromDegree(rotationAnimation.value)),
               alignment: Alignment.center,
               child: CircularButton(
-                color: AppColors.primary,
+                color: theme.hintColor,
                 width: 60,
                 height: 60,
                 icon: Icon(

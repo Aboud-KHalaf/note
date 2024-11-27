@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:note/core/helpers/colors/app_colors.dart';
 import 'package:note/core/helpers/localization/app_localization.dart';
 import 'package:note/core/helpers/providers/images_provider.dart';
 import 'package:note/core/helpers/styles/fonts_h.dart';
@@ -28,6 +27,8 @@ class FirstViewBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ThemeData theme = Theme.of(context);
+
     return Container(
       height: double.infinity,
       width: double.infinity,
@@ -73,7 +74,7 @@ class FirstViewBody extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               child: CustomMaterialButton(
                 text: "get_started".tr(context),
-                color: AppColors.primary,
+                color: theme.primaryColor,
                 onPressed: () {
                   Navigator.of(context).pushNamed(SignUpView.id);
                 },

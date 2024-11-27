@@ -105,14 +105,16 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
+    ThemeData theme = Theme.of(context);
+
     return Scaffold(
       backgroundColor: AppColors.cardColors[color],
       appBar: _buildAppBar(),
-      body: _buildBody(),
+      body: _buildBody(theme),
     );
   }
 
-  Widget _buildBody() {
+  Widget _buildBody(ThemeData theme) {
     // ignore: deprecated_member_use
     return SizedBox(
       child: Stack(
@@ -308,7 +310,7 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
             padding: const EdgeInsets.all(8.0),
             child: ElevatedButton(
               style: const ButtonStyle(
-                backgroundColor: WidgetStatePropertyAll(AppColors.secondary),
+                backgroundColor: WidgetStatePropertyAll(Colors.cyan),
               ),
               onPressed: () {
                 showAddFolderDialog(context: context);

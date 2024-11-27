@@ -1,12 +1,6 @@
 import 'package:flutter/material.dart';
 
 abstract class AppColors {
-  static const Color cardColor = Color(0xff272636);
-  static const Color bottomSheet = Color(0xff1f1d2b);
-  static const Color primary = Color(0xffffd740);
-  static const Color background = Color(0xff1f1d2b);
-  static const Color secondary = Color(0xff29b6f6);
-
   static const Color darkCardColor = Color(0xff272636);
   static const Color darkBottomSheet = Color(0xff1f1d2b);
   static const Color darkPrimary = Color(0xffffd740);
@@ -21,7 +15,8 @@ abstract class AppColors {
   static const Color lightSecondary = Color(0xff0050ef);
 
   static const List<Color> cardColors = [
-    cardColor,
+    lightCardColor,
+    darkCardColor,
     Color(0xFF0A0A0A), // Nearly black
     Color(0xFF4A0000), // Very dark red
     Color(0xFF4A2000), // Very dark orange

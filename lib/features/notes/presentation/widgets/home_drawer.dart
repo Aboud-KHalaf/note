@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:note/core/cubits/localizations_cubit/localizations_cubit.dart';
-import 'package:note/core/helpers/colors/app_colors.dart';
 import 'package:note/core/helpers/localization/app_localization.dart';
 import 'package:note/features/auth/presentation/manager/get_user_cubit/get_user_cubit.dart';
 
@@ -35,8 +34,10 @@ class _HomeDrawerState extends State<HomeDrawer> {
 
   @override
   Widget build(BuildContext context) {
+    ThemeData theme = Theme.of(context);
+
     return Drawer(
-      backgroundColor: AppColors.background,
+      backgroundColor: theme.scaffoldBackgroundColor,
       child: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -48,16 +49,16 @@ class _HomeDrawerState extends State<HomeDrawer> {
                 children: [
                   Text(
                     'Hi, $name!', // Personal greeting
-                    style: const TextStyle(
-                      color: AppColors.primary,
+                    style: TextStyle(
+                      color: theme.primaryColor,
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   Text(
                     email,
-                    style: const TextStyle(
-                      color: AppColors.primary,
+                    style: TextStyle(
+                      color: theme.primaryColor,
                       fontSize: 12,
                     ),
                   ),
@@ -73,14 +74,14 @@ class _HomeDrawerState extends State<HomeDrawer> {
             ),
             const SizedBox(height: 20),
 
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Text(
                 "Theme",
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
-                  color: AppColors.primary,
+                  color: theme.primaryColor,
                 ),
               ),
             ),
@@ -90,19 +91,19 @@ class _HomeDrawerState extends State<HomeDrawer> {
               title: const Text('Dark Mode'),
               value: true,
               onChanged: (isDark) {},
-              inactiveThumbColor: AppColors.secondary,
-              activeColor: AppColors.secondary,
+              inactiveThumbColor: theme.hintColor,
+              activeColor: theme.hintColor,
             ),
 
             // Language Selector
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Text(
                 "Language",
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
-                  color: AppColors.primary,
+                  color: theme.primaryColor,
                 ),
               ),
             ),
@@ -119,9 +120,8 @@ class _HomeDrawerState extends State<HomeDrawer> {
                           .changeLanguage(LanguageOption.ar);
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: (lang == "ar")
-                          ? AppColors.cardColor
-                          : AppColors.secondary,
+                      backgroundColor:
+                          (lang == "ar") ? theme.cardColor : theme.hintColor,
                     ),
                     child: const Text("العربية"),
                   ),
@@ -132,9 +132,8 @@ class _HomeDrawerState extends State<HomeDrawer> {
                           .changeLanguage(LanguageOption.en);
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: (lang == "en")
-                          ? AppColors.cardColor
-                          : AppColors.secondary,
+                      backgroundColor:
+                          (lang == "en") ? theme.cardColor : theme.hintColor,
                     ),
                     child: const Text("English"),
                   ),
@@ -151,7 +150,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
                 "App Version: 1.0.0",
                 style: TextStyle(
                   fontSize: 12,
-                  color: AppColors.secondary.withOpacity(0.6),
+                  color: theme.hintColor.withOpacity(0.6),
                 ),
               ),
             ),

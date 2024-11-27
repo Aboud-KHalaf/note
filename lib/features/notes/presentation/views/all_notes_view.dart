@@ -64,6 +64,8 @@ class _AllNotesViewState extends State<AllNotesView> {
 
   @override
   Widget build(BuildContext context) {
+    ThemeData theme = Theme.of(context);
+
     return Scaffold(
       appBar: isSelectionMode ? _buildAppBar() : null,
       body: AllNotesViewBody(
@@ -73,7 +75,7 @@ class _AllNotesViewState extends State<AllNotesView> {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
       floatingActionButton: FloatingActionButton(
-        backgroundColor: AppColors.primary,
+        backgroundColor: theme.primaryColor,
         onPressed: () => Navigator.of(context).pushNamed(NoteDetailScreen.id),
         child: const Icon(Icons.add),
       ),

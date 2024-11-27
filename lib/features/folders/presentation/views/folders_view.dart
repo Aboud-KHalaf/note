@@ -9,11 +9,13 @@ class FoldersView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ThemeData theme = Theme.of(context);
+
     return Scaffold(
       body: const FoldersViewBody(),
       floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
       floatingActionButton: FloatingActionButton(
-        backgroundColor: AppColors.primary,
+        backgroundColor: theme.primaryColor,
         onPressed: () async {
           showAddFolderDialog(context: context);
         },

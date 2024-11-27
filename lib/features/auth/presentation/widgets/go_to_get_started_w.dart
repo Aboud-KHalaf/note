@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:note/core/helpers/colors/app_colors.dart';
 import 'package:note/core/helpers/localization/app_localization.dart';
 import 'package:note/core/helpers/styles/fonts_h.dart';
 import 'package:note/features/auth/presentation/views/sign_up_view.dart';
@@ -11,6 +10,8 @@ class GoToSignUp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ThemeData theme = Theme.of(context);
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -27,7 +28,7 @@ class GoToSignUp extends StatelessWidget {
           child: Text(
             'sign_up'.tr(context),
             style: FontsStylesHelper.textStyle15.copyWith(
-              color: AppColors.primary,
+              color: theme.primaryColor,
             ),
             textAlign: TextAlign.center,
           ),

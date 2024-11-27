@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:note/core/helpers/colors/app_colors.dart';
 import 'package:note/core/helpers/styles/fonts_h.dart';
 
 class CustomTextFormFieldWidget extends StatelessWidget {
@@ -25,6 +24,8 @@ class CustomTextFormFieldWidget extends StatelessWidget {
   final String? Function(String?)? validator;
   @override
   Widget build(BuildContext context) {
+    ThemeData theme = Theme.of(context);
+
     return SizedBox(
       child: TextFormField(
         onFieldSubmitted: onFieldSubmitted,
@@ -37,22 +38,22 @@ class CustomTextFormFieldWidget extends StatelessWidget {
           errorMaxLines: 1,
           errorStyle: const TextStyle(fontSize: 10),
           prefixIcon: suffixIcon,
-          prefixIconColor: AppColors.primary,
+          prefixIconColor: theme.primaryColor,
           hintText: hintText,
           hintStyle: FontsStylesHelper.textStyle13,
           filled: true,
-          fillColor: AppColors.background,
+          fillColor: theme.scaffoldBackgroundColor,
           enabledBorder: OutlineInputBorder(
-            borderSide: const BorderSide(
+            borderSide: BorderSide(
               width: 1,
-              color: AppColors.primary,
+              color: theme.primaryColor,
             ),
             borderRadius: BorderRadius.circular(8),
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8),
-            borderSide: const BorderSide(
-              color: AppColors.primary,
+            borderSide: BorderSide(
+              color: theme.primaryColor,
               width: 2,
             ),
           ),

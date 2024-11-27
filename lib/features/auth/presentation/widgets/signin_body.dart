@@ -86,6 +86,8 @@ class _SignInViewBodyState extends State<SignInViewBody>
 
   @override
   Widget build(BuildContext context) {
+    ThemeData theme = Theme.of(context);
+
     return Form(
       key: _formKey,
       child: Padding(
@@ -113,7 +115,7 @@ class _SignInViewBodyState extends State<SignInViewBody>
                     builder: (context, state) {
                       return AnimatedSwitcher(
                         duration: const Duration(milliseconds: 500),
-                        child: _buildAuthContent(state),
+                        child: _buildAuthContent(state, theme.primaryColor),
                       );
                     },
                   ),
@@ -129,21 +131,21 @@ class _SignInViewBodyState extends State<SignInViewBody>
     );
   }
 
-  Widget _buildAuthContent(AuthState state) {
+  Widget _buildAuthContent(AuthState state, Color color) {
     if (state is AuthLoading) {
-      return buildLoadingIndicator();
+      return buildLoadingIndicator(Colors.cyan);
     } else if (state is AuthFailure) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         showAnimatedSnackBar(context, Colors.red, state.errMessage);
       });
-      return _buildSignUpButton();
+      return _buildSignUpButton(color);
     } else if (state is AuthSuccess) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         showAnimatedSnackBar(context, Colors.green, 'sign in success');
         Navigator.of(context).pushReplacementNamed(SyncingView.id);
       });
     }
-    return _buildSignUpButton();
+    return _buildSignUpButton(color);
   }
 
   Widget _buildGoogleButton() {
@@ -182,10 +184,10 @@ class _SignInViewBodyState extends State<SignInViewBody>
     );
   }
 
-  Widget _buildSignUpButton() {
+  Widget _buildSignUpButton(Color color) {
     return CustomMaterialButton(
       text: "sign_in".tr(context),
-      color: AppColors.primary,
+      color: color,
       onPressed: _submitForm,
     );
   }

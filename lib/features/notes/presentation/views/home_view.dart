@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:note/core/helpers/colors/app_colors.dart';
 import 'package:note/core/helpers/localization/app_localization.dart';
 import 'package:note/core/utils/logger.dart';
 import 'package:note/features/folders/data/data_soureces/folder_local_data_source.dart';
@@ -71,6 +70,8 @@ class _HomeViewState extends State<HomeView> {
 
   @override
   Widget build(BuildContext context) {
+    ThemeData theme = Theme.of(context);
+
     return DefaultTabController(
       length: 2,
       child: Scaffold(
@@ -87,10 +88,10 @@ class _HomeViewState extends State<HomeView> {
                 BlocBuilder<SynceNotesCubit, SyncNotesState>(
                   builder: (context, state) {
                     if (state is SyncNotesLoading) {
-                      return const Padding(
-                        padding: EdgeInsets.all(12.0),
+                      return Padding(
+                        padding: const EdgeInsets.all(12.0),
                         child: CircularProgressIndicator(
-                          color: AppColors.secondary,
+                          color: theme.hintColor,
                           strokeWidth: 2.0,
                         ),
                       );
@@ -115,13 +116,13 @@ class _HomeViewState extends State<HomeView> {
               ),
               pinned: true, // Keeps the TabBar pinned
               bottom: TabBar(
-                unselectedLabelColor: AppColors.primary,
+                unselectedLabelColor: theme.primaryColor,
                 tabs: [
                   Tab(text: 'all'.tr(context)),
                   Tab(text: 'folders'.tr(context)),
                 ],
-                labelColor: AppColors.secondary,
-                indicatorColor: AppColors.secondary,
+                labelColor: theme.hintColor,
+                indicatorColor: theme.hintColor,
                 indicatorWeight: 3.0,
                 automaticIndicatorColorAdjustment: false,
                 dividerColor: Colors.transparent,

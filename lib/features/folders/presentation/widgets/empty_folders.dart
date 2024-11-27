@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:note/core/helpers/colors/app_colors.dart';
 import 'package:note/core/helpers/localization/app_localization.dart';
 import 'package:note/core/helpers/providers/images_provider.dart';
 import 'package:note/core/helpers/styles/spacing_h.dart';
@@ -9,6 +8,8 @@ class EmptyFolders extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ThemeData theme = Theme.of(context);
+
     return Padding(
       padding: const EdgeInsets.only(bottom: 36.0),
       child: SingleChildScrollView(
@@ -28,8 +29,8 @@ class EmptyFolders extends StatelessWidget {
               Text(
                 'emtpy_folders'.tr(context),
                 textAlign: TextAlign.center,
-                style: const TextStyle(
-                    color: AppColors.primary,
+                style: TextStyle(
+                    color: theme.primaryColor,
                     fontSize: 20,
                     fontWeight: FontWeight.bold),
               ),
