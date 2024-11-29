@@ -23,6 +23,9 @@ Future<void> initApp() async {
   sl.registerFactory<LocalizationsCubit>(
     () => LocalizationsCubit(sl()),
   );
+  sl.registerFactory<ThemeCubit>(
+    () => ThemeCubit(sl()),
+  );
   _initAuth();
   _initNote();
   _initFolder();

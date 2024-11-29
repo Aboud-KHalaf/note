@@ -8,11 +8,15 @@ abstract class AppColors {
   static const Color darkSecondary = Color(0xff29b6f6);
 
   // Light Mode Colors
-  static const Color lightCardColor = Color(0xfff5f5f5);
-  static const Color lightBottomSheet = Color(0xffffffff);
-  static const Color lightPrimary = Color(0xff0050ef);
-  static const Color lightBackground = Color(0xfffafafa);
-  static const Color lightSecondary = Color(0xff0050ef);
+  static const Color lightCardColor = Color(0xfff5f5f5); // Light gray for cards
+  static const Color lightBottomSheet =
+      Color(0xffffffff); // White for bottom sheets
+  static const Color lightPrimary =
+      Color(0xffffc107); // Lighter shade of yellow
+  static const Color lightBackground =
+      Color(0xfffafafa); // Near-white for the background
+  static const Color lightSecondary =
+      Color(0xff0288d1); // Lighter shade of blue
 
   static const List<Color> cardColors = [
     lightCardColor,

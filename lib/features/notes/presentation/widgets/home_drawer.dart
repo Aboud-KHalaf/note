@@ -4,6 +4,8 @@ import 'package:note/core/cubits/localizations_cubit/localizations_cubit.dart';
 import 'package:note/core/helpers/localization/app_localization.dart';
 import 'package:note/features/auth/presentation/manager/get_user_cubit/get_user_cubit.dart';
 
+import '../../../../core/cubits/theme_cubit/theme_cubit.dart';
+
 class HomeDrawer extends StatefulWidget {
   const HomeDrawer({super.key});
 
@@ -12,24 +14,23 @@ class HomeDrawer extends StatefulWidget {
 }
 
 class _HomeDrawerState extends State<HomeDrawer> {
-  late String name, email, lang;
+  String? email, lang;
 
   @override
   void initState() {
     super.initState();
-    _setNameAndEmail();
+    Future.microtask(() => _setEmail());
     _setLange();
   }
 
-  Future<void> _setNameAndEmail() async {
-    name = await BlocProvider.of<GetUserCubit>(context).getUserName();
-    if (mounted) {
-      email = await BlocProvider.of<GetUserCubit>(context).getUserEmail();
-    }
+  Future<void> _setEmail() async {
+    email = await BlocProvider.of<GetUserCubit>(context).getUserEmail();
+    setState(() {}); // Update UI when email is fetched
   }
 
   void _setLange() {
     lang = BlocProvider.of<LocalizationsCubit>(context).getLang;
+    setState(() {}); // Update UI for initial language
   }
 
   @override
@@ -48,7 +49,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Hi, $name!', // Personal greeting
+                    '${'hi'.tr(context)}!',
                     style: TextStyle(
                       color: theme.primaryColor,
                       fontSize: 24,
@@ -56,28 +57,21 @@ class _HomeDrawerState extends State<HomeDrawer> {
                     ),
                   ),
                   Text(
-                    email,
-                    style: TextStyle(
-                      color: theme.primaryColor,
+                    email ??
+                        'Loading...', // Show "Loading..." until email is ready
+                    style: const TextStyle(
                       fontSize: 12,
                     ),
                   ),
                   const SizedBox(height: 8),
-                  const Text(
-                    'Welcome back!',
-                    style: TextStyle(
-                      fontSize: 16,
-                    ),
-                  ),
                 ],
               ),
             ),
-            const SizedBox(height: 20),
-
+            const DividerWithSpace(),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Text(
-                "Theme",
+                "theme".tr(context),
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
@@ -86,20 +80,21 @@ class _HomeDrawerState extends State<HomeDrawer> {
               ),
             ),
             const SizedBox(height: 10),
-
             SwitchListTile(
               title: const Text('Dark Mode'),
-              value: true,
-              onChanged: (isDark) {},
+              value: context.read<ThemeCubit>().state.brightness ==
+                  Brightness.dark,
+              onChanged: (isDark) {
+                context.read<ThemeCubit>().toggleTheme();
+              },
               inactiveThumbColor: theme.hintColor,
               activeColor: theme.hintColor,
             ),
-
-            // Language Selector
+            const DividerWithSpace(),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Text(
-                "Language",
+                "language".tr(context),
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
@@ -118,10 +113,13 @@ class _HomeDrawerState extends State<HomeDrawer> {
                       context
                           .read<LocalizationsCubit>()
                           .changeLanguage(LanguageOption.ar);
+                      setState(() {
+                        lang = "ar";
+                      });
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor:
-                          (lang == "ar") ? theme.cardColor : theme.hintColor,
+                          (lang != "ar") ? theme.cardColor : theme.hintColor,
                     ),
                     child: const Text("العربية"),
                   ),
@@ -130,20 +128,20 @@ class _HomeDrawerState extends State<HomeDrawer> {
                       context
                           .read<LocalizationsCubit>()
                           .changeLanguage(LanguageOption.en);
+                      setState(() {
+                        lang = "en";
+                      });
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor:
-                          (lang == "en") ? theme.cardColor : theme.hintColor,
+                          (lang != "en") ? theme.cardColor : theme.hintColor,
                     ),
                     child: const Text("English"),
                   ),
                 ],
               ),
             ),
-
             const Spacer(),
-
-            // Footer
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: Text(
@@ -157,6 +155,27 @@ class _HomeDrawerState extends State<HomeDrawer> {
           ],
         ),
       ),
+    );
+  }
+}
+
+class DividerWithSpace extends StatelessWidget {
+  const DividerWithSpace({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return const Column(
+      children: [
+        SizedBox(height: 10),
+        Divider(
+          thickness: 1,
+          endIndent: 30,
+          indent: 30,
+        ),
+        SizedBox(height: 10),
+      ],
     );
   }
 }

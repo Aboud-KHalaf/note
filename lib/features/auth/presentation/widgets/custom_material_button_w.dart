@@ -25,7 +25,9 @@ class CustomMaterialButton extends StatelessWidget {
       onPressed: onPressed,
       child: Text(
         text,
-        style: FontsStylesHelper.textStyle16,
+        style: FontsStylesHelper.textStyle16.copyWith(
+          color: (color == Colors.white) ? Colors.black : null,
+        ),
       ),
     );
   }

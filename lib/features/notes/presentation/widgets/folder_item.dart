@@ -18,7 +18,7 @@ class FolderItem extends StatelessWidget {
 
     return Container(
       decoration: BoxDecoration(
-        color: theme.primaryColor,
+        color: theme.cardColor,
         borderRadius: BorderRadius.circular(8.0),
       ),
       child: Column(

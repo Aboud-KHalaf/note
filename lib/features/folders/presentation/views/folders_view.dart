@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:note/core/helpers/colors/app_colors.dart';
 import 'package:note/core/helpers/functions/ui_functions.dart';
 
 import '../widgets/folder_view_body.dart';

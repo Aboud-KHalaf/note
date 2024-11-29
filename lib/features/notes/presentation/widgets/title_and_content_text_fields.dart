@@ -14,18 +14,19 @@ class TitleField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ThemeData theme = Theme.of(context);
     return TextField(
       textDirection: direction,
       controller: controller,
       style: const TextStyle(
         fontSize: 24.0,
-        color: Colors.white,
         fontWeight: FontWeight.bold,
       ),
       onChanged: onChanged,
       decoration: InputDecoration(
         hintText: "title".tr(context),
         border: InputBorder.none,
+        fillColor: theme.scaffoldBackgroundColor,
       ),
       autofocus: false,
       maxLines: 1,

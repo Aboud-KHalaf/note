@@ -58,14 +58,14 @@ class _HomeViewState extends State<HomeView> {
       }
     }
 
-    // try {
-    //   // Sign out the user from Supabase
-    //   await Supabase.instance.client.auth.signOut();
-    //   print('User signed out successfully.');
-    // } catch (e) {
-    //   // Handle any errors that occur during sign out
-    //   print('Error signing out: $e');
-    // }
+    try {
+      // Sign out the user from Supabase
+      await Supabase.instance.client.auth.signOut();
+      print('User signed out successfully.');
+    } catch (e) {
+      // Handle any errors that occur during sign out
+      print('Error signing out: $e');
+    }
   }
 
   @override
@@ -116,7 +116,6 @@ class _HomeViewState extends State<HomeView> {
               ),
               pinned: true, // Keeps the TabBar pinned
               bottom: TabBar(
-                unselectedLabelColor: theme.primaryColor,
                 tabs: [
                   Tab(text: 'all'.tr(context)),
                   Tab(text: 'folders'.tr(context)),

@@ -152,7 +152,7 @@ class _FabMenuState extends State<FabMenu> with SingleTickerProviderStateMixin {
                   getRadiansFromDegree(rotationAnimation.value)),
               alignment: Alignment.center,
               child: CircularButton(
-                color: theme.hintColor,
+                color: theme.primaryColor,
                 width: 60,
                 height: 60,
                 icon: Icon(

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:note/core/cubits/localizations_cubit/localizations_cubit.dart';
+import 'package:note/core/cubits/theme_cubit/theme_cubit.dart';
 import 'package:note/core/helpers/colors/themes.dart';
 import 'package:note/core/helpers/localization/app_localization.dart';
 import 'package:note/features/splash/presentation/views/splash_view.dart';
@@ -23,32 +24,62 @@ class NotesApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: providers,
-      child: BlocBuilder<LocalizationsCubit, LocalizationsState>(
-        builder: (context, state) {
-          Locale locale = const Locale('en');
-          if (state is LanguageLoaded) {
-            locale = state.locale;
-          }
-          return MaterialApp(
-            debugShowCheckedModeBanner: false,
-            title: 'Notes App',
-            supportedLocales: const [
-              Locale('en'),
-              Locale('ar'),
-            ],
-            theme: darkTheme,
-            locale: locale,
-            localizationsDelegates: const [
-              AppLocalizations.delegate,
-              GlobalMaterialLocalizations.delegate,
-              GlobalWidgetsLocalizations.delegate,
-              GlobalCupertinoLocalizations.delegate,
-            ],
-            localeResolutionCallback: localeResolutionCallback,
-            home: const SplashView(),
-            routes: appRoutes,
+      child: BlocBuilder<ThemeCubit, ThemeData>(
+        builder: (context, theme) {
+          return BlocBuilder<LocalizationsCubit, LocalizationsState>(
+            builder: (context, state) {
+              Locale locale = const Locale('en');
+              if (state is LanguageLoaded) {
+                locale = state.locale;
+              }
+              return MaterialApp(
+                debugShowCheckedModeBanner: false,
+                title: 'Notes App',
+                supportedLocales: const [
+                  Locale('en'),
+                  Locale('ar'),
+                ],
+                theme: theme,
+                locale: locale,
+                localizationsDelegates: const [
+                  AppLocalizations.delegate,
+                  GlobalMaterialLocalizations.delegate,
+                  GlobalWidgetsLocalizations.delegate,
+                  GlobalCupertinoLocalizations.delegate,
+                ],
+                localeResolutionCallback: localeResolutionCallback,
+                home: const SplashView(),
+                routes: appRoutes,
+              );
+            },
           );
         },
+      ),
+    );
+  }
+}
+
+class A extends StatelessWidget {
+  const A({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        //
+        backgroundColor: Colors.amber,
+        //
+        foregroundColor: Colors.black,
+        //
+        leading: const Icon(Icons.sunny),
+        //
+        title: const Text('Hello Dooby..'),
+        //
+        actions: const [
+          Icon(Icons.light_mode),
+          Icon(Icons.dark_mode),
+        ],
+        //
       ),
     );
   }

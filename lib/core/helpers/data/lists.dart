@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:note/core/cubits/theme_cubit/theme_cubit.dart';
 import '../../cubits/localizations_cubit/localizations_cubit.dart';
 import '../../../features/auth/presentation/manager/auth_cubit/auth_cubit.dart';
 import '../../../features/folders/presentation/manager/sync_folders_cubit/sync_folders_cubit.dart';
@@ -48,4 +49,5 @@ List<BlocProvider> providers = [
   BlocProvider<SyncFoldersCubit>(
     create: (BuildContext context) => sl<SyncFoldersCubit>(),
   ),
+  BlocProvider<ThemeCubit>(create: (BuildContext context) => sl<ThemeCubit>()),
 ];
