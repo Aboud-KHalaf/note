@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:note/core/cubits/localizations_cubit/localizations_cubit.dart';
+import 'package:note/core/helpers/functions/ui_functions.dart';
 import 'package:note/core/helpers/localization/app_localization.dart';
 import 'package:note/features/auth/presentation/manager/get_user_cubit/get_user_cubit.dart';
 
@@ -144,12 +145,30 @@ class _HomeDrawerState extends State<HomeDrawer> {
             const Spacer(),
             Padding(
               padding: const EdgeInsets.all(16.0),
-              child: Text(
-                "App Version: 1.0.0",
-                style: TextStyle(
-                  fontSize: 12,
-                  color: theme.hintColor.withOpacity(0.6),
-                ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  TextButton(
+                    onPressed: () {
+                      showWarning(
+                          context: context,
+                          content: "log_out_warning".tr(context),
+                          type: "log_out".tr(context),
+                          onDone: () async {});
+                    },
+                    child: const Text(
+                      'Sign out',
+                      style: TextStyle(color: Colors.red),
+                    ),
+                  ),
+                  Text(
+                    "App Version: 1.0.0",
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: theme.hintColor.withOpacity(0.6),
+                    ),
+                  ),
+                ],
               ),
             ),
           ],

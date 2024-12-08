@@ -12,6 +12,7 @@ class CustomTextFormFieldWidget extends StatelessWidget {
     this.focusNode,
     this.textInputAction,
     this.onFieldSubmitted,
+    this.onChanged,
   });
 
   final String hintText;
@@ -22,12 +23,15 @@ class CustomTextFormFieldWidget extends StatelessWidget {
   final bool obscureText;
   final TextEditingController controller;
   final String? Function(String?)? validator;
+  final void Function(String)? onChanged;
+
   @override
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
 
     return SizedBox(
       child: TextFormField(
+        onChanged: onChanged,
         onFieldSubmitted: onFieldSubmitted,
         textInputAction: textInputAction,
         focusNode: focusNode,

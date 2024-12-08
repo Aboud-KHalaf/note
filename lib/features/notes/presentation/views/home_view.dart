@@ -9,6 +9,7 @@ import 'package:note/features/notes/presentation/manager/synce_notes_cubit/sync_
 import 'package:note/features/notes/presentation/widgets/home_drawer.dart';
 
 import 'package:note/features/notes/presentation/widgets/home_view_body.dart';
+import 'package:note/features/search/presentation/views/search_view.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../folders/presentation/manager/folder_actions_cubit/folder_actions_cubit.dart';
@@ -57,15 +58,6 @@ class _HomeViewState extends State<HomeView> {
         Log.error("${folder.name} upload failed because ${e.toString()}");
       }
     }
-
-    try {
-      // Sign out the user from Supabase
-      await Supabase.instance.client.auth.signOut();
-      print('User signed out successfully.');
-    } catch (e) {
-      // Handle any errors that occur during sign out
-      print('Error signing out: $e');
-    }
   }
 
   @override
@@ -101,7 +93,9 @@ class _HomeViewState extends State<HomeView> {
                   },
                 ),
                 IconButton(
-                  onPressed: signOutUser,
+                  onPressed: () {
+                    Navigator.of(context).pushNamed(SearchView.id);
+                  },
                   icon: const Icon(
                     Icons.search,
                     size: 32,

@@ -29,6 +29,30 @@ Future<void> initApp() async {
   _initAuth();
   _initNote();
   _initFolder();
+  _initSearch();
+}
+
+Future<void> _initSearch() async {
+  // Register Local Data Sources
+  sl.registerLazySingleton<SearchLocalDataSourceImpl>(
+      () => SearchLocalDataSourceImpl(sharedPreferencesService: sl()));
+
+  // Register Search Repositories
+  sl.registerLazySingleton<SearchRepoImpl>(
+    () => SearchRepoImpl(
+      searchLocalDataSourceImpl: sl<SearchLocalDataSourceImpl>(),
+    ),
+  );
+
+  // Register UseCases
+  sl.registerLazySingleton<SearchUseCase>(
+    () => SearchUseCase(searchRepository: sl<SearchRepoImpl>()),
+  );
+
+  // Register Cubits
+  sl.registerFactory<SearchCubit>(
+    () => SearchCubit(sl<SearchUseCase>()),
+  );
 }
 
 Future<void> _initAuth() async {

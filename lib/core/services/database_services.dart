@@ -141,4 +141,23 @@ class SQLiteService {
       ], // SQL pattern matching for partial match
     );
   }
+
+  Future<List<Map<String, dynamic>>> searchNotes({
+    required String query,
+    required String userId,
+  }) async {
+    final db = await database;
+    return await db.query(
+      'notes',
+      where:
+          "(title LIKE ? OR content LIKE ?) AND is_deleted = ? AND user_id = ?",
+      whereArgs: [
+        '%$query%', // SQL pattern matching for partial match in title
+        '%$query%', // SQL pattern matching for partial match in content
+        0, // Exclude deleted notes
+        userId,
+      ],
+      orderBy: 'uploaded_at DESC', // Order by most recently uploaded
+    );
+  }
 }

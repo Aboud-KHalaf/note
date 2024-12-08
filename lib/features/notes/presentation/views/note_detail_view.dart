@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:note/core/helpers/colors/app_colors.dart';
 import 'package:note/core/helpers/localization/app_localization.dart';
 import 'package:note/core/services/image_storage_services.dart';
 import 'package:note/core/utils/logger.dart';
@@ -107,6 +108,7 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
     ThemeData theme = Theme.of(context);
 
     return Scaffold(
+      backgroundColor: AppColors.cardColors[color],
       appBar: _buildAppBar(),
       body: _buildBody(theme),
     );
@@ -173,6 +175,7 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
 
   AppBar _buildAppBar() {
     return AppBar(
+      backgroundColor: AppColors.cardColors[color],
       title: Text(
         widget.note != null ? "edit_note".tr(context) : "new_note".tr(context),
       ),

@@ -44,7 +44,7 @@ void customShowModelBottomSheetMethod(
 
   showModalBottomSheet(
       showDragHandle: true,
-      backgroundColor: theme.primaryColor,
+      backgroundColor: theme.cardColor,
       context: context,
       builder: (BuildContext context) => child);
 }
@@ -68,8 +68,12 @@ bool isArbic(firstChar) {
   return isArab;
 }
 
-void showDeleteWarning(BuildContext context, String content,
-    Future<void> Function() onDeleted) async {
+void showWarning({
+  required BuildContext context,
+  required String content,
+  required String type,
+  required Future<void> Function() onDone,
+}) async {
   showDialog(
     context: context,
     barrierDismissible: false,
@@ -96,12 +100,12 @@ void showDeleteWarning(BuildContext context, String content,
           ElevatedButton(
             onPressed: () async {
               Navigator.of(context).pop();
-              await onDeleted();
+              await onDone();
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.red,
             ),
-            child: Text("delete".tr(context)),
+            child: Text(type),
           ),
         ],
       );

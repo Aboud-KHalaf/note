@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:note/features/auth/presentation/views/syncing_view.dart';
+import 'package:note/features/search/presentation/views/search_view.dart';
 
 import '../../../features/auth/presentation/views/first_view.dart';
 import '../../../features/auth/presentation/views/forget_password_view.dart';
@@ -16,4 +17,5 @@ Map<String, WidgetBuilder> appRoutes = {
   ForgetPasswordView.id: (_) => const ForgetPasswordView(),
   NoteDetailScreen.id: (_) => const NoteDetailScreen(),
   SyncingView.id: (_) => const SyncingView(),
+  SearchView.id: (_) => const SearchView(),
 };

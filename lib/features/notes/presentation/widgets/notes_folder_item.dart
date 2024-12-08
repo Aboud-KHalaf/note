@@ -13,17 +13,8 @@ class NotesFolderItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ThemeData theme = Theme.of(context);
-
     return Container(
       decoration: BoxDecoration(
-        boxShadow: [
-          BoxShadow(
-            color: theme.primaryColor,
-            blurRadius: 16.0,
-            blurStyle: BlurStyle.outer,
-          ),
-        ],
         border: Border.all(color: Colors.white),
         color: AppColors.cardColors[colorIdx],
         borderRadius: BorderRadius.circular(12),

@@ -164,10 +164,11 @@ class _FolderNotesViewState extends State<FolderNotesView> {
   }
 
   Future<void> _ondelteFolder() async {
-    showDeleteWarning(
-      context,
-      "folder_warning_content".tr(context),
-      _deleteFolder,
+    showWarning(
+      context: context,
+      content: "folder_warning_content".tr(context),
+      type: "delete".tr(context),
+      onDone: _deleteFolder,
     );
   }
 

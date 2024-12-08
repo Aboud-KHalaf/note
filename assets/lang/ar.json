@@ -51,5 +51,9 @@
     "dark_mode": "الوضع الليلي",
     "language": "اللغة",
     "arbic": "العربية",
-    "english": "English"
+    "english": "English",
+    "log_out_warning": "هل تريد حقا تسجيل الخروج",
+    "log_out": " تسجيل الخروج",
+    "no_search_notes": "لا يوجد ملاحظات مطابقه لما تبحث عنه",
+    "search": "بحث"
 }

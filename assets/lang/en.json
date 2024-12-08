@@ -51,5 +51,9 @@
     "dark_mode": "Dark Mode",
     "language": "Language",
     "arbic": "العربية",
-    "english": "English"
+    "english": "English",
+    "log_out_warning": "Do you really want to log out",
+    "log_out": "log out",
+    "no_search_notes": "There are no notes matching what you are looking for.",
+    "search": "search"
 }

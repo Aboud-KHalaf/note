@@ -1,6 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:note/core/cubits/theme_cubit/theme_cubit.dart';
+import 'package:note/features/search/presentation/manager/search_cubit/search_cubit.dart';
 import '../../cubits/localizations_cubit/localizations_cubit.dart';
 import '../../../features/auth/presentation/manager/auth_cubit/auth_cubit.dart';
 import '../../../features/folders/presentation/manager/sync_folders_cubit/sync_folders_cubit.dart';
@@ -18,6 +19,9 @@ import '../../services/services_locator_imports.dart';
 List<BlocProvider> providers = [
   BlocProvider<LocalizationsCubit>(
     create: (BuildContext context) => sl<LocalizationsCubit>(),
+  ),
+  BlocProvider<SearchCubit>(
+    create: (BuildContext context) => sl<SearchCubit>(),
   ),
   BlocProvider<SynceNotesCubit>(
     create: (BuildContext context) => sl<SynceNotesCubit>(),

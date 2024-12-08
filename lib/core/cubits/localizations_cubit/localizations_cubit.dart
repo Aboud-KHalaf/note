@@ -33,6 +33,7 @@ class LocalizationsCubit extends Cubit<LocalizationsState> {
     try {
       await _sharedPreferencesService.saveUserLang(language: lang);
       Log.info("Language changed to: $lang");
+      _lang = lang.code;
       emit(LanguageLoaded(Locale(lang.code)));
     } catch (e) {
       Log.error("Error changing language: $e");

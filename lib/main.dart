@@ -3,10 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:note/core/cubits/localizations_cubit/localizations_cubit.dart';
 import 'package:note/core/cubits/theme_cubit/theme_cubit.dart';
-import 'package:note/core/helpers/colors/themes.dart';
 import 'package:note/core/helpers/localization/app_localization.dart';
 import 'package:note/features/splash/presentation/views/splash_view.dart';
-
 import 'core/helpers/data/lists.dart';
 import 'core/helpers/data/maps.dart';
 import 'core/services/services_locator_imports.dart';
@@ -54,32 +52,6 @@ class NotesApp extends StatelessWidget {
             },
           );
         },
-      ),
-    );
-  }
-}
-
-class A extends StatelessWidget {
-  const A({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        //
-        backgroundColor: Colors.amber,
-        //
-        foregroundColor: Colors.black,
-        //
-        leading: const Icon(Icons.sunny),
-        //
-        title: const Text('Hello Dooby..'),
-        //
-        actions: const [
-          Icon(Icons.light_mode),
-          Icon(Icons.dark_mode),
-        ],
-        //
       ),
     );
   }

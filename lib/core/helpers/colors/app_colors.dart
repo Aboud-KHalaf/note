@@ -19,8 +19,8 @@ abstract class AppColors {
       Color(0xff0288d1); // Lighter shade of blue
 
   static const List<Color> cardColors = [
-    lightCardColor,
     darkCardColor,
+    lightCardColor,
     Color(0xFF0A0A0A), // Nearly black
     Color(0xFF4A0000), // Very dark red
     Color(0xFF4A2000), // Very dark orange
