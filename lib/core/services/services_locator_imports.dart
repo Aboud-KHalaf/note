@@ -2,7 +2,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:note/core/cubits/localizations_cubit/localizations_cubit.dart';
 import 'package:note/core/cubits/theme_cubit/theme_cubit.dart';
-import 'package:note/core/services/database_services.dart';
 import 'package:note/core/services/network_services.dart';
 import 'package:note/core/services/shared_preferences_services.dart';
 import 'package:note/core/utils/simple_bloc_observer.dart';
@@ -10,6 +9,7 @@ import 'package:note/features/auth/data/data_soureces/auth_local_data_source.dar
 import 'package:note/features/auth/domain/usecases/get_user_data_usecase.dart';
 import 'package:note/features/auth/domain/usecases/google_sign_in_usecase.dart';
 import 'package:note/features/auth/domain/usecases/is_user_logged_in_usecase.dart';
+import 'package:note/features/auth/domain/usecases/sign_out_usecase.dart';
 import 'package:note/features/auth/presentation/manager/get_user_cubit/get_user_cubit.dart';
 import 'package:note/features/folders/data/data_soureces/folder_local_data_source.dart';
 import 'package:note/features/folders/data/data_soureces/folder_remote_data_source.dart';
@@ -41,7 +41,6 @@ import 'package:note/features/notes/presentation/manager/update_note_cubit/updat
 import 'package:note/features/notes/presentation/manager/upload_note_cubit/upload_note_cubit.dart';
 import 'package:note/features/search/data/data_sources/search_local_data_source.dart';
 import 'package:note/features/search/data/repositories/search_repo_impl.dart';
-import 'package:note/features/search/domain/repositories/search_repository.dart';
 import 'package:note/features/search/domain/use_cases/search_use_case.dart';
 import 'package:note/features/search/presentation/manager/search_cubit/search_cubit.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';

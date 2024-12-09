@@ -48,7 +48,7 @@ class _SearchViewState extends State<SearchView> {
         body: BlocBuilder<SearchCubit, SearchState>(
           builder: (context, state) {
             if (state is SearchSuccess) {
-              return SearchFoldersGridViewWidget(notes: state.notes);
+              return SearchGridViewWidget(notes: state.notes);
             } else if (state is SearchEmpty) {
               return const SearchResultsEmpty();
             } else if (state is SearchFailure) {
@@ -103,8 +103,8 @@ class SearchResultsEmpty extends StatelessWidget {
   }
 }
 
-class SearchFoldersGridViewWidget extends StatelessWidget {
-  const SearchFoldersGridViewWidget({
+class SearchGridViewWidget extends StatelessWidget {
+  const SearchGridViewWidget({
     super.key,
     required this.notes,
   });

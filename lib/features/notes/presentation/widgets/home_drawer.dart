@@ -3,7 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:note/core/cubits/localizations_cubit/localizations_cubit.dart';
 import 'package:note/core/helpers/functions/ui_functions.dart';
 import 'package:note/core/helpers/localization/app_localization.dart';
+import 'package:note/features/auth/presentation/manager/auth_cubit/auth_cubit.dart';
 import 'package:note/features/auth/presentation/manager/get_user_cubit/get_user_cubit.dart';
+import 'package:note/features/auth/presentation/views/first_view.dart';
 
 import '../../../../core/cubits/theme_cubit/theme_cubit.dart';
 
@@ -151,10 +153,14 @@ class _HomeDrawerState extends State<HomeDrawer> {
                   TextButton(
                     onPressed: () {
                       showWarning(
-                          context: context,
-                          content: "log_out_warning".tr(context),
-                          type: "log_out".tr(context),
-                          onDone: () async {});
+                        context: context,
+                        content: "log_out_warning".tr(context),
+                        type: "log_out".tr(context),
+                        onDone: () async {
+                          context.read<AuthCubit>().signOut();
+                          Navigator.pushReplacementNamed(context, FirstView.id);
+                        },
+                      );
                     },
                     child: const Text(
                       'Sign out',

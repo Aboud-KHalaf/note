@@ -8,6 +8,7 @@ import 'package:note/features/auth/presentation/views/first_view.dart';
 import 'package:note/features/auth/presentation/views/syncing_view.dart';
 import 'package:note/features/folders/presentation/manager/sync_folders_cubit/sync_folders_cubit.dart';
 import 'package:note/features/notes/presentation/views/home_view.dart';
+import 'package:note/features/on_boarding/presentation/views/on_boarding_view.dart';
 
 import '../../../auth/presentation/manager/get_user_cubit/get_user_cubit.dart';
 import '../../../notes/presentation/manager/synce_notes_cubit/sync_notes_cubit.dart';
@@ -69,7 +70,7 @@ class SplashScreenBody extends StatelessWidget {
           splash: Lottie.asset(
             'assets/animations/splash.json',
           ),
-          nextScreen: isLoggedIn ? const HomeView() : const FirstView(),
+          nextScreen: isLoggedIn ? const HomeView() : const OnBoardingView(),
           curve: Curves.decelerate,
           splashTransition: SplashTransition.scaleTransition,
           backgroundColor: colorScheme.surface,

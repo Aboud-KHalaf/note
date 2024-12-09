@@ -7,6 +7,7 @@ class SharedPreferencesService {
   static const String _keyId = 'id';
   static const String _langId = 'lang';
   static const String themeKey = 'isDarkMode';
+  static const String firstTimeKey = 'isFirstTime';
 
   // Singleton pattern to ensure only one instance of SharedPreferencesService
   static final SharedPreferencesService _instance =
@@ -68,9 +69,8 @@ class SharedPreferencesService {
     await prefs.setBool(themeKey, isDarkMode);
   }
 
-  // Get theme mode from SharedPreferences
   Future<bool> getThemeMode() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.getBool(themeKey) ?? true; // Default to light theme
+    return prefs.getBool(themeKey) ?? true;
   }
 }

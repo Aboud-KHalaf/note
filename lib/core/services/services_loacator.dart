@@ -89,10 +89,13 @@ Future<void> _initAuth() async {
   sl.registerLazySingleton<GoogleSignInUsecase>(
     () => GoogleSignInUsecase(authRepository: sl()),
   );
+  sl.registerLazySingleton<SignOutUsecase>(
+    () => SignOutUsecase(authRepository: sl()),
+  );
 
   // Register Cubits
   sl.registerFactory<AuthCubit>(
-    () => AuthCubit(sl(), sl(), sl(), sl()),
+    () => AuthCubit(sl(), sl(), sl(), sl(), sl()),
   );
   sl.registerFactory<GetUserCubit>(
     () => GetUserCubit(sl(), sl()),

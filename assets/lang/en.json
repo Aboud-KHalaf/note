@@ -55,5 +55,18 @@
     "log_out_warning": "Do you really want to log out",
     "log_out": "log out",
     "no_search_notes": "There are no notes matching what you are looking for.",
-    "search": "search"
+    "search": "search",
+    "last_update": "last update",
+    "COMMENT_4": "Onboarding screen messages .................",
+    "onboarding_note_writing_title": "Writing Notes Made Easy",
+    "onboarding_note_writing": "Easily jot down your thoughts and moments, making writing a smooth and enjoyable experience.",
+    "onboarding_note_organizing_title": "Organizing Notes",
+    "onboarding_note_organizing": "Organize your notes your way with flexible, customizable folders tailored to your needs.",
+    "onboarding_note_searching_title": "Searching Notes",
+    "onboarding_note_searching": "Never lose a note! Quickly search and find your files and notes with ease anytime.",
+    "onboarding_note_syncing_title": "Syncing Notes",
+    "onboarding_note_syncing": "Stay worry-free! Sync your notes to keep them safe and accessible anytime, anywhere.",
+    "finish": "finish",
+    "next": "next",
+    "skip": "skip"
 }

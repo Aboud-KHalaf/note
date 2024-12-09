@@ -176,8 +176,16 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
   AppBar _buildAppBar() {
     return AppBar(
       backgroundColor: AppColors.cardColors[color],
-      title: Text(
-        widget.note != null ? "edit_note".tr(context) : "new_note".tr(context),
+      title: ListTile(
+        title: Text(
+          widget.note != null
+              ? "edit_note".tr(context)
+              : "new_note".tr(context),
+        ),
+        subtitle: (widget.note != null)
+            ? Text(
+                "${'last_update'.tr(context)} :  ${formatDateTime(widget.note!.uploadedAt)}")
+            : null,
       ),
     );
   }

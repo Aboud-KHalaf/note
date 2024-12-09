@@ -55,5 +55,18 @@
     "log_out_warning": "هل تريد حقا تسجيل الخروج",
     "log_out": " تسجيل الخروج",
     "no_search_notes": "لا يوجد ملاحظات مطابقه لما تبحث عنه",
-    "search": "بحث"
+    "search": "بحث",
+    "last_update": "اخر تعديل",
+    "COMMENT_4": "جمل شاشات الترحيب .................",
+    "onboarding_note_writing_title": "كتابة الملاحظات بسهولة",
+    "onboarding_note_writing": "دوّن أفكارك ولحظاتك بسهولة واجعل الكتابة تجربة ممتعة وسلسة.",
+    "onboarding_note_organizing_title": "تنظيم الملاحظات",
+    "onboarding_note_organizing": "نظّم ملاحظاتك كما تريد باستخدام مجلدات مرنة وقابلة للتخصيص تناسب احتياجاتك.",
+    "onboarding_note_searching_title": "البحث عن الملاحظات",
+    "onboarding_note_searching": "لا تفقد أي ملاحظة أبدًا! ابحث بسرعة عن ملفاتك وملاحظاتك بسهولة في أي وقت.",
+    "onboarding_note_syncing_title": "مزامنة الملاحظات",
+    "onboarding_note_syncing": "ابقَ مطمئنًا! قم بمزامنة ملاحظاتك لضمان حمايتها والوصول إليها في أي وقت وأي مكان.",
+    "finish": "إنهاء",
+    "next": "التالي",
+    "skip": "تخطي"
 }

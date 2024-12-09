@@ -112,3 +112,13 @@ void showWarning({
     },
   );
 }
+
+String formatDateTime(DateTime dateTime, {String separator = '-'}) {
+  String twoDigits(int n) => n.toString().padLeft(2, '0');
+
+  final year = dateTime.year;
+  final month = twoDigits(dateTime.month);
+  final day = twoDigits(dateTime.day);
+
+  return "$year$separator$month$separator$day";
+}

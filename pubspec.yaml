@@ -61,6 +61,7 @@ flutter:
     - assets/lang/
     - assets/animations/
     - assets/images/
+    - assets/images/onBoarding/
     - assets/images/folder.png
     - assets/svgs/folder.svg
   # An image asset can refer to one or more resolution-specific "variants", see

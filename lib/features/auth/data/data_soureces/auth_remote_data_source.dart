@@ -35,6 +35,10 @@ abstract class AuthRemoteDataSource {
   //
 
   Future<Unit> googleSignIn();
+
+  //
+
+  Future<Unit> signOut();
 }
 
 class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
@@ -149,6 +153,19 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
         idToken: idToken,
         accessToken: accessToken,
       );
+
+      return unit;
+    } on AuthException catch (e) {
+      throw ServerException(e.toString());
+    } catch (e) {
+      throw const UnknownFailure();
+    }
+  }
+
+  @override
+  Future<Unit> signOut() async {
+    try {
+      await supabaseClient.auth.signOut();
 
       return unit;
     } on AuthException catch (e) {
