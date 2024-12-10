@@ -34,19 +34,19 @@ class FirstViewBody extends StatelessWidget {
       width: double.infinity,
       decoration: BoxDecoration(
         image: DecorationImage(
-          fit: BoxFit.cover,
           image: AssetImage(
-            ImagesProvider.notebook,
+            ImagesProvider.appIcon,
           ),
         ),
       ),
       child: Container(
         height: double.infinity,
         decoration: BoxDecoration(
+          color: theme.scaffoldBackgroundColor,
           gradient: LinearGradient(
             colors: [
-              Colors.black.withOpacity(0.9),
-              Colors.black.withOpacity(0.5),
+              Colors.black.withOpacity(0.8),
+              Colors.black.withOpacity(1),
               Colors.black.withOpacity(0.3),
               Colors.white.withOpacity(0.0),
             ],

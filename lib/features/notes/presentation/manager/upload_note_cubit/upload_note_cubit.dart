@@ -20,6 +20,7 @@ class UploadNoteCubit extends Cubit<UploadNoteState> {
     res.fold((failure) {
       emit(UploadNoteFailure(errmessage: failure.message));
     }, (note) {
+      print('sucessssss');
       emit(UploadNoteSuccess());
     });
   }

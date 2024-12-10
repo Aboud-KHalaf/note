@@ -9,6 +9,8 @@ import 'package:note/features/notes/presentation/manager/fetch_all_notes_cubit/f
 import 'package:note/features/notes/presentation/views/note_detail_view.dart';
 import 'package:note/features/notes/presentation/widgets/all_notes_view_body.dart';
 
+import '../../../../core/helpers/functions/ui_functions.dart';
+
 class AllNotesView extends StatefulWidget {
   const AllNotesView({
     super.key,
@@ -50,15 +52,21 @@ class _AllNotesViewState extends State<AllNotesView> {
   }
 
   void deleteSelection() {
-    for (var note in selectedNotes) {
-      BlocProvider.of<DeleteNoteCubit>(context).deleteNote(note: note);
-    }
-    BlocProvider.of<FetchAllNotesCubit>(context).fetchAllNotes();
+    showWarning(
+        context: context,
+        content: 'note_warning_content'.tr(context),
+        type: 'delete'.tr(context),
+        onDone: () async {
+          for (var note in selectedNotes) {
+            BlocProvider.of<DeleteNoteCubit>(context).deleteNote(note: note);
+          }
+          BlocProvider.of<FetchAllNotesCubit>(context).fetchAllNotes();
 
-    setState(() {
-      isSelectionMode = false;
-      selectedNotes.clear();
-    });
+          setState(() {
+            isSelectionMode = false;
+            selectedNotes.clear();
+          });
+        });
   }
 
   @override

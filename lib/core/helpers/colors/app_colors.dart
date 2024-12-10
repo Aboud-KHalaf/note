@@ -21,6 +21,19 @@ abstract class AppColors {
   static const List<Color> cardColors = [
     darkCardColor,
     lightCardColor,
+    Color(0xFF4D4D4D), // Light black (from 0xFF0A0A0A)
+    Color(0xFFFF4D4D), // Light red (from 0xFF4A0000)
+    Color(0xFFFFA64D), // Light orange (from 0xFF4A2000)
+    Color(0xFFFFCC4D), // Light yellow (from 0xFF4A4000)
+    Color(0xFF66CC4D), // Light green (from 0xFF0A3300)
+    Color(0xFF4DCCCC), // Light teal (from 0xFF002A2A)
+    Color(0xFF4DA6FF), // Light light blue (from 0xFF002A4A)
+    Color(0xFF4D88FF), // Light blue (from 0xFF00204A)
+    Color(0xFFB34DFF), // Light purple (from 0xFF2A004A)
+    Color(0xFFFF4DA6), // Light pink (from 0xFF4A0033)
+    Color(0xFFB38F73), // Light brown (from 0xFF2A1A0A)
+    Color(0xFFB3B3B3), // Light gray (from 0xFF1A1A1A)
+
     Color(0xFF0A0A0A), // Nearly black
     Color(0xFF4A0000), // Very dark red
     Color(0xFF4A2000), // Very dark orange

@@ -9,6 +9,7 @@ import 'package:note/features/folders/presentation/widgets/folder_notes_view_bod
 import 'package:note/features/folders/presentation/widgets/options_menu_button.dart';
 import 'package:note/features/notes/domain/entities/note_entity.dart';
 import 'package:note/features/notes/presentation/manager/delete_note_cubit/delete_note_cubit.dart';
+import 'package:note/features/notes/presentation/manager/fetch_all_notes_cubit/fetch_all_notes_cubit.dart';
 import 'package:note/features/notes/presentation/manager/fetch_notes_by_folder_cubit.dart/fetch_notes_by_folder_cubit.dart';
 
 class FolderNotesView extends StatefulWidget {
@@ -62,16 +63,23 @@ class _FolderNotesViewState extends State<FolderNotesView> {
   }
 
   void deleteSelection() {
-    for (var note in selectedNotes) {
-      BlocProvider.of<DeleteNoteCubit>(context).deleteNote(note: note);
-    }
-    context
-        .read<FetchNotesByFolderCubit>()
-        .fetchNotesByFolder(folderName: widget.folder.name);
-    setState(() {
-      isSelectionMode = false;
-      selectedNotes.clear();
-    });
+    showWarning(
+        context: context,
+        content: 'note_warning_content'.tr(context),
+        type: 'delete'.tr(context),
+        onDone: () async {
+          for (var note in selectedNotes) {
+            BlocProvider.of<DeleteNoteCubit>(context).deleteNote(note: note);
+          }
+          context
+              .read<FetchNotesByFolderCubit>()
+              .fetchNotesByFolder(folderName: widget.folder.name);
+          context.read<FetchAllNotesCubit>().fetchAllNotes();
+          setState(() {
+            isSelectionMode = false;
+            selectedNotes.clear();
+          });
+        });
   }
 
   @override

@@ -29,11 +29,23 @@ class OptionsMenuButton extends StatelessWidget {
       itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
         PopupMenuItem<String>(
           value: 'edit',
-          child: Text('edit'.tr(context)),
+          child: Row(
+            children: [
+              const Icon(Icons.edit),
+              const SizedBox(width: 3),
+              Text('edit'.tr(context)),
+            ],
+          ),
         ),
         PopupMenuItem<String>(
           value: 'delete',
-          child: Text('delete'.tr(context)),
+          child: Row(
+            children: [
+              const Icon(Icons.delete),
+              const SizedBox(width: 3),
+              Text('delete'.tr(context)),
+            ],
+          ),
         ),
       ],
       icon: const Icon(Icons.more_vert),

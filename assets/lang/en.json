@@ -46,6 +46,7 @@
     "cancel": "cancel",
     "warning": "Warning",
     "folder_warning_content": "Are you sure you want to delete this item? This action cannot be undone.",
+    "note_warning_content": "Are you sure you want to delete these notes? This action cannot be undone.",
     "hi": "Hi",
     "theme": "Theme",
     "dark_mode": "Dark Mode",

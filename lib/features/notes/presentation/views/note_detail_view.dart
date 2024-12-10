@@ -4,8 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:note/core/helpers/colors/app_colors.dart';
 import 'package:note/core/helpers/localization/app_localization.dart';
+import 'package:note/core/helpers/styles/fonts_h.dart';
 import 'package:note/core/services/image_storage_services.dart';
-import 'package:note/core/utils/logger.dart';
 import 'package:note/features/auth/presentation/manager/get_user_cubit/get_user_cubit.dart';
 import 'package:note/features/notes/domain/entities/note_entity.dart';
 import 'package:note/features/notes/domain/entities/required_data_entity.dart';
@@ -56,7 +56,7 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
       _selectedImage = File(widget.note!.imageUrl!);
     }
     noteFolders = widget.note?.folders ?? [];
-    color = widget.note?.color ?? 0;
+    color = widget.note?.color ?? 100;
 
     _titleController = TextEditingController(text: widget.note?.title ?? "");
     _contentController =
@@ -106,6 +106,9 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
   @override
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
+    if (color == 100) {
+      color = (theme.brightness == Brightness.light) ? 1 : 0;
+    }
 
     return Scaffold(
       backgroundColor: AppColors.cardColors[color],
@@ -122,7 +125,7 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
           // ignore: deprecated_member_use
           WillPopScope(
             onWillPop: () async {
-              _saveNote();
+              await _saveNote();
               return true;
             },
             child: CustomScrollView(
@@ -184,7 +187,9 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
         ),
         subtitle: (widget.note != null)
             ? Text(
-                "${'last_update'.tr(context)} :  ${formatDateTime(widget.note!.uploadedAt)}")
+                "${'last_update'.tr(context)} :  ${formatDateTime(widget.note!.uploadedAt)}",
+                style: FontsStylesHelper.textStyle10,
+              )
             : null,
       ),
     );
@@ -192,14 +197,12 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
 
   Future<void> _saveNote() async {
     final getUserState = context.read<GetUserCubit>().state;
-    final uploadNoteCubit = context.read<UploadNoteCubit>();
+    final insertNoteCubit = context.read<UploadNoteCubit>();
     final updateNoteCubit = context.read<UpdateNoteCubit>();
-    final fetchAllNotesCubit = context.read<FetchAllNotesCubit>();
     final fetchNotesByFolderCubit = context.read<FetchNotesByFolderCubit>();
     final pop = Navigator.pop(context);
 
     if (getUserState is GetUserSuccess) {
-      Log.cyan("hello...");
       RequiredDataEntity data = RequiredDataEntity(
         imageUrl: widget.note?.imageUrl ?? '',
         color: color,
@@ -212,13 +215,13 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
         inSynced: widget.note?.isSynced ?? 0,
       );
 
-      if (data.title == '' && data.content == '') {
+      if (data.title.isEmpty && data.content.isEmpty) {
         pop;
         return;
       }
 
       if (widget.note == null) {
-        await uploadNoteCubit.uploadNote(data: data);
+        await insertNoteCubit.uploadNote(data: data);
       } else {
         await updateNoteCubit.updateNote(data: data);
         if (widget.folder != null) {
@@ -228,7 +231,7 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
       }
 
       if (mounted) {
-        await fetchAllNotesCubit.fetchAllNotes();
+        await context.read<FetchAllNotesCubit>().fetchAllNotes();
         pop;
       }
     }

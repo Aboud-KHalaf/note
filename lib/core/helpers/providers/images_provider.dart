@@ -7,4 +7,5 @@ abstract class ImagesProvider {
   static String search = "assets/images/onBoarding/search.png";
   static String sync = "assets/images/onBoarding/sync_note.png";
   static String note = "assets/images/onBoarding/note.png";
+  static String appIcon = "assets/images/notes_icon.png";
 }

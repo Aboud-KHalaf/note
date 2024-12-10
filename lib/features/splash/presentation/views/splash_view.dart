@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
 import 'package:note/core/cubits/localizations_cubit/localizations_cubit.dart';
 import 'package:note/features/auth/presentation/manager/auth_cubit/auth_cubit.dart';
-import 'package:note/features/auth/presentation/views/first_view.dart';
 import 'package:note/features/auth/presentation/views/syncing_view.dart';
 import 'package:note/features/folders/presentation/manager/sync_folders_cubit/sync_folders_cubit.dart';
 import 'package:note/features/notes/presentation/views/home_view.dart';
