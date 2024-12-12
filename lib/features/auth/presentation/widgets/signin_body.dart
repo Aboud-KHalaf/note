@@ -176,6 +176,7 @@ class _SignInViewBodyState extends State<SignInViewBody>
     return CustomTextFormFieldWidget(
       controller: _passwordController,
       focusNode: _passwordFocusNode,
+      obscureText: true,
       validator: Validators.validatePassword,
       hintText: 'enter_password'.tr(context),
       suffixIcon: const Icon(Icons.lock),

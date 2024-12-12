@@ -15,7 +15,7 @@ class ImageOptionsSheet extends StatelessWidget {
     ThemeData theme = Theme.of(context);
 
     return Container(
-      color: theme.primaryColor,
+      color: theme.cardColor,
       height: 150,
       child: Column(
         children: [

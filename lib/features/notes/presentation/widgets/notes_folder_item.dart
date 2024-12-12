@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:note/core/helpers/colors/app_colors.dart';
+import 'package:note/core/helpers/styles/fonts_h.dart';
 
 class NotesFolderItem extends StatelessWidget {
   const NotesFolderItem({
@@ -13,17 +14,20 @@ class NotesFolderItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var theme = Theme.of(context);
+
     return Container(
       decoration: BoxDecoration(
-        border: Border.all(color: Colors.white),
-        color: AppColors.cardColors[colorIdx],
+        border: Border.all(color: theme.hintColor),
+        color:
+            (colorIdx <= 1 ? theme.cardColor : AppColors.cardColors[colorIdx]),
         borderRadius: BorderRadius.circular(12),
       ),
       child: Padding(
         padding: const EdgeInsets.all(5.0),
         child: Text(
           folder,
-          style: const TextStyle(color: Colors.white),
+          style: FontsStylesHelper.textStyle10.copyWith(color: theme.hintColor),
         ),
       ),
     );

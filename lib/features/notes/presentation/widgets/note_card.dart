@@ -28,7 +28,9 @@ class NoteCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: isSelected
             ? theme.primaryColor.withOpacity(0.5)
-            : AppColors.cardColors[note.color],
+            : (note.color <= 1)
+                ? theme.cardColor
+                : AppColors.cardColors[note.color],
         borderRadius: BorderRadius.circular(10.0),
         border: Border.all(
           color: isSelected ? Colors.white : Colors.transparent,

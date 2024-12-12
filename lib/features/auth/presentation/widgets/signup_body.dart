@@ -205,6 +205,7 @@ class _SignUpViewBodyState extends State<SignUpViewBody>
     return CustomTextFormFieldWidget(
       controller: _passwordController,
       focusNode: _passwordFocusNode,
+      obscureText: true,
       validator: Validators.validatePassword,
       hintText: 'enter_password'.tr(context),
       suffixIcon: const Icon(Icons.lock),
