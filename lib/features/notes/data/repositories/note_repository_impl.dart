@@ -164,7 +164,7 @@ class NoteRepositoryImpl implements NoteRepository {
         }
 
         String caesarText = note.content;
-        String caesarKey = note.uploadedAt.toString();
+        String caesarKey = note.uploadedAt.second.toString();
         NoteModel noteModel = note.copyWith(
           isSynced: 1,
           imageUrl: '',
@@ -198,7 +198,7 @@ class NoteRepositoryImpl implements NoteRepository {
       // encrypt
       try {
         String caesarText = note.content;
-        String caesarKey = note.uploadedAt.toString();
+        String caesarKey = note.uploadedAt.second.toString();
         NoteModel noteModel = note.copyWith(
             content: caesarCipher.encrypt(
           text: caesarText,
@@ -260,10 +260,13 @@ class NoteRepositoryImpl implements NoteRepository {
     Log.warning("sync updated Notes start");
     final List<NoteModel> updatedNotes =
         await noteLocalDataSource.fetchUpdatedNotes();
+    final caesarCipher = EncryptionFactory.create(EncryptionType.caesar);
 
     for (var note in updatedNotes) {
       Log.cyan(note.title);
       try {
+        String caesarText = note.content;
+        String caesarKey = note.uploadedAt.second.toString();
         NoteModel noteModel = note;
         if (note.imageUrl != null && note.imageUrl != '') {
           final String imageUrl = await noteRemoteDataSource.updateImage(
@@ -272,7 +275,8 @@ class NoteRepositoryImpl implements NoteRepository {
           noteModel = noteModel.copyWith(imageUrl: imageUrl);
         }
 
-        bool result = await noteRemoteDataSource.updateNote(note: noteModel);
+        bool result = await noteRemoteDataSource.updateNote(
+            note: noteModel.copyWith(content: caesarText));
 
         if (result == true) {
           await noteLocalDataSource
