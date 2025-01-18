@@ -22,7 +22,8 @@ class NoteRepositoryImpl implements NoteRepository {
   NoteRepositoryImpl(
       {required this.internetConnectivity,
       required this.noteLocalDataSource,
-      required this.noteRemoteDataSource});
+      required this.noteRemoteDataSource,
+      r});
   @override
   ResultFuture<List<NoteModel>> fetchAllLocalNotes() async {
     try {
@@ -154,15 +155,27 @@ class NoteRepositoryImpl implements NoteRepository {
   ResultFuture<Unit> fetchAllRemoteNotes() async {
     try {
       List<NoteModel> notes = await noteRemoteDataSource.fetchAllNotes();
+      final caesarCipher = EncryptionFactory.create(EncryptionType.caesar);
+
       for (NoteModel note in notes) {
         if (note.imageUrl != null && note.imageUrl!.isNotEmpty) {
           Log.error("errore");
           // File image = await noteRemoteDataSource.downloadImage(note: note);
         }
 
+        String caesarText = note.content;
+        String caesarKey = note.uploadedAt.toString();
+        NoteModel noteModel = note.copyWith(
+          isSynced: 1,
+          imageUrl: '',
+          content: caesarCipher.decrypt(
+            text: caesarText,
+            key: caesarKey,
+          ),
+        );
+
         Log.error(note.title);
-        noteLocalDataSource
-            .insertNoteLocally(note.copyWith(isSynced: 1, imageUrl: ''));
+        noteLocalDataSource.insertNoteLocally(noteModel);
         Log.error(note.imageUrl!);
       }
       return right(unit);
@@ -180,11 +193,18 @@ class NoteRepositoryImpl implements NoteRepository {
     final List<NoteModel> unsyncedNotes =
         await noteLocalDataSource.fetchLocalUnSyncedNotes();
 
-    CaesarCipher caesarCipher = CaesarCipher();
-    for (var note in unsyncedNotes) {
+    final caesarCipher = EncryptionFactory.create(EncryptionType.caesar);
+    for (NoteModel note in unsyncedNotes) {
+      // encrypt
       try {
+        String caesarText = note.content;
+        String caesarKey = note.uploadedAt.toString();
         NoteModel noteModel = note.copyWith(
-            content: caesarCipher.encrypt(text: note.content, shift: 1));
+            content: caesarCipher.encrypt(
+          text: caesarText,
+          key: caesarKey,
+        ));
+        //
         if (note.imageUrl != null && note.imageUrl != '') {
           Log.cyan(note.imageUrl!);
           final String imageUrl = await noteRemoteDataSource.uploadImage(
@@ -192,6 +212,7 @@ class NoteRepositoryImpl implements NoteRepository {
 
           noteModel = noteModel.copyWith(imageUrl: imageUrl);
         }
+        //
 
         bool result = await noteRemoteDataSource.uploadNote(note: noteModel);
 

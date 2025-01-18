@@ -17,6 +17,9 @@ Future<void> initApp() async {
   sl.registerLazySingleton<SharedPreferencesService>(
       () => SharedPreferencesService());
 
+  //l.registerLazySingleton<EncryptionServices>(() => CaesarCipher());
+  sl.registerLazySingleton<EncryptionServices>(() => Aes());
+
   sl.registerLazySingleton<InternetConnectivity>(
       () => InternetConnectivityImpl());
 
@@ -118,6 +121,7 @@ Future<void> _initNote() async {
       noteRemoteDataSource: sl(),
       noteLocalDataSource: sl(),
       internetConnectivity: sl(),
+      //aesarCipher: sl<CaesarCipher>(),
     ),
   );
 

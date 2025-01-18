@@ -222,6 +222,7 @@ class _SignUpViewBodyState extends State<SignUpViewBody>
       validator: (value) => Validators.validateConfirmPassword(
           value, _passwordController.text.trim()),
       hintText: 'confirm_password'.tr(context),
+      obscureText: true,
       suffixIcon: const Icon(Icons.password),
       textInputAction: TextInputAction.done,
     );
