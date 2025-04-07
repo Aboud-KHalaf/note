@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:note/core/helpers/colors/app_colors.dart';
 
 class ColorSelectionSheet extends StatefulWidget {
@@ -28,44 +29,56 @@ class _ColorSelectionSheetState extends State<ColorSelectionSheet> {
     ThemeData theme = Theme.of(context);
 
     return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12),
-      ),
-      height: 80,
+      height: 90,
+      padding: const EdgeInsets.symmetric(horizontal: 8),
       child: ListView.builder(
-        padding: EdgeInsets.zero,
-        itemCount: AppColors.cardColors.length,
         scrollDirection: Axis.horizontal,
+        itemCount: AppColors.cardColors.length,
         itemBuilder: (context, index) {
-          return Stack(
-            children: [
-              IconButton(
-                onPressed: () {
+          return Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 4),
+            child: Material(
+              color: Colors.transparent,
+              child: InkWell(
+                onTap: () {
                   widget.onColorSelected(index);
                   setState(() {
                     currentIdx = index;
                   });
                 },
-                icon: CircleAvatar(
-                  backgroundColor:
-                      (index == currentIdx) ? theme.primaryColor : Colors.white,
-                  radius: 22,
-                  child: CircleAvatar(
-                    backgroundColor: AppColors.cardColors[index],
-                    radius: 20,
-                  ),
-                ),
-              ),
-              (index == currentIdx)
-                  ? Center(
-                      child: Icon(
+                borderRadius: BorderRadius.circular(50),
+                child: Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.all(2),
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        border: Border.all(
+                          color: index == currentIdx
+                              ? theme.primaryColor
+                              : Colors.transparent,
+                          width: 2,
+                        ),
+                      ),
+                      child: CircleAvatar(
+                        backgroundColor: AppColors.cardColors[index],
+                        radius: 20,
+                      ),
+                    ),
+                    if (index == currentIdx)
+                      Icon(
                         Icons.check,
-                        size: 38,
+                        size: 28,
                         color: theme.primaryColor,
                       ),
-                    )
-                  : const SizedBox(),
-            ],
+                  ],
+                ),
+              ),
+            )
+                .animate(delay: Duration(milliseconds: index * 30))
+                .scale(duration: const Duration(milliseconds: 200))
+                .fade(duration: const Duration(milliseconds: 200)),
           );
         },
       ),
