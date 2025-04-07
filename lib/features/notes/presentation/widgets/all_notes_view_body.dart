@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import 'package:note/features/notes/domain/entities/note_entity.dart';
 import 'package:note/features/notes/presentation/manager/fetch_all_notes_cubit/fetch_all_notes_cubit.dart';
 import 'package:note/features/notes/presentation/widgets/empty_notes.dart';
 import 'package:note/features/notes/presentation/widgets/note_staggered_grid_view.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 
 class AllNotesViewBody extends StatelessWidget {
   final bool isSelectionMode;
@@ -30,11 +30,31 @@ class AllNotesViewBody extends StatelessWidget {
                   isSelectionMode: isSelectionMode,
                   onNoteTap: onNoteTap,
                   notes: state.notes,
-                );
+                )
+                  .animate()
+                  .fade(duration: const Duration(milliseconds: 300))
+                  .scale(delay: const Duration(milliseconds: 100));
         } else if (state is FetchAllNotesFaiure) {
-          return Center(child: Text(state.errMessage));
+          return Center(
+            child: Text(
+              state.errMessage,
+              style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                    color: Theme.of(context).colorScheme.error,
+                  ),
+            ),
+          )
+              .animate()
+              .fade(duration: const Duration(milliseconds: 300))
+              .shake(delay: const Duration(milliseconds: 100));
         } else {
-          return const Center(child: CircularProgressIndicator());
+          return Center(
+            child: CircularProgressIndicator(
+              color: Theme.of(context).primaryColor,
+            ),
+          )
+              .animate()
+              .fade(duration: const Duration(milliseconds: 300))
+              .scale(delay: const Duration(milliseconds: 100));
         }
       },
     );

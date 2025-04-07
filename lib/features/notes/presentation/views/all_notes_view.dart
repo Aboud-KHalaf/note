@@ -2,12 +2,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:note/core/helpers/localization/app_localization.dart';
-
+import 'package:note/core/helpers/styles/fonts_h.dart';
 import 'package:note/features/notes/domain/entities/note_entity.dart';
 import 'package:note/features/notes/presentation/manager/delete_note_cubit/delete_note_cubit.dart';
 import 'package:note/features/notes/presentation/manager/fetch_all_notes_cubit/fetch_all_notes_cubit.dart';
 import 'package:note/features/notes/presentation/views/note_detail_view.dart';
 import 'package:note/features/notes/presentation/widgets/all_notes_view_body.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 
 import '../../../../core/helpers/functions/ui_functions.dart';
 
@@ -21,23 +22,21 @@ class AllNotesView extends StatefulWidget {
 }
 
 class _AllNotesViewState extends State<AllNotesView> {
-  bool isSelectionMode = false; // Flag to check if selection mode is active
-  List<NoteEntity> selectedNotes = []; // List to track selected notes' indices
+  bool isSelectionMode = false;
+  List<NoteEntity> selectedNotes = [];
 
   void toggleSelectionMode(NoteEntity note) {
     setState(() {
       if (isSelectionMode) {
-        // Add or remove note index from selected list
         if (selectedNotes.contains(note)) {
           selectedNotes.remove(note);
           if (selectedNotes.isEmpty) {
-            isSelectionMode = false; // Exit selection mode if none selected
+            isSelectionMode = false;
           }
         } else {
           selectedNotes.add(note);
         }
       } else {
-        // Start selection mode
         isSelectionMode = true;
         selectedNotes.add(note);
       }
@@ -74,6 +73,7 @@ class _AllNotesViewState extends State<AllNotesView> {
     ThemeData theme = Theme.of(context);
 
     return Scaffold(
+      backgroundColor: theme.scaffoldBackgroundColor,
       appBar: isSelectionMode ? _buildAppBar() : null,
       body: AllNotesViewBody(
         isSelectionMode: isSelectionMode,
@@ -85,29 +85,45 @@ class _AllNotesViewState extends State<AllNotesView> {
         backgroundColor: theme.primaryColor,
         onPressed: () => Navigator.of(context).pushNamed(NoteDetailScreen.id),
         child: const Icon(Icons.add),
-      ),
+      )
+          .animate()
+          .scale(duration: const Duration(milliseconds: 300))
+          .fade(duration: const Duration(milliseconds: 300)),
     );
   }
 
   AppBar _buildAppBar() {
     return AppBar(
-      title: Text('${selectedNotes.length} ${"selected".tr(context)}'),
+      elevation: 0,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      title: Text(
+        '${selectedNotes.length} ${"selected".tr(context)}',
+        style: FontsStylesHelper.textStyle16.copyWith(
+          fontWeight: FontWeight.bold,
+        ),
+      ),
       actions: [
         IconButton(
-          icon: const Icon(
+          icon: Icon(
             Icons.delete,
-            color: Colors.red,
+            color: Theme.of(context).colorScheme.error,
           ),
-          onPressed: deleteSelection, // Exit selection mode
-        ),
+          onPressed: deleteSelection,
+        )
+            .animate()
+            .fade(duration: const Duration(milliseconds: 300))
+            .scale(delay: const Duration(milliseconds: 100)),
       ],
       leading: IconButton(
-        icon: const Icon(
+        icon: Icon(
           Icons.clear,
-          color: Colors.green,
+          color: Theme.of(context).primaryColor,
         ),
-        onPressed: clearSelection, // Exit selection mode
-      ),
+        onPressed: clearSelection,
+      )
+          .animate()
+          .fade(duration: const Duration(milliseconds: 300))
+          .scale(delay: const Duration(milliseconds: 50)),
     );
   }
 }

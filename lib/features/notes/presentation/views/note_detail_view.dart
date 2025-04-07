@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import '../../domain/entities/note_entity.dart';
 import '../logic/note_detail_screen_logic.dart';
 import '../widgets/fab_menu.dart';
@@ -41,15 +42,12 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
     final theme = Theme.of(context);
     return Scaffold(
       backgroundColor: _logic.getNoteBackgroundColor(theme),
-      appBar: _buildAppBar(),
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: _logic.getNoteBackgroundColor(Theme.of(context)),
+        title: _logic.buildAppBarTitle(context),
+      ),
       body: _buildBody(theme),
-    );
-  }
-
-  AppBar _buildAppBar() {
-    return AppBar(
-      backgroundColor: _logic.getNoteBackgroundColor(Theme.of(context)),
-      title: _logic.buildAppBarTitle(context),
     );
   }
 
@@ -57,15 +55,21 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
     return SizedBox(
       child: Stack(
         children: <Widget>[
-          // ignore: deprecated_member_use
           WillPopScope(
             onWillPop: _logic.handleBackNavigation,
             child: _buildNoteContent(),
           ),
-          FabMenu(
-            onColorPressed: _logic.showColorSelectionSheet,
-            onFolderPressed: _logic.showFolderSelectionSheet,
-            onImagePressed: _logic.showImageSourceDialog,
+          Positioned(
+            right: 16,
+            bottom: 16,
+            child: FabMenu(
+              onColorPressed: _logic.showColorSelectionSheet,
+              onFolderPressed: _logic.showFolderSelectionSheet,
+              onImagePressed: _logic.showImageSourceDialog,
+            )
+                .animate()
+                .scale(duration: const Duration(milliseconds: 300))
+                .fade(duration: const Duration(milliseconds: 300)),
           ),
         ],
       ),
@@ -84,13 +88,22 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
                 controller: _logic.titleController,
                 direction: _logic.titleTextDirection,
                 onChanged: _logic.detectTitleTextDirection,
-              ),
-              const SizedBox(height: 10),
+              )
+                  .animate()
+                  .fade(duration: const Duration(milliseconds: 300))
+                  .slideX(begin: 0.1, end: 0),
+              const SizedBox(height: 16),
               ContentField(
                 controller: _logic.contentController,
                 direction: _logic.contentTextDirection,
                 onChanged: _logic.detectContentTextDirection,
-              ),
+              )
+                  .animate()
+                  .fade(duration: const Duration(milliseconds: 300))
+                  .slideX(
+                      begin: 0.1,
+                      end: 0,
+                      delay: const Duration(milliseconds: 100)),
             ]),
           ),
         ),
@@ -101,10 +114,16 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
   Widget _buildImageDisplay() {
     return GestureDetector(
       onTap: _logic.openFullImageView,
-      child: ImageDisplay(
-        image: _logic.selectedImage!,
-        onLongPress: _logic.showImageOptions,
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(12),
+        child: ImageDisplay(
+          image: _logic.selectedImage!,
+          onLongPress: _logic.showImageOptions,
+        ),
       ),
-    );
+    )
+        .animate()
+        .fade(duration: const Duration(milliseconds: 300))
+        .scale(delay: const Duration(milliseconds: 50));
   }
 }

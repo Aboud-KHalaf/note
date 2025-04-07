@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:note/core/helpers/localization/app_localization.dart';
 import 'package:note/core/helpers/styles/spacing_h.dart';
 import 'package:uuid/uuid.dart';
@@ -49,59 +50,119 @@ class _AddFolderDialogContentWidgetState
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return SizedBox(
-      width: MediaQuery.sizeOf(context).width - 10,
+      width: MediaQuery.sizeOf(context).width - 32,
       child: Form(
         key: _formKey,
         child: SingleChildScrollView(
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text("add_new_folder".tr(context)),
-              SpacingHelper.h3,
+              Text(
+                "add_new_folder".tr(context),
+                style: theme.textTheme.titleLarge?.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
+              )
+                  .animate()
+                  .fade(duration: const Duration(milliseconds: 300))
+                  .slideY(begin: -0.1, end: 0),
+              SpacingHelper.h5,
               CustomTextFormFieldWidget(
                 controller: _nameController,
                 hintText: 'name'.tr(context),
                 validator: Validators.validateName,
-              ),
-              SpacingHelper.h2,
+                suffixIcon: const Icon(Icons.folder_outlined),
+              )
+                  .animate()
+                  .fade(duration: const Duration(milliseconds: 300))
+                  .slideX(begin: 0.1, end: 0),
+              SpacingHelper.h3,
               CustomTextFormFieldWidget(
                 controller: _discriptionController,
                 hintText: 'discription'.tr(context),
-              ),
+                suffixIcon: const Icon(Icons.description_outlined),
+              )
+                  .animate()
+                  .fade(duration: const Duration(milliseconds: 300))
+                  .slideX(
+                      begin: 0.1,
+                      end: 0,
+                      delay: const Duration(milliseconds: 100)),
+              SpacingHelper.h4,
+              Text(
+                'select_color'.tr(context),
+                style: theme.textTheme.titleMedium?.copyWith(
+                  fontWeight: FontWeight.w600,
+                ),
+              )
+                  .animate()
+                  .fade(duration: const Duration(milliseconds: 300))
+                  .slideX(
+                      begin: 0.1,
+                      end: 0,
+                      delay: const Duration(milliseconds: 200)),
               SpacingHelper.h2,
               ColorSelectionSheet(
                 onColorSelected: (int idx) {
                   _colorIdx = idx;
                 },
                 idx: _colorIdx,
-              ),
+              )
+                  .animate()
+                  .fade(duration: const Duration(milliseconds: 300))
+                  .scale(delay: const Duration(milliseconds: 300)),
               SpacingHelper.h5,
-              ElevatedButton(
-                onPressed: () {
-                  if (_formKey.currentState!.validate()) {
-                    FolderEntity folder = FolderEntity(
-                      userID: '',
-                      description: _discriptionController.text.trim(),
-                      id: widget.folderEntity == null
-                          ? const Uuid().v1()
-                          : widget.folderEntity!.id,
-                      name: _nameController.text.trim(),
-                      color: _colorIdx,
-                    );
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: theme.primaryColor,
+                    foregroundColor: Colors.white,
+                    elevation: 0,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                  ),
+                  onPressed: () {
+                    if (_formKey.currentState!.validate()) {
+                      FolderEntity folder = FolderEntity(
+                        userID: '',
+                        description: _discriptionController.text.trim(),
+                        id: widget.folderEntity == null
+                            ? const Uuid().v1()
+                            : widget.folderEntity!.id,
+                        name: _nameController.text.trim(),
+                        color: _colorIdx,
+                      );
 
-                    if (widget.folderEntity == null) {
-                      _createFolder(folder);
-                    } else {
-                      _editFolder(folder);
+                      if (widget.folderEntity == null) {
+                        _createFolder(folder);
+                      } else {
+                        _editFolder(folder);
+                      }
+
+                      context.read<FolderActionsCubit>().fetchAllFolders();
+                      Navigator.pop(context);
                     }
-
-                    context.read<FolderActionsCubit>().fetchAllFolders();
-                    Navigator.pop(context);
-                  }
-                },
-                child: Text(createOrEdit()),
-              ),
+                  },
+                  child: Text(
+                    createOrEdit(),
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
+              )
+                  .animate()
+                  .fade(duration: const Duration(milliseconds: 300))
+                  .slideY(
+                      begin: 0.1,
+                      end: 0,
+                      delay: const Duration(milliseconds: 400)),
             ],
           ),
         ),

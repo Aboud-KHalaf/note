@@ -113,10 +113,9 @@ class NoteDetailScreenLogic {
   }
 
   Future<bool> handleBackNavigation() async {
-    await saveNote(); // Ensure note is fully saved
-    await context
-        .read<FetchAllNotesCubit>()
-        .fetchAllNotes(); // Fetch updated data
+    await saveNote();
+    if (!context.mounted) return true;
+    await context.read<FetchAllNotesCubit>().fetchAllNotes();
     return true;
   }
 
@@ -158,15 +157,16 @@ class NoteDetailScreenLogic {
       await insertNoteCubit.uploadNote(data: data);
     } else {
       await updateNoteCubit.updateNote(data: data);
-      if (folder != null) {
+      if (folder != null && context.mounted) {
         context
             .read<FetchNotesByFolderCubit>()
             .fetchNotesByFolder(folderName: folder!);
       }
     }
 
-    // Fetch all notes after persisting
-    await fetchAllNotesCubit.fetchAllNotes();
+    if (context.mounted) {
+      await fetchAllNotesCubit.fetchAllNotes();
+    }
   }
 
   // Image-related methods
@@ -224,6 +224,7 @@ class NoteDetailScreenLogic {
             onColorSelected: (int index) {
               noteColor = index;
               onStateUpdate();
+              Navigator.of(context).pop();
             },
             idx: noteColor,
           ),
@@ -240,7 +241,10 @@ class NoteDetailScreenLogic {
         contentWidgets: [
           FolderSelectionSheet(
             currentNoteFolders: noteFolders,
-            onFolderToggled: toggleFolder,
+            onFolderToggled: (String name, bool value) {
+              toggleFolder(name, value);
+              Navigator.of(context).pop();
+            },
           ),
           _buildAddFolderButton(),
         ],
@@ -255,15 +259,27 @@ class NoteDetailScreenLogic {
 
   Widget _buildAddFolderButton() {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(16.0),
       child: ElevatedButton(
-        style: const ButtonStyle(
-          backgroundColor: WidgetStatePropertyAll(Colors.cyan),
+        style: ElevatedButton.styleFrom(
+          backgroundColor: Theme.of(context).primaryColor,
+          foregroundColor: Colors.white,
+          elevation: 0,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
         ),
-        onPressed: () => showAddFolderDialog(context: context),
+        onPressed: () {
+          Navigator.of(context).pop();
+          showAddFolderDialog(context: context);
+        },
         child: Text(
           "add_new_folder".tr(context),
-          style: const TextStyle(color: Colors.black),
+          style: const TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.w600,
+          ),
         ),
       ),
     );
@@ -272,7 +288,9 @@ class NoteDetailScreenLogic {
   void openFullImageView() {
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (context) => ImageView(image: selectedImage!),
+        builder: (context) => ImageView(
+          image: selectedImage!,
+        ),
       ),
     );
   }

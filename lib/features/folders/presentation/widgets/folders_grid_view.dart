@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:note/features/folders/domain/entities/folder_entity.dart';
 import 'package:note/features/folders/presentation/views/folder_notes_view.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 
 import '../../../notes/presentation/widgets/folder_item.dart';
 
@@ -15,15 +16,14 @@ class FoldersGridView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GridView.builder(
-      itemCount: folders.length, // Number of items
+      itemCount: folders.length,
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2, // Number of columns in the grid
-        crossAxisSpacing: 10.0, // Space between columns
-        mainAxisSpacing: 10.0, // Space between rows
-        childAspectRatio: 1.0, // Aspect ratio of the items
+        crossAxisCount: 2,
+        crossAxisSpacing: 16.0,
+        mainAxisSpacing: 16.0,
+        childAspectRatio: 1.0,
       ),
-      padding:
-          const EdgeInsets.only(top: 36.0, right: 12, left: 12, bottom: 12),
+      padding: const EdgeInsets.all(16.0),
       itemBuilder: (context, index) {
         return GestureDetector(
           onTap: () {
@@ -37,7 +37,10 @@ class FoldersGridView extends StatelessWidget {
           },
           child: FolderItem(
             folder: folders[index],
-          ),
+          )
+              .animate()
+              .fade(duration: const Duration(milliseconds: 300))
+              .scale(delay: Duration(milliseconds: index * 50)),
         );
       },
     );

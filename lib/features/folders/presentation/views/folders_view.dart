@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:note/core/helpers/functions/ui_functions.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 
 import '../widgets/folder_view_body.dart';
 
@@ -11,7 +12,11 @@ class FoldersView extends StatelessWidget {
     ThemeData theme = Theme.of(context);
 
     return Scaffold(
-      body: const FoldersViewBody(),
+      backgroundColor: theme.scaffoldBackgroundColor,
+      body: const FoldersViewBody()
+          .animate()
+          .fade(duration: const Duration(milliseconds: 300))
+          .slideY(begin: 0.1, end: 0),
       floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
       floatingActionButton: FloatingActionButton(
         backgroundColor: theme.primaryColor,
@@ -19,7 +24,10 @@ class FoldersView extends StatelessWidget {
           showAddFolderDialog(context: context);
         },
         child: const Icon(Icons.add),
-      ),
+      )
+          .animate()
+          .scale(duration: const Duration(milliseconds: 300))
+          .fade(duration: const Duration(milliseconds: 300)),
     );
   }
 }
