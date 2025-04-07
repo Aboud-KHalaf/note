@@ -9,6 +9,7 @@ import 'package:note/features/notes/presentation/widgets/note_card.dart';
 import 'package:note/features/search/presentation/manager/search_cubit/search_cubit.dart';
 import 'package:staggered_grid_view_flutter/widgets/staggered_grid_view.dart';
 import 'package:staggered_grid_view_flutter/widgets/staggered_tile.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 
 import '../../../notes/domain/entities/note_entity.dart';
 
@@ -31,33 +32,45 @@ class _SearchViewState extends State<SearchView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: CustomTextFormFieldWidget(
-            hintText: 'search'.tr(context),
-            controller: searchContorller,
-            onChanged: (value) {
-              if (value != "") {
-                context.read<SearchCubit>().search(text: value);
-              }
-            },
-            suffixIcon: const Icon(
-              Icons.search,
-            ),
-          ),
-        ),
-        body: BlocBuilder<SearchCubit, SearchState>(
-          builder: (context, state) {
-            if (state is SearchSuccess) {
-              return SearchGridViewWidget(notes: state.notes);
-            } else if (state is SearchEmpty) {
-              return const SearchResultsEmpty();
-            } else if (state is SearchFailure) {
-              return Text(state.mesage);
-            } else {
-              return const InitialSearch();
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+        title: CustomTextFormFieldWidget(
+          hintText: 'search'.tr(context),
+          controller: searchContorller,
+          onChanged: (value) {
+            if (value != "") {
+              context.read<SearchCubit>().search(text: value);
             }
           },
-        ));
+          suffixIcon: Icon(
+            Icons.search,
+            color: Theme.of(context).hintColor,
+          ),
+        ),
+      ),
+      body: BlocBuilder<SearchCubit, SearchState>(
+        builder: (context, state) {
+          if (state is SearchSuccess) {
+            return SearchGridViewWidget(notes: state.notes);
+          } else if (state is SearchEmpty) {
+            return const SearchResultsEmpty();
+          } else if (state is SearchFailure) {
+            return Center(
+              child: Text(
+                state.mesage,
+                style: FontsStylesHelper.textStyle16.copyWith(
+                  color: Theme.of(context).colorScheme.error,
+                ),
+              ),
+            );
+          } else {
+            return const InitialSearch();
+          }
+        },
+      ),
+    );
   }
 }
 
@@ -69,14 +82,31 @@ class InitialSearch extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.symmetric(horizontal: 24),
       height: double.infinity,
-      child: Center(
-        child: Text(
-          'search'.tr(context),
-          textAlign: TextAlign.center,
-          style: FontsStylesHelper.textStyle16,
-        ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(
+            Icons.search,
+            size: 64,
+            color: Theme.of(context).hintColor.withOpacity(0.5),
+          )
+              .animate()
+              .fade(duration: const Duration(milliseconds: 500))
+              .scale(delay: const Duration(milliseconds: 200)),
+          const SizedBox(height: 24),
+          Text(
+            'search'.tr(context),
+            textAlign: TextAlign.center,
+            style: FontsStylesHelper.textStyle16.copyWith(
+              color: Theme.of(context).hintColor.withOpacity(0.7),
+            ),
+          )
+              .animate()
+              .fade(delay: const Duration(milliseconds: 300))
+              .slideY(begin: 0.3, end: 0),
+        ],
       ),
     );
   }
@@ -90,13 +120,33 @@ class SearchResultsEmpty extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.symmetric(horizontal: 24),
       height: double.infinity,
       child: Center(
-        child: Text(
-          'no_search_notes'.tr(context),
-          textAlign: TextAlign.center,
-          style: FontsStylesHelper.textStyle16,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.search_off,
+              size: 64,
+              color: Theme.of(context).hintColor.withOpacity(0.5),
+            )
+                .animate()
+                .fade(duration: const Duration(milliseconds: 500))
+                .scale(delay: const Duration(milliseconds: 200)),
+            const SizedBox(height: 24),
+            Text(
+              'no_search_notes'.tr(context),
+              textAlign: TextAlign.center,
+              style: FontsStylesHelper.textStyle16.copyWith(
+                color: Theme.of(context).hintColor.withOpacity(0.7),
+              ),
+            )
+                .animate()
+                .fade(delay: const Duration(milliseconds: 300))
+                .slideY(begin: 0.3, end: 0),
+          ],
         ),
       ),
     );
@@ -133,12 +183,15 @@ class SearchGridViewWidget extends StatelessWidget {
               note: notes[index],
               cardColor: AppColors.cardColors[notes[index].color],
               isSelected: false,
-            ),
+            )
+                .animate()
+                .fade(duration: const Duration(milliseconds: 300))
+                .scale(delay: Duration(milliseconds: index * 50)),
           );
         },
         staggeredTileBuilder: (index) => const StaggeredTile.fit(2),
-        mainAxisSpacing: 10.0,
-        crossAxisSpacing: 10.0,
+        mainAxisSpacing: 12.0,
+        crossAxisSpacing: 12.0,
       ),
     );
   }
