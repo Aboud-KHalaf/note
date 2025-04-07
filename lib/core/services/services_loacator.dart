@@ -5,23 +5,33 @@ final sl = GetIt.instance; //  a global service locator instance
 Future<void> initApp() async {
   // Set the BlocObserver
   Bloc.observer = SimpleBlocObserver();
-  // Initialize Supabase
-  final supabase = await Supabase.initialize(
-    url: SupabaseSecrets.supabaseUrl,
-    anonKey: SupabaseSecrets.supabaseAnonKey,
-    // remove
-    debug: true,
-  );
-  // Register Supabase Client
-  sl.registerLazySingleton<SupabaseClient>(() => supabase.client);
+
+  // Initialize SharedPreferences first
   sl.registerLazySingleton<SharedPreferencesService>(
       () => SharedPreferencesService());
 
-  //l.registerLazySingleton<EncryptionServices>(() => CaesarCipher());
-  sl.registerLazySingleton<EncryptionServices>(() => Aes());
-
+  // Initialize Internet Connectivity
   sl.registerLazySingleton<InternetConnectivity>(
       () => InternetConnectivityImpl());
+
+  // Initialize Supabase with offline support
+  try {
+    final supabase = await Supabase.initialize(
+      url: SupabaseSecrets.supabaseUrl,
+      anonKey: SupabaseSecrets.supabaseAnonKey,
+      authOptions: const FlutterAuthClientOptions(
+        autoRefreshToken: true,
+      ),
+    );
+    sl.registerLazySingleton<SupabaseClient>(() => supabase.client);
+  } catch (e) {
+    // If Supabase initialization fails, we'll still register a client
+    // but it will be in an offline state
+    sl.registerLazySingleton<SupabaseClient>(() => SupabaseClient(
+          SupabaseSecrets.supabaseUrl,
+          SupabaseSecrets.supabaseAnonKey,
+        ));
+  }
 
   sl.registerFactory<LocalizationsCubit>(
     () => LocalizationsCubit(sl()),

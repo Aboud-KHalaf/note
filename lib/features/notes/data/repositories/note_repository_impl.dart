@@ -3,7 +3,6 @@ import 'package:dartz/dartz.dart';
 import 'package:uuid/uuid.dart';
 import '../../../../core/error/exceptions.dart';
 import '../../../../core/error/failures.dart';
-import '../../../../core/services/encryption_services.dart';
 import '../../../../core/services/network_services.dart';
 import '../../../../core/services/shared_preferences_services.dart';
 import '../../../../core/utils/logger.dart';
@@ -140,13 +139,16 @@ class NoteRepositoryImpl implements NoteRepository {
 
     if (isConnected) {
       //
+      Log.info("noteRepositoryImpl/synceNotes : connected");
+
+      //
       await _syncDeletedNotes();
       await _syncUpdatedNotes();
       await _uploadUnSyncedNotes();
       //
       return right(unit);
     } else {
-      Log.error("not connected");
+      Log.info("noteRepositoryImpl/synceNotes : not connected");
       return left(const ServerFailure('No internet'));
     }
   }
@@ -155,7 +157,6 @@ class NoteRepositoryImpl implements NoteRepository {
   ResultFuture<Unit> fetchAllRemoteNotes() async {
     try {
       List<NoteModel> notes = await noteRemoteDataSource.fetchAllNotes();
-      final caesarCipher = EncryptionFactory.create(EncryptionType.caesar);
 
       for (NoteModel note in notes) {
         if (note.imageUrl != null && note.imageUrl!.isNotEmpty) {
@@ -163,15 +164,10 @@ class NoteRepositoryImpl implements NoteRepository {
           // File image = await noteRemoteDataSource.downloadImage(note: note);
         }
 
-        String caesarText = note.content;
-        String caesarKey = note.uploadedAt.second.toString();
         NoteModel noteModel = note.copyWith(
           isSynced: 1,
           imageUrl: '',
-          content: caesarCipher.decrypt(
-            text: caesarText,
-            key: caesarKey,
-          ),
+          content: note.content,
         );
 
         Log.error(note.title);
@@ -189,21 +185,15 @@ class NoteRepositoryImpl implements NoteRepository {
   }
 
   Future<void> _uploadUnSyncedNotes() async {
-    Log.warning("connected ... upload start");
+    Log.info("_uploadUnSyncedNotes start");
     final List<NoteModel> unsyncedNotes =
         await noteLocalDataSource.fetchLocalUnSyncedNotes();
 
-    final caesarCipher = EncryptionFactory.create(EncryptionType.caesar);
     for (NoteModel note in unsyncedNotes) {
+      Log.cyan("this is note : ${note.content}");
       // encrypt
       try {
-        String caesarText = note.content;
-        String caesarKey = note.uploadedAt.second.toString();
-        NoteModel noteModel = note.copyWith(
-            content: caesarCipher.encrypt(
-          text: caesarText,
-          key: caesarKey,
-        ));
+        NoteModel noteModel = note;
         //
         if (note.imageUrl != null && note.imageUrl != '') {
           Log.cyan(note.imageUrl!);
@@ -229,7 +219,7 @@ class NoteRepositoryImpl implements NoteRepository {
   }
 
   Future<void> _syncDeletedNotes() async {
-    Log.warning("sync Deleted Notes start");
+    Log.info("_syncDeletedNotes start");
     final List<NoteModel> deletedNotes =
         await noteLocalDataSource.fetchDeletedNotes();
 
@@ -257,16 +247,13 @@ class NoteRepositoryImpl implements NoteRepository {
   }
 
   Future<void> _syncUpdatedNotes() async {
-    Log.warning("sync updated Notes start");
+    Log.info("_syncUpdatedNotes start");
     final List<NoteModel> updatedNotes =
         await noteLocalDataSource.fetchUpdatedNotes();
-    final caesarCipher = EncryptionFactory.create(EncryptionType.caesar);
 
     for (var note in updatedNotes) {
       Log.cyan(note.title);
       try {
-        String caesarText = note.content;
-        String caesarKey = note.uploadedAt.second.toString();
         NoteModel noteModel = note;
         if (note.imageUrl != null && note.imageUrl != '') {
           final String imageUrl = await noteRemoteDataSource.updateImage(
@@ -276,7 +263,7 @@ class NoteRepositoryImpl implements NoteRepository {
         }
 
         bool result = await noteRemoteDataSource.updateNote(
-            note: noteModel.copyWith(content: caesarText));
+            note: noteModel.copyWith(content: note.content));
 
         if (result == true) {
           await noteLocalDataSource

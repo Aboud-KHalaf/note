@@ -2,7 +2,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:note/core/cubits/localizations_cubit/localizations_cubit.dart';
 import 'package:note/core/cubits/theme_cubit/theme_cubit.dart';
-import 'package:note/core/services/encryption_services.dart';
 import 'package:note/core/services/network_services.dart';
 import 'package:note/core/services/shared_preferences_services.dart';
 import 'package:note/core/utils/simple_bloc_observer.dart';

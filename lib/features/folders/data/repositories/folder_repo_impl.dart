@@ -96,7 +96,7 @@ class FolderRepoImpl implements FolderRepository {
   }
 
   Future<void> _uploadUnSyncedNotes() async {
-    Log.info("connected ... upload folders start");
+    Log.info("_uploadUnSyncedNotes start");
     final List<FolderModel> unsyncedFolders =
         await folderLocalDataSource.fetchLocalUnSyncedFolders();
 
@@ -113,7 +113,7 @@ class FolderRepoImpl implements FolderRepository {
   }
 
   Future<void> _syncDeletedFolders() async {
-    Log.warning("sync Deleted folders start");
+    Log.info("_syncDeletedFolders start");
     final List<FolderModel> deletedFolders =
         await folderLocalDataSource.fetchLocalDeletedFolders();
 
@@ -134,7 +134,7 @@ class FolderRepoImpl implements FolderRepository {
   }
 
   Future<void> _syncUpdatedFolders() async {
-    Log.warning("sync updated folders start");
+    Log.info("_syncUpdatedFolders start");
     final List<FolderModel> updatedFolders =
         await folderLocalDataSource.fetchLocalUpdatedFolders();
 
