@@ -109,66 +109,86 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
                   ),
                   content: SingleChildScrollView(
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            ElevatedButton.icon(
-                              onPressed: () =>
-                                  _showMarkdownGuide(context, isArabic: false),
-                              icon: Icon(
-                                Icons.language,
-                                color: theme.hintColor,
-                              ),
-                              label: Text(
-                                'English',
-                                style: TextStyle(
-                                  color: theme.hintColor,
-                                ),
-                              ),
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: theme.scaffoldBackgroundColor,
-                                elevation: 0,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(8),
-                                  side: BorderSide(
-                                    color: theme.hintColor.withOpacity(0.2),
-                                    width: 1,
+                        LayoutBuilder(
+                          builder: (context, constraints) {
+                            final isSmallScreen = constraints.maxWidth < 400;
+                            return Wrap(
+                              spacing: 8,
+                              runSpacing: 8,
+                              alignment: WrapAlignment.center,
+                              children: [
+                                ElevatedButton.icon(
+                                  onPressed: () => _showMarkdownGuide(context,
+                                      isArabic: false),
+                                  icon: Icon(
+                                    Icons.language,
+                                    color: theme.hintColor,
+                                    size: isSmallScreen ? 16 : 20,
+                                  ),
+                                  label: Text(
+                                    'English',
+                                    style: TextStyle(
+                                      color: theme.hintColor,
+                                      fontSize: isSmallScreen ? 12 : 14,
+                                    ),
+                                  ),
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor:
+                                        theme.scaffoldBackgroundColor,
+                                    elevation: 0,
+                                    padding: EdgeInsets.symmetric(
+                                      horizontal: isSmallScreen ? 12 : 16,
+                                      vertical: isSmallScreen ? 8 : 12,
+                                    ),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(8),
+                                      side: BorderSide(
+                                        color: theme.hintColor.withOpacity(0.2),
+                                        width: 1,
+                                      ),
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ),
-                            ElevatedButton.icon(
-                              onPressed: () =>
-                                  _showMarkdownGuide(context, isArabic: true),
-                              icon: Icon(
-                                Icons.language,
-                                color: theme.hintColor,
-                              ),
-                              label: Text(
-                                'العربية',
-                                style: TextStyle(
-                                  color: theme.hintColor,
-                                ),
-                              ),
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: theme.scaffoldBackgroundColor,
-                                elevation: 0,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(8),
-                                  side: BorderSide(
-                                    color: theme.hintColor.withOpacity(0.2),
-                                    width: 1,
+                                ElevatedButton.icon(
+                                  onPressed: () => _showMarkdownGuide(context,
+                                      isArabic: true),
+                                  icon: Icon(
+                                    Icons.language,
+                                    color: theme.hintColor,
+                                    size: isSmallScreen ? 16 : 20,
+                                  ),
+                                  label: Text(
+                                    'العربية',
+                                    style: TextStyle(
+                                      color: theme.hintColor,
+                                      fontSize: isSmallScreen ? 12 : 14,
+                                    ),
+                                  ),
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor:
+                                        theme.scaffoldBackgroundColor,
+                                    elevation: 0,
+                                    padding: EdgeInsets.symmetric(
+                                      horizontal: isSmallScreen ? 12 : 16,
+                                      vertical: isSmallScreen ? 8 : 12,
+                                    ),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(8),
+                                      side: BorderSide(
+                                        color: theme.hintColor.withOpacity(0.2),
+                                        width: 1,
+                                      ),
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ),
-                          ],
+                              ],
+                            );
+                          },
                         ),
-                        // const SizedBox(height: 16),
-                        //  _buildMarkdownGuideContent(isArabic: false),
                       ],
                     ),
                   ),
@@ -288,288 +308,28 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
         .scale(delay: const Duration(milliseconds: 50));
   }
 
-  Widget _buildMarkdownSection(String title, List<Widget> items) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(top: 16, bottom: 8),
-          child: Text(
-            title,
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-              color: Theme.of(context).hintColor,
-            ),
-          ),
-        ),
-        ...items,
-      ],
-    );
-  }
-
-  Widget _buildMarkdownGuideItem(
-      String title, String syntax, String preview, String description) {
-    final theme = Theme.of(context);
-    return Container(
-      margin: const EdgeInsets.only(bottom: 12),
-      decoration: BoxDecoration(
-        border: Border.all(
-          color: theme.colorScheme.outline.withOpacity(0.2),
-        ),
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(12),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 8, vertical: 4),
-                      decoration: BoxDecoration(
-                        color: theme.primaryColor.withOpacity(0.1),
-                        borderRadius: BorderRadius.circular(4),
-                      ),
-                      child: Text(
-                        title,
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: theme.primaryColor,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  description,
-                  style: TextStyle(
-                    color: theme.colorScheme.onSurface.withOpacity(0.7),
-                    fontSize: 12,
-                  ),
-                ),
-                const SizedBox(height: 8),
-                Row(
-                  children: [
-                    Expanded(
-                      child: Container(
-                        padding: const EdgeInsets.all(8),
-                        decoration: BoxDecoration(
-                          color: theme.colorScheme.surfaceContainerHighest,
-                          borderRadius: BorderRadius.circular(4),
-                        ),
-                        child: Text(
-                          syntax,
-                          style: TextStyle(
-                            fontFamily: 'monospace',
-                            color: theme.colorScheme.onSurfaceVariant,
-                          ),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: 8),
-                    IconButton(
-                      onPressed: () async {
-                        await Clipboard.setData(ClipboardData(text: syntax));
-                        if (context.mounted) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text(
-                                'Copied to clipboard',
-                                style: TextStyle(
-                                  color: theme.colorScheme.onSecondaryContainer,
-                                ),
-                              ),
-                              backgroundColor:
-                                  theme.colorScheme.secondaryContainer,
-                              behavior: SnackBarBehavior.floating,
-                              duration: const Duration(seconds: 1),
-                            ),
-                          );
-                        }
-                      },
-                      icon: Icon(
-                        Icons.content_copy,
-                        color: theme.hintColor,
-                        size: 20,
-                      ),
-                      tooltip: 'Copy syntax',
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  'Preview:',
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: theme.colorScheme.onSurface.withOpacity(0.7),
-                  ),
-                ),
-                const SizedBox(height: 4),
-                Container(
-                  padding: const EdgeInsets.all(8),
-                  decoration: BoxDecoration(
-                    color: theme.colorScheme.surface,
-                    borderRadius: BorderRadius.circular(4),
-                  ),
-                  child: Text(
-                    preview,
-                    style: TextStyle(
-                      color: theme.colorScheme.onSurface,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
   void _showMarkdownGuide(BuildContext context, {required bool isArabic}) {
+    final size = MediaQuery.of(context).size;
+    final isSmallScreen = size.width < 600;
+
     showDialog(
       context: context,
-      builder: (context) => MarkdownGuide(
-        isArabic: isArabic,
-        theme: Theme.of(context),
+      builder: (context) => Dialog(
+        insetPadding: EdgeInsets.symmetric(
+          horizontal: isSmallScreen ? 16 : 32,
+          vertical: 24,
+        ),
+        child: ConstrainedBox(
+          constraints: BoxConstraints(
+            maxWidth: isSmallScreen ? size.width : 600,
+            maxHeight: size.height * 0.8,
+          ),
+          child: MarkdownGuide(
+            isArabic: isArabic,
+            theme: Theme.of(context),
+          ),
+        ),
       ),
-    );
-  }
-
-  Widget _buildMarkdownGuideContent({required bool isArabic}) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        _buildMarkdownSection(
-          isArabic ? 'تنسيق النص' : 'Text Formatting',
-          [
-            _buildMarkdownGuideItem(
-              isArabic ? 'عريض' : 'Bold',
-              '**${isArabic ? 'نص عريض' : 'bold text'}**',
-              isArabic ? 'نص عريض' : 'Bold text',
-              isArabic ? 'جعل النص عريض' : 'Make text bold',
-            ),
-            _buildMarkdownGuideItem(
-              isArabic ? 'مائل' : 'Italic',
-              '*${isArabic ? 'نص مائل' : 'italic text'}*',
-              isArabic ? 'نص مائل' : 'Italic text',
-              isArabic ? 'جعل النص مائل' : 'Make text italic',
-            ),
-            _buildMarkdownGuideItem(
-              isArabic ? 'عريض ومائل' : 'Bold & Italic',
-              '***${isArabic ? 'نص عريض ومائل' : 'bold & italic'}***',
-              isArabic ? 'نص عريض ومائل' : 'Bold & Italic',
-              isArabic ? 'جعل النص عريض ومائل' : 'Make text bold and italic',
-            ),
-            _buildMarkdownGuideItem(
-              isArabic ? 'يتوسطه خط' : 'Strikethrough',
-              '~~${isArabic ? 'نص يتوسطه خط' : 'strikethrough'}~~',
-              isArabic ? 'نص يتوسطه خط' : 'Strikethrough',
-              isArabic ? 'إضافة خط في منتصف النص' : 'Add a line through text',
-            ),
-          ],
-        ),
-        _buildMarkdownSection(
-          isArabic ? 'العناوين' : 'Headers',
-          [
-            _buildMarkdownGuideItem(
-              'H1',
-              '# ${isArabic ? 'عنوان 1' : 'Header 1'}',
-              isArabic ? 'عنوان 1' : 'Header 1',
-              isArabic ? 'عنوان رئيسي كبير' : 'Large main heading',
-            ),
-            _buildMarkdownGuideItem(
-              'H2',
-              '## ${isArabic ? 'عنوان 2' : 'Header 2'}',
-              isArabic ? 'عنوان 2' : 'Header 2',
-              isArabic ? 'عنوان فرعي متوسط' : 'Medium subheading',
-            ),
-            _buildMarkdownGuideItem(
-              'H3',
-              '### ${isArabic ? 'عنوان 3' : 'Header 3'}',
-              isArabic ? 'عنوان 3' : 'Header 3',
-              isArabic ? 'عنوان صغير' : 'Small heading',
-            ),
-          ],
-        ),
-        _buildMarkdownSection(
-          isArabic ? 'القوائم' : 'Lists',
-          [
-            _buildMarkdownGuideItem(
-              isArabic ? 'غير مرقمة' : 'Unordered',
-              '- ${isArabic ? 'عنصر 1' : 'Item 1'}\n- ${isArabic ? 'عنصر 2' : 'Item 2'}\n- ${isArabic ? 'عنصر 3' : 'Item 3'}',
-              isArabic
-                  ? '• عنصر 1\n• عنصر 2\n• عنصر 3'
-                  : '• Item 1\n• Item 2\n• Item 3',
-              isArabic ? 'إنشاء قائمة غير مرقمة' : 'Create a bullet list',
-            ),
-            _buildMarkdownGuideItem(
-              isArabic ? 'مرقمة' : 'Ordered',
-              '1. ${isArabic ? 'أولاً' : 'First'}\n2. ${isArabic ? 'ثانياً' : 'Second'}\n3. ${isArabic ? 'ثالثاً' : 'Third'}',
-              isArabic
-                  ? '1. أولاً\n2. ثانياً\n3. ثالثاً'
-                  : '1. First\n2. Second\n3. Third',
-              isArabic ? 'إنشاء قائمة مرقمة' : 'Create a numbered list',
-            ),
-            _buildMarkdownGuideItem(
-              isArabic ? 'قائمة المهام' : 'Task List',
-              '- [ ] ${isArabic ? 'مهمة غير مكتملة' : 'Incomplete task'}\n- [x] ${isArabic ? 'مهمة مكتملة' : 'Completed task'}',
-              isArabic
-                  ? '☐ مهمة غير مكتملة\n☑ مهمة مكتملة'
-                  : '☐ Incomplete task\n☑ Completed task',
-              isArabic ? 'إنشاء قائمة مهام' : 'Create a task list',
-            ),
-          ],
-        ),
-        _buildMarkdownSection(
-          isArabic ? 'الروابط والصور' : 'Links & Images',
-          [
-            _buildMarkdownGuideItem(
-              isArabic ? 'رابط' : 'Link',
-              '[${isArabic ? 'نص الرابط' : 'link text'}](${isArabic ? 'رابط' : 'url'})',
-              isArabic ? 'نص الرابط' : 'link text',
-              isArabic ? 'إضافة رابط' : 'Add a link',
-            ),
-            _buildMarkdownGuideItem(
-              isArabic ? 'صورة' : 'Image',
-              '![${isArabic ? 'وصف الصورة' : 'image alt'}](${isArabic ? 'رابط الصورة' : 'image url'})',
-              isArabic ? 'صورة' : 'Image',
-              isArabic ? 'إضافة صورة' : 'Add an image',
-            ),
-          ],
-        ),
-        _buildMarkdownSection(
-          isArabic ? 'متقدم' : 'Advanced',
-          [
-            _buildMarkdownGuideItem(
-              isArabic ? 'اقتباس' : 'Blockquote',
-              '> ${isArabic ? 'نص الاقتباس' : 'Quote text'}',
-              isArabic ? 'نص الاقتباس' : 'Quote text',
-              isArabic ? 'إضافة اقتباس' : 'Add a quote',
-            ),
-            _buildMarkdownGuideItem(
-              isArabic ? 'كود' : 'Code',
-              '```\n${isArabic ? 'كود' : 'code'}\n```',
-              isArabic ? 'كود' : 'code',
-              isArabic ? 'إضافة كود' : 'Add code',
-            ),
-            _buildMarkdownGuideItem(
-              isArabic ? 'جدول' : 'Table',
-              '| ${isArabic ? 'العنوان' : 'Header'} | ${isArabic ? 'الوصف' : 'Description'} |\n|--------|-------------|\n| ${isArabic ? 'خلية' : 'Cell'}   | ${isArabic ? 'محتوى' : 'Content'}  |',
-              isArabic ? 'جدول' : 'Table',
-              isArabic ? 'إنشاء جدول' : 'Create a table',
-            ),
-          ],
-        ),
-      ],
     );
   }
 }

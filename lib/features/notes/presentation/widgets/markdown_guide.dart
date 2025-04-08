@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'markdown_guide_item.dart';
-import 'markdown_content.dart';
 
 class MarkdownGuide extends StatelessWidget {
   final bool isArabic;
@@ -30,12 +29,15 @@ class MarkdownGuide extends StatelessWidget {
                 color: theme.primaryColor,
               ),
               const SizedBox(width: 8),
-              Text(
-                isArabic ? 'دليل ماركداون' : 'Markdown Guide',
-                style: TextStyle(
-                  color: theme.primaryColor,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20,
+              Expanded(
+                child: Text(
+                  isArabic ? 'دليل ماركداون' : 'Markdown Guide',
+                  style: TextStyle(
+                    color: theme.primaryColor,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                  ),
+                  overflow: TextOverflow.ellipsis,
                 ),
               ),
             ],
