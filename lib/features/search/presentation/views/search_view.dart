@@ -85,6 +85,7 @@ class InitialSearch extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 24),
       height: double.infinity,
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Icon(
@@ -96,6 +97,7 @@ class InitialSearch extends StatelessWidget {
               .fade(duration: const Duration(milliseconds: 500))
               .scale(delay: const Duration(milliseconds: 200)),
           const SizedBox(height: 24),
+          const SizedBox(width: double.infinity),
           Text(
             'search'.tr(context),
             textAlign: TextAlign.center,
