@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:note/core/helpers/localization/app_localization.dart';
+import 'package:note/core/utils/logger.dart';
 
 import '../../../../core/helpers/colors/app_colors.dart';
 import '../../../../core/helpers/functions/ui_functions.dart';
@@ -113,13 +114,27 @@ class NoteDetailScreenLogic {
   }
 
   Future<bool> handleBackNavigation() async {
+    // Save the note before navigating back
     await saveNote();
+
+    // Only proceed with navigation if the context is still mounted
     if (!context.mounted) return true;
+
+    // Refresh the notes list
     await context.read<FetchAllNotesCubit>().fetchAllNotes();
+
+    // If we're in a folder view, refresh that too
+    if (folder != null && context.mounted) {
+      await context
+          .read<FetchNotesByFolderCubit>()
+          .fetchNotesByFolder(folderName: folder!);
+    }
+
     return true;
   }
 
   Future<void> saveNote() async {
+    Log.info("save note");
     final getUserState = context.read<GetUserCubit>().state;
 
     if (getUserState is! GetUserSuccess) return;

@@ -82,7 +82,7 @@ void showWarning({
 
       return TweenAnimationBuilder<double>(
         tween: Tween(begin: 0.0, end: 1.0),
-        duration: const Duration(milliseconds: 300),
+        duration: const Duration(milliseconds: 200),
         builder: (context, value, child) {
           return Transform.scale(
             scale: value,

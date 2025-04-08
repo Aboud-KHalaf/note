@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:note/features/notes/presentation/widgets/circular_button.dart';
 
 class FabMenu extends StatefulWidget {
-  const FabMenu(
-      {super.key,
-      required this.onColorPressed,
-      required this.onImagePressed,
-      required this.onFolderPressed});
+  const FabMenu({
+    super.key,
+    required this.onColorPressed,
+    required this.onImagePressed,
+    required this.onFolderPressed,
+  });
 
   final VoidCallback onColorPressed;
   final VoidCallback onImagePressed;
@@ -68,107 +69,101 @@ class _FabMenuState extends State<FabMenu> with SingleTickerProviderStateMixin {
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
 
-    return Positioned(
-        right: 30,
-        bottom: 30,
-        child: Stack(
-          alignment: Alignment.bottomRight,
-          children: <Widget>[
-            IgnorePointer(
-              child: Container(
-                color: Colors.transparent,
-                height: 150.0,
-                width: 150.0,
-              ),
-            ),
-            Transform.translate(
-              offset: Offset.fromDirection(getRadiansFromDegree(270),
-                  degOneTranslationAnimation.value * 100),
-              child: Transform(
-                transform: Matrix4.rotationZ(
-                    getRadiansFromDegree(rotationAnimation.value))
-                  ..scale(degOneTranslationAnimation.value),
-                alignment: Alignment.center,
-                child: CircularButton(
-                  color: theme.primaryColor,
-                  width: 50,
-                  height: 50,
-                  icon: const Icon(
-                    Icons.color_lens,
-                    color: Colors.black,
-                  ),
-                  onClick: () {
-                    widget.onColorPressed();
-                  },
-                ),
-              ),
-            ),
-            Transform.translate(
-              offset: Offset.fromDirection(getRadiansFromDegree(225),
-                  degTwoTranslationAnimation.value * 100),
-              child: Transform(
-                transform: Matrix4.rotationZ(
-                    getRadiansFromDegree(rotationAnimation.value))
-                  ..scale(degTwoTranslationAnimation.value),
-                alignment: Alignment.center,
-                child: CircularButton(
-                  color: Colors.cyan,
-                  width: 50,
-                  height: 50,
-                  icon: const Icon(
-                    Icons.add_photo_alternate,
-                    color: Colors.black,
-                  ),
-                  onClick: () {
-                    widget.onImagePressed();
-                  },
-                ),
-              ),
-            ),
-            Transform.translate(
-              offset: Offset.fromDirection(getRadiansFromDegree(180),
-                  degThreeTranslationAnimation.value * 100),
-              child: Transform(
-                transform: Matrix4.rotationZ(
-                    getRadiansFromDegree(rotationAnimation.value))
-                  ..scale(degThreeTranslationAnimation.value),
-                alignment: Alignment.center,
-                child: CircularButton(
-                  color: Colors.orangeAccent,
-                  width: 50,
-                  height: 50,
-                  icon: const Icon(
-                    Icons.folder,
-                    color: Colors.black,
-                  ),
-                  onClick: () {
-                    widget.onFolderPressed();
-                  },
-                ),
-              ),
-            ),
-            Transform(
+    return SizedBox(
+      height: 150.0,
+      width: 150.0,
+      child: Stack(
+        alignment: Alignment.bottomRight,
+        children: <Widget>[
+          Transform.translate(
+            offset: Offset.fromDirection(getRadiansFromDegree(270),
+                degOneTranslationAnimation.value * 100),
+            child: Transform(
               transform: Matrix4.rotationZ(
-                  getRadiansFromDegree(rotationAnimation.value)),
+                  getRadiansFromDegree(rotationAnimation.value))
+                ..scale(degOneTranslationAnimation.value),
               alignment: Alignment.center,
               child: CircularButton(
                 color: theme.primaryColor,
-                width: 60,
-                height: 60,
-                icon: Icon(
-                  !(animationController.isCompleted) ? Icons.menu : Icons.clear,
+                width: 50,
+                height: 50,
+                icon: const Icon(
+                  Icons.color_lens,
                   color: Colors.black,
                 ),
                 onClick: () {
-                  if (animationController.isCompleted) {
-                    animationController.reverse();
-                  } else {
-                    animationController.forward();
-                  }
+                  widget.onColorPressed();
                 },
               ),
-            )
-          ],
-        ));
+            ),
+          ),
+          Transform.translate(
+            offset: Offset.fromDirection(getRadiansFromDegree(225),
+                degTwoTranslationAnimation.value * 100),
+            child: Transform(
+              transform: Matrix4.rotationZ(
+                  getRadiansFromDegree(rotationAnimation.value))
+                ..scale(degTwoTranslationAnimation.value),
+              alignment: Alignment.center,
+              child: CircularButton(
+                color: Colors.cyan,
+                width: 50,
+                height: 50,
+                icon: const Icon(
+                  Icons.add_photo_alternate,
+                  color: Colors.black,
+                ),
+                onClick: () {
+                  widget.onImagePressed();
+                },
+              ),
+            ),
+          ),
+          Transform.translate(
+            offset: Offset.fromDirection(getRadiansFromDegree(180),
+                degThreeTranslationAnimation.value * 100),
+            child: Transform(
+              transform: Matrix4.rotationZ(
+                  getRadiansFromDegree(rotationAnimation.value))
+                ..scale(degThreeTranslationAnimation.value),
+              alignment: Alignment.center,
+              child: CircularButton(
+                color: Colors.orangeAccent,
+                width: 50,
+                height: 50,
+                icon: const Icon(
+                  Icons.folder,
+                  color: Colors.black,
+                ),
+                onClick: () {
+                  widget.onFolderPressed();
+                },
+              ),
+            ),
+          ),
+          Transform(
+            transform: Matrix4.rotationZ(
+                getRadiansFromDegree(rotationAnimation.value)),
+            alignment: Alignment.center,
+            child: CircularButton(
+              color: theme.primaryColor,
+              width: 60,
+              height: 60,
+              icon: Icon(
+                !(animationController.isCompleted) ? Icons.menu : Icons.clear,
+                color: Colors.black,
+              ),
+              onClick: () {
+                if (animationController.isCompleted) {
+                  animationController.reverse();
+                } else {
+                  animationController.forward();
+                }
+              },
+            ),
+          )
+        ],
+      ),
+    );
   }
 }

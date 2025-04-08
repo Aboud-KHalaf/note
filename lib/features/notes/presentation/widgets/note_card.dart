@@ -5,6 +5,7 @@ import 'package:note/core/helpers/functions/ui_functions.dart';
 import 'package:note/core/helpers/styles/spacing_h.dart';
 import 'package:note/features/notes/domain/entities/note_entity.dart';
 import 'package:note/features/notes/presentation/widgets/image_display.dart';
+import 'package:note/features/notes/presentation/widgets/markdown_content.dart';
 import 'package:note/features/notes/presentation/widgets/notes_folder_list_view.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
@@ -28,6 +29,9 @@ class NoteCard extends StatelessWidget {
 
     return Container(
       padding: const EdgeInsets.all(12.0),
+      constraints: BoxConstraints(
+        maxHeight: MediaQuery.of(context).size.height * 0.5,
+      ),
       decoration: BoxDecoration(
         color: isSelected
             ? theme.primaryColor.withOpacity(0.5)
@@ -47,70 +51,76 @@ class NoteCard extends StatelessWidget {
           ),
         ],
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          if (note.imageUrl != '' && note.imageUrl != null)
-            ClipRRect(
-              borderRadius: BorderRadius.circular(12.0),
-              child: ImageDisplay(
-                image: File(note.imageUrl!),
-                onLongPress: () {},
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            if (note.imageUrl != '' && note.imageUrl != null)
+              ClipRRect(
+                borderRadius: BorderRadius.circular(12.0),
+                child: ImageDisplay(
+                  image: File(note.imageUrl!),
+                  onLongPress: () {},
+                ),
+              )
+                  .animate()
+                  .fade(duration: const Duration(milliseconds: 300))
+                  .scale(delay: Duration(milliseconds: index * 50)),
+            SpacingHelper.h2,
+            Flexible(
+              child: SizedBox(
+                width: double.infinity,
+                child: Text(
+                  note.title,
+                  textDirection: isArbic(note.title[0])
+                      ? TextDirection.rtl
+                      : TextDirection.ltr,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18.0,
+                    color: theme.textTheme.titleLarge?.color,
+                  ),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
               ),
             )
                 .animate()
                 .fade(duration: const Duration(milliseconds: 300))
-                .scale(delay: Duration(milliseconds: index * 50)),
-          SpacingHelper.h2,
-          Flexible(
-            child: SizedBox(
-              width: double.infinity,
-              child: Text(
-                note.title,
-                textDirection: isArbic(note.title[0])
-                    ? TextDirection.rtl
-                    : TextDirection.ltr,
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 18.0,
-                  color: theme.textTheme.titleLarge?.color,
+                .slideX(begin: 0.1, end: 0),
+            const SizedBox(height: 8.0),
+            Flexible(
+              child: SizedBox(
+                width: double.infinity,
+                child: MarkdownContent(
+                  content: note.content,
+                  direction:
+                      isArbic(note.content.isNotEmpty ? note.content[0] : 'a')
+                          ? TextDirection.rtl
+                          : TextDirection.ltr,
                 ),
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
               ),
-            ),
-          )
-              .animate()
-              .fade(duration: const Duration(milliseconds: 300))
-              .slideX(begin: 0.1, end: 0),
-          const SizedBox(height: 8.0),
-          Flexible(
-            child: SizedBox(
-              width: double.infinity,
-              child: Text(
-                note.content,
-                textDirection:
-                    isArbic(note.content.isNotEmpty ? note.content[0] : 'a')
-                        ? TextDirection.rtl
-                        : TextDirection.ltr,
-                style: TextStyle(
-                  fontSize: 14.0,
-                  color: theme.textTheme.bodyLarge?.color?.withOpacity(0.8),
-                ),
-                maxLines: 8,
-                overflow: TextOverflow.ellipsis,
-              ),
-            ),
-          ).animate().fade(duration: const Duration(milliseconds: 300)).slideX(
-              begin: 0.1, end: 0, delay: const Duration(milliseconds: 100)),
-          const SizedBox(height: 8),
-          NotesFolderListView(
-            folders: note.folders,
-            colorIdx: note.color,
-          ).animate().fade(duration: const Duration(milliseconds: 300)).slideX(
-              begin: 0.1, end: 0, delay: const Duration(milliseconds: 200)),
-        ],
+            )
+                .animate()
+                .fade(duration: const Duration(milliseconds: 300))
+                .slideX(
+                    begin: 0.1,
+                    end: 0,
+                    delay: const Duration(milliseconds: 100)),
+            const SizedBox(height: 8),
+            NotesFolderListView(
+              folders: note.folders,
+              colorIdx: note.color,
+            )
+                .animate()
+                .fade(duration: const Duration(milliseconds: 300))
+                .slideX(
+                    begin: 0.1,
+                    end: 0,
+                    delay: const Duration(milliseconds: 200)),
+          ],
+        ),
       ),
     )
         .animate()
