@@ -29,4 +29,8 @@ class SearchCubit extends Cubit<SearchState> {
       },
     );
   }
+
+  void resetSearch() {
+    emit(SearchInitial());
+  }
 }

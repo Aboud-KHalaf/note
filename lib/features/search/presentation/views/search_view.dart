@@ -31,7 +31,7 @@ class _SearchViewState extends State<SearchView> {
     searchContorller = TextEditingController();
     searchCubit = context.read<SearchCubit>();
     // Reset search state when view is initialized
-    searchCubit.emit(SearchInitial());
+    searchCubit.resetSearch();
   }
 
   @override
@@ -42,7 +42,7 @@ class _SearchViewState extends State<SearchView> {
 
   void _clearSearch() {
     searchContorller.clear();
-    searchCubit.emit(SearchInitial());
+    searchCubit.resetSearch();
   }
 
   @override
@@ -58,7 +58,7 @@ class _SearchViewState extends State<SearchView> {
           onChanged: (value) {
             if (value.isEmpty) {
               // Reset state when search is cleared
-              searchCubit.emit(SearchInitial());
+              searchCubit.resetSearch();
             } else {
               searchCubit.search(text: value);
             }

@@ -147,8 +147,9 @@ class NoteDetailScreenLogic {
 
   bool _hasImageChanged() {
     if (note == null) return selectedImage != null;
-    if (selectedImage == null)
+    if (selectedImage == null) {
       return note!.imageUrl != null && note!.imageUrl!.isNotEmpty;
+    }
     return note!.imageUrl == null || note!.imageUrl!.isEmpty;
   }
 

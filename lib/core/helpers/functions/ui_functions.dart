@@ -20,18 +20,48 @@ Widget buildLoadingIndicator(Color color) {
 }
 
 void showAnimatedSnackBar(BuildContext context, Color color, String text) {
+  final theme = Theme.of(context);
   final snackBar = SnackBar(
-    content: Text(text),
+    content: Row(
+      children: [
+        Icon(
+          color == Colors.green ? Icons.check_circle : Icons.error,
+          color: theme.colorScheme.onPrimary,
+          size: 20,
+        ),
+        const SizedBox(width: 8),
+        Expanded(
+          child: Text(
+            text,
+            style: TextStyle(
+              color: theme.colorScheme.onPrimary,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+        ),
+      ],
+    ),
     behavior: SnackBarBehavior.floating,
     backgroundColor: color,
-    duration: const Duration(seconds: 2),
+    duration: const Duration(seconds: 3),
     margin: const EdgeInsets.only(bottom: 40, left: 20, right: 20),
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(12),
+    ),
+    elevation: 4,
     animation: CurvedAnimation(
       parent: AnimationController(
         vsync: Scaffold.of(context),
-        duration: const Duration(milliseconds: 500),
+        duration: const Duration(milliseconds: 300),
       ),
-      curve: Curves.easeInOut,
+      curve: Curves.easeOutCubic,
+    ),
+    action: SnackBarAction(
+      label: 'Dismiss',
+      textColor: theme.colorScheme.onPrimary.withOpacity(0.8),
+      onPressed: () {
+        ScaffoldMessenger.of(context).hideCurrentSnackBar();
+      },
     ),
   );
 

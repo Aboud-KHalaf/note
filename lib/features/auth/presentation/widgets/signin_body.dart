@@ -6,6 +6,7 @@ import 'package:note/core/helpers/styles/fonts_h.dart';
 import 'package:note/core/helpers/styles/spacing_h.dart';
 import 'package:note/core/utils/validators.dart';
 import 'package:note/features/auth/presentation/manager/auth_cubit/auth_cubit.dart';
+import 'package:note/features/auth/presentation/manager/get_user_cubit/get_user_cubit.dart';
 import 'package:note/features/auth/presentation/views/syncing_view.dart';
 import 'package:note/features/auth/presentation/widgets/animation_box_w.dart';
 import 'package:note/features/auth/presentation/widgets/go_to_get_started_w.dart';
@@ -139,9 +140,21 @@ class _SignInViewBodyState extends State<SignInViewBody>
       });
       return _buildSignUpButton(color);
     } else if (state is AuthSuccess) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        showAnimatedSnackBar(context, Colors.green, 'sign in success');
-        Navigator.of(context).pushReplacementNamed(SyncingView.id);
+      final currentContext = context;
+      WidgetsBinding.instance.addPostFrameCallback((_) async {
+        try {
+          await BlocProvider.of<GetUserCubit>(currentContext).getUserData();
+          if (currentContext.mounted) {
+            showAnimatedSnackBar(
+                currentContext, Colors.green, 'sign in success');
+            Navigator.of(currentContext).pushReplacementNamed(SyncingView.id);
+          }
+        } catch (e) {
+          if (currentContext.mounted) {
+            showAnimatedSnackBar(
+                currentContext, Colors.red, 'Failed to load user data');
+          }
+        }
       });
     }
     return _buildSignUpButton(color);
