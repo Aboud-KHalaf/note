@@ -98,9 +98,10 @@ class NoteDetailScreenLogic {
   }
 
   Color getNoteBackgroundColor(ThemeData theme) {
+    // Ensure the color index is within valid bounds
     final colorIndex = (noteColor == 0 || noteColor == 1)
         ? (theme.brightness == Brightness.light ? 1 : 0)
-        : noteColor;
+        : noteColor.clamp(0, AppColors.cardColors.length - 1);
     return AppColors.cardColors[colorIndex];
   }
 
