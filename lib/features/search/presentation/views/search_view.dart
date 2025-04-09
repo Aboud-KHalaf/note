@@ -23,10 +23,26 @@ class SearchView extends StatefulWidget {
 
 class _SearchViewState extends State<SearchView> {
   late TextEditingController searchContorller;
+  late SearchCubit searchCubit;
+
   @override
   void initState() {
     super.initState();
     searchContorller = TextEditingController();
+    searchCubit = context.read<SearchCubit>();
+    // Reset search state when view is initialized
+    searchCubit.emit(SearchInitial());
+  }
+
+  @override
+  void dispose() {
+    searchContorller.dispose();
+    super.dispose();
+  }
+
+  void _clearSearch() {
+    searchContorller.clear();
+    searchCubit.emit(SearchInitial());
   }
 
   @override
@@ -40,8 +56,11 @@ class _SearchViewState extends State<SearchView> {
           hintText: 'search'.tr(context),
           controller: searchContorller,
           onChanged: (value) {
-            if (value != "") {
-              context.read<SearchCubit>().search(text: value);
+            if (value.isEmpty) {
+              // Reset state when search is cleared
+              searchCubit.emit(SearchInitial());
+            } else {
+              searchCubit.search(text: value);
             }
           },
           suffixIcon: Icon(
@@ -49,6 +68,16 @@ class _SearchViewState extends State<SearchView> {
             color: Theme.of(context).hintColor,
           ),
         ),
+        actions: [
+          if (searchContorller.text.isNotEmpty)
+            IconButton(
+              icon: Icon(
+                Icons.clear,
+                color: Theme.of(context).hintColor,
+              ),
+              onPressed: _clearSearch,
+            ),
+        ],
       ),
       body: BlocBuilder<SearchCubit, SearchState>(
         builder: (context, state) {

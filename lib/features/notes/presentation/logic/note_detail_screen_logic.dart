@@ -98,7 +98,7 @@ class NoteDetailScreenLogic {
   }
 
   Color getNoteBackgroundColor(ThemeData theme) {
-    final colorIndex = noteColor == 100
+    final colorIndex = (noteColor == 0 || noteColor == 1)
         ? (theme.brightness == Brightness.light ? 1 : 0)
         : noteColor;
     return AppColors.cardColors[colorIndex];
@@ -118,9 +118,44 @@ class NoteDetailScreenLogic {
     );
   }
 
+  bool _hasChanges() {
+    if (note == null) {
+      // For new notes, check if there's any content
+      return titleController.text.trim().isNotEmpty ||
+          contentController.text.trim().isNotEmpty;
+    }
+
+    // For existing notes, compare with original values
+    final hasTitleChanged = titleController.text.trim() != note!.title;
+    final hasContentChanged = contentController.text.trim() != note!.content;
+    final hasColorChanged = noteColor != note!.color;
+    final hasFoldersChanged = !_areListsEqual(noteFolders, note!.folders);
+    final hasImageChanged = _hasImageChanged();
+
+    return hasTitleChanged ||
+        hasContentChanged ||
+        hasColorChanged ||
+        hasFoldersChanged ||
+        hasImageChanged;
+  }
+
+  bool _areListsEqual(List<String> list1, List<String> list2) {
+    if (list1.length != list2.length) return false;
+    return list1.every((item) => list2.contains(item));
+  }
+
+  bool _hasImageChanged() {
+    if (note == null) return selectedImage != null;
+    if (selectedImage == null)
+      return note!.imageUrl != null && note!.imageUrl!.isNotEmpty;
+    return note!.imageUrl == null || note!.imageUrl!.isEmpty;
+  }
+
   Future<bool> handleBackNavigation() async {
-    // Save the note before navigating back
-    await saveNote();
+    // Only save if there are actual changes
+    if (_hasChanges()) {
+      await saveNote();
+    }
 
     // Only proceed with navigation if the context is still mounted
     if (!context.mounted) return true;

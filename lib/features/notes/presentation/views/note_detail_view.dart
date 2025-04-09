@@ -58,7 +58,7 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
               padding: const EdgeInsets.all(8),
               decoration: BoxDecoration(
                 color: _isEditing
-                    ? theme.primaryColor.withOpacity(0.1)
+                    ? theme.primaryColor.withOpacity(0.3)
                     : theme.colorScheme.surfaceContainerHighest,
                 borderRadius: BorderRadius.circular(8),
               ),

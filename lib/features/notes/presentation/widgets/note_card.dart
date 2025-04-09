@@ -52,75 +52,81 @@ class NoteCard extends StatelessWidget {
         ],
       ),
       child: SingleChildScrollView(
-        physics: const NeverScrollableScrollPhysics(),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            if (note.imageUrl != '' && note.imageUrl != null)
-              ClipRRect(
-                borderRadius: BorderRadius.circular(12.0),
-                child: ImageDisplay(
-                  image: File(note.imageUrl!),
-                  onLongPress: () {},
+        physics: const ClampingScrollPhysics(),
+        child: ConstrainedBox(
+          constraints: BoxConstraints(
+            maxHeight: MediaQuery.of(context).size.height * 0.5 -
+                24, // Account for padding
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              if (note.imageUrl != '' && note.imageUrl != null)
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(12.0),
+                  child: ImageDisplay(
+                    image: File(note.imageUrl!),
+                    onLongPress: () {},
+                  ),
+                )
+                    .animate()
+                    .fade(duration: const Duration(milliseconds: 300))
+                    .scale(delay: Duration(milliseconds: index * 50)),
+              SpacingHelper.h2,
+              Flexible(
+                child: SizedBox(
+                  width: double.infinity,
+                  child: Text(
+                    note.title,
+                    textDirection: isArbic(note.title[0])
+                        ? TextDirection.rtl
+                        : TextDirection.ltr,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18.0,
+                      color: theme.textTheme.titleLarge?.color,
+                    ),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
                 ),
               )
                   .animate()
                   .fade(duration: const Duration(milliseconds: 300))
-                  .scale(delay: Duration(milliseconds: index * 50)),
-            SpacingHelper.h2,
-            Flexible(
-              child: SizedBox(
-                width: double.infinity,
-                child: Text(
-                  note.title,
-                  textDirection: isArbic(note.title[0])
-                      ? TextDirection.rtl
-                      : TextDirection.ltr,
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 18.0,
-                    color: theme.textTheme.titleLarge?.color,
+                  .slideX(begin: 0.1, end: 0),
+              const SizedBox(height: 8.0),
+              Flexible(
+                child: SizedBox(
+                  width: double.infinity,
+                  child: MarkdownContent(
+                    content: note.content,
+                    direction:
+                        isArbic(note.content.isNotEmpty ? note.content[0] : 'a')
+                            ? TextDirection.rtl
+                            : TextDirection.ltr,
                   ),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
                 ),
-              ),
-            )
-                .animate()
-                .fade(duration: const Duration(milliseconds: 300))
-                .slideX(begin: 0.1, end: 0),
-            const SizedBox(height: 8.0),
-            Flexible(
-              child: SizedBox(
-                width: double.infinity,
-                child: MarkdownContent(
-                  content: note.content,
-                  direction:
-                      isArbic(note.content.isNotEmpty ? note.content[0] : 'a')
-                          ? TextDirection.rtl
-                          : TextDirection.ltr,
-                ),
-              ),
-            )
-                .animate()
-                .fade(duration: const Duration(milliseconds: 300))
-                .slideX(
-                    begin: 0.1,
-                    end: 0,
-                    delay: const Duration(milliseconds: 100)),
-            const SizedBox(height: 8),
-            NotesFolderListView(
-              folders: note.folders,
-              colorIdx: note.color,
-            )
-                .animate()
-                .fade(duration: const Duration(milliseconds: 300))
-                .slideX(
-                    begin: 0.1,
-                    end: 0,
-                    delay: const Duration(milliseconds: 200)),
-          ],
+              )
+                  .animate()
+                  .fade(duration: const Duration(milliseconds: 300))
+                  .slideX(
+                      begin: 0.1,
+                      end: 0,
+                      delay: const Duration(milliseconds: 100)),
+              const SizedBox(height: 8),
+              NotesFolderListView(
+                folders: note.folders,
+                colorIdx: note.color,
+              )
+                  .animate()
+                  .fade(duration: const Duration(milliseconds: 300))
+                  .slideX(
+                      begin: 0.1,
+                      end: 0,
+                      delay: const Duration(milliseconds: 200)),
+            ],
+          ),
         ),
       ),
     )

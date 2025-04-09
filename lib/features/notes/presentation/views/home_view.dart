@@ -65,13 +65,16 @@ class _HomeViewState extends State<HomeView> {
                     }
                   },
                 ),
-                IconButton(
-                  onPressed: () {
-                    Navigator.of(context).pushNamed(SearchView.id);
-                  },
-                  icon: const Icon(
-                    Icons.search,
-                    size: 32,
+                Padding(
+                  padding: const EdgeInsets.only(left: 8.0),
+                  child: IconButton(
+                    onPressed: () {
+                      Navigator.of(context).pushNamed(SearchView.id);
+                    },
+                    icon: const Icon(
+                      Icons.search,
+                      size: 32,
+                    ),
                   ),
                 )
               ],
