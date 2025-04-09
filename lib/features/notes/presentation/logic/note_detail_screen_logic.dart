@@ -78,7 +78,12 @@ class NoteDetailScreenLogic {
   TextDirection _determineTextDirection(String text) {
     if (text.isEmpty) return TextDirection.ltr;
 
-    final firstChar = text.trim().characters.first;
+    // Remove markdown syntax characters
+    final cleanText = text.replaceAll(RegExp(r'^[#*~`>|!\[\]]+'), '').trim();
+
+    if (cleanText.isEmpty) return TextDirection.ltr;
+
+    final firstChar = cleanText.characters.first;
     return isArbic(firstChar) ? TextDirection.rtl : TextDirection.ltr;
   }
 

@@ -31,8 +31,7 @@ class MarkdownContent extends StatelessWidget {
                     ?.withOpacity(0.7),
               ),
           code: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                backgroundColor:
-                    Theme.of(context).colorScheme.surfaceContainerHighest,
+                backgroundColor: Theme.of(context).colorScheme.primary,
                 fontFamily: 'monospace',
               ),
           listBullet: Theme.of(context).textTheme.bodyLarge,
