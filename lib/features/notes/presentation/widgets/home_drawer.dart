@@ -163,7 +163,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
                         content: "log_out_warning".tr(context),
                         type: "log_out".tr(context),
                         onDone: () async {
-                          context.read<AuthCubit>().signOut();
+                          await context.read<AuthCubit>().signOut();
                           Navigator.pushReplacementNamed(context, FirstView.id);
                         },
                       );

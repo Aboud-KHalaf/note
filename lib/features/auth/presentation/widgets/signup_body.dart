@@ -10,6 +10,7 @@ import 'package:note/features/auth/presentation/manager/auth_cubit/auth_cubit.da
 import 'package:note/features/auth/presentation/widgets/animation_box_w.dart';
 import 'package:note/features/notes/presentation/views/home_view.dart';
 
+import '../manager/get_user_cubit/get_user_cubit.dart';
 import 'custom_material_button_w.dart';
 import '../../../../core/widgets/custom_text_form_field_w.dart';
 import 'go_to_login.dart_w.dart';
@@ -157,9 +158,21 @@ class _SignUpViewBodyState extends State<SignUpViewBody>
       });
       return _buildSignUpButton(color);
     } else if (state is AuthSuccess) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        showAnimatedSnackBar(context, Colors.green, 'sign up success');
-        Navigator.of(context).pushReplacementNamed(HomeView.id);
+      final currentContext = context;
+      WidgetsBinding.instance.addPostFrameCallback((_) async {
+        try {
+          await BlocProvider.of<GetUserCubit>(currentContext).getUserData();
+          if (currentContext.mounted) {
+            showAnimatedSnackBar(
+                currentContext, Colors.green, 'sign up success');
+            Navigator.of(currentContext).pushReplacementNamed(HomeView.id);
+          }
+        } catch (e) {
+          if (currentContext.mounted) {
+            showAnimatedSnackBar(
+                currentContext, Colors.red, 'Failed to load user data');
+          }
+        }
       });
     }
     return _buildSignUpButton(color);
