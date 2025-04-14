@@ -69,5 +69,7 @@
     "onboarding_note_syncing": "Stay worry-free! Sync your notes to keep them safe and accessible anytime, anywhere.",
     "finish": "finish",
     "next": "next",
-    "skip": "skip"
+    "skip": "skip",
+    "onboarding_markdown_title": "Powerful Markdown Support",
+    "onboarding_markdown": "Write beautiful notes with Markdown formatting. Create headers, lists, code blocks, and more with simple syntax."
 }

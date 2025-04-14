@@ -12,7 +12,7 @@ abstract class AppColors {
   static const Color lightBottomSheet =
       Color(0xffffffff); // White for bottom sheets
   static const Color lightPrimary =
-      Color(0xffffc107); // Lighter shade of yellow
+      Color(0xffffc107); // Lighter shade of yellow\
   static const Color lightBackground =
       Color(0xfffafafa); // Near-white for the background
   static const Color lightSecondary =

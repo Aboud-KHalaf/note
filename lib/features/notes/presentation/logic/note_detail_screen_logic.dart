@@ -281,7 +281,6 @@ class NoteDetailScreenLogic {
             onColorSelected: (int index) {
               noteColor = index;
               onStateUpdate();
-              Navigator.of(context).pop();
             },
             idx: noteColor,
           ),
@@ -300,7 +299,6 @@ class NoteDetailScreenLogic {
             currentNoteFolders: noteFolders,
             onFolderToggled: (String name, bool value) {
               toggleFolder(name, value);
-              Navigator.of(context).pop();
             },
           ),
           _buildAddFolderButton(),

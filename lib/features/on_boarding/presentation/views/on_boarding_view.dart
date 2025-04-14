@@ -23,6 +23,11 @@ class _OnBoardingViewState extends State<OnBoardingView> {
       'image': ImagesProvider.note,
     },
     {
+      'title': 'onboarding_markdown_title',
+      'description': 'onboarding_markdown',
+      'image': ImagesProvider.markdown,
+    },
+    {
       'title': 'onboarding_note_organizing_title',
       'description': 'onboarding_note_organizing',
       'image': ImagesProvider.folders,
