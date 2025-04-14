@@ -163,8 +163,24 @@ class _HomeDrawerState extends State<HomeDrawer> {
                         content: "log_out_warning".tr(context),
                         type: "log_out".tr(context),
                         onDone: () async {
-                          await context.read<AuthCubit>().signOut();
-                          Navigator.pushReplacementNamed(context, FirstView.id);
+                          final currentContext = context;
+                          final authCubit = currentContext.read<AuthCubit>();
+
+                          await authCubit.signOut();
+
+                          if (!currentContext.mounted) return;
+
+                          final state = authCubit.state;
+                          if (state is AuthLogOutSuccess) {
+                            Navigator.pushReplacementNamed(
+                                currentContext, FirstView.id);
+                          } else if (state is AuthFailure) {
+                            showAnimatedSnackBar(
+                              currentContext,
+                              Colors.red,
+                              state.errMessage,
+                            );
+                          }
                         },
                       );
                     },
