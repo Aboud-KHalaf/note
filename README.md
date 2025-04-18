@@ -1,4 +1,4 @@
-# Notes App
+# QuickNote App
 
 A modern, feature-rich note-taking application built with Flutter, offering a seamless experience for creating, organizing, and managing your notes.
 
